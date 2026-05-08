@@ -1,0 +1,11 @@
+# {{BUSINESS_NAME}}
+
+## Overview
+{{META_DESCRIPTION_FROM_IMAGES}}
+
+## Key URLs
+- Home: {{SITE_URL}}/index.html
+- Services: {{SITE_URL}}/services.html
+- Articles hub: {{SITE_URL}}/articles.html
+- Contact: {{SITE_URL}}/contact.html
+- Privacy: {{SITE_URL}}/privacy-policy.html

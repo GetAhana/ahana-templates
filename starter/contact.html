@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="{{HTML_LANG|en}}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{CONTACT_PAGE_TITLE}}</title>
+  <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
+  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <link rel="canonical" href="{{SITE_URL}}/contact.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{CONTACT_PAGE_TITLE}}" />
+  <meta property="og:description" content="{{CONTACT_META_DESCRIPTION}}" />
+  <meta property="og:url" content="{{SITE_URL}}/contact.html" />
+  <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ContactPage",
+    "name":"{{CONTACT_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/contact.html",
+    "about":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}"}
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="inner container">
+      <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+        <ul>
+          <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
+          <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
+          <li><a href="about.html">{{NAV_LABEL_ABOUT}}</a></li>
+          <li><a href="articles.html">{{NAV_LABEL_ARTICLES}}</a></li>
+          <li><a href="contact.html">{{NAV_LABEL_CONTACT}}</a></li>
+        </ul>
+      </nav>
+      <div class="cta">
+        <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="depth-page">
+    <div class="container">
+      <div class="k">{{CONTACT_SECTION_KICKER}}</div>
+      <h1>{{CONTACT_H1_LINE_1}}<br><span>{{CONTACT_H1_ACCENT}}</span></h1>
+      <p class="sub" style="margin-top:.85rem">{{CONTACT_LEAD}}</p>
+
+      <div class="grid contact-2col" style="margin-top:2rem">
+        <div class="card">
+          <h2 style="font-family:&quot;Plus Jakarta Sans&quot;,system-ui,sans-serif;font-size:1.35rem;margin-bottom:.5rem">{{CONTACT_CALL_CARD_TITLE}}</h2>
+          <p style="color:#555;line-height:1.75;margin:0 0 1rem">{{CONTACT_CALL_COPY}}</p>
+          <div style="display:flex;flex-direction:column;gap:.65rem">
+            <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+            <div style="color:#666;line-height:1.75">{{CONTACT_CALL_META_HTML}}</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 style="font-family:&quot;Plus Jakarta Sans&quot;,system-ui,sans-serif;font-size:1.35rem;margin-bottom:.5rem">{{CONTACT_FORM_CARD_TITLE}}</h2>
+          <p style="color:#555;line-height:1.65;margin:0 0 1rem">{{CONTACT_FORM_INTRO}}</p>
+
+          <form id="contact-form" style="display:grid;gap:.75rem" action="{{CONTACT_FORM_ACTION}}" method="{{CONTACT_FORM_METHOD}}" novalidate>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="name">{{CONTACT_FIELD_NAME_LABEL}}</label>
+              <input id="name" name="name" autocomplete="name" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_NAME_PLACEHOLDER}}" />
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="phone">{{CONTACT_FIELD_PHONE_LABEL}}</label>
+              <input id="phone" name="phone" autocomplete="tel" required inputmode="tel" style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_PHONE_PLACEHOLDER}}" />
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="address">{{CONTACT_FIELD_ADDRESS_LABEL}}</label>
+              <input id="address" name="address" autocomplete="street-address" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_ADDRESS_PLACEHOLDER}}" />
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="service">{{CONTACT_FIELD_SERVICE_LABEL}}</label>
+              <select id="service" name="service" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px;background:#fff">
+                <option value="" disabled selected>{{CONTACT_SERVICE_SELECT_PLACEHOLDER}}</option>
+                <option value="service-1">{{CONTACT_SERVICE_OPTION_1}}</option>
+                <option value="service-2">{{CONTACT_SERVICE_OPTION_2}}</option>
+                <option value="service-3">{{CONTACT_SERVICE_OPTION_3}}</option>
+                <option value="other">{{CONTACT_SERVICE_OPTION_OTHER}}</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="timing">{{CONTACT_FIELD_TIMING_LABEL}}</label>
+              <select id="timing" name="timing" style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px;background:#fff">
+                <option>{{CONTACT_TIMING_OPTION_1}}</option>
+                <option>{{CONTACT_TIMING_OPTION_2}}</option>
+                <option>{{CONTACT_TIMING_OPTION_3}}</option>
+                <option>{{CONTACT_TIMING_OPTION_4}}</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="message">{{CONTACT_FIELD_MESSAGE_LABEL}}</label>
+              <textarea id="message" name="message" rows="5" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_MESSAGE_PLACEHOLDER}}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="justify-content:center">{{CONTACT_FORM_SUBMIT_LABEL}}</button>
+            <div style="color:#666;line-height:1.6;font-size:.9rem">{{CONTACT_FORM_FOOTNOTE}}</div>
+          </form>
+          <div id="form-success" style="display:none;margin-top:1rem;color:#166534;font-weight:800;line-height:1.6">{{CONTACT_FORM_SUCCESS_MESSAGE}}</div>
+        </div>
+      </div>
+
+      <div class="depth-h">
+        <div class="k">{{CONTACT_NEXT_STEPS_SECTION_KICKER}}</div>
+        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{CONTACT_NEXT_STEPS_H2_LINE_1}}<br><span>{{CONTACT_NEXT_STEPS_H2_ACCENT}}</span></h2>
+      </div>
+      <div class="depth-steps">
+        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_1_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_1_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_1_BODY}}</p></div>
+        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_2_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_2_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_2_BODY}}</p></div>
+        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_3_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_3_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_3_BODY}}</p></div>
+        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_4_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_4_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_4_BODY}}</p></div>
+      </div>
+
+      <div class="card" style="margin-top:2rem;background:var(--tint);border-color:rgba(29,78,216,.12)">
+        <h2 style="font-family:&quot;Plus Jakarta Sans&quot;,system-ui,sans-serif;font-size:1.25rem;margin-bottom:.35rem">{{CONTACT_RESPONSE_CARD_TITLE}}</h2>
+        <p style="margin:.5rem 0 0;color:#555;line-height:1.75">{{CONTACT_RESPONSE_TIME}}</p>
+      </div>
+
+      <div class="depth-h">
+        <div class="k">{{CONTACT_FAQ_SECTION_KICKER}}</div>
+        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{CONTACT_FAQ_H2_LINE_1}}<br><span>{{CONTACT_FAQ_H2_ACCENT}}</span></h2>
+        <div class="faq-block">
+          <details><summary>{{CONTACT_FAQ_1_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_1_ANSWER}}</div></details>
+          <details><summary>{{CONTACT_FAQ_2_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_2_ANSWER}}</div></details>
+          <details><summary>{{CONTACT_FAQ_3_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_3_ANSWER}}</div></details>
+        </div>
+      </div>
+
+      <div class="map-wrap" style="margin-top:2rem">
+        <iframe title="{{MAP_IFRAME_TITLE}}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{{MAP_EMBED_URL}}"></iframe>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="fgrid">
+      <div>
+        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
+        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="flinks">
+          <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
+          <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
+          <li><a href="about.html">{{NAV_LABEL_ABOUT}}</a></li>
+          <li><a href="articles.html">{{NAV_LABEL_ARTICLES}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fb">
+      <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var form=document.getElementById("contact-form");
+      if(!form)return;
+      form.addEventListener("submit",function(ev){
+        ev.preventDefault();
+        if(!form.checkValidity()){
+          alert("{{CONTACT_FORM_REQUIRED_FIELD_MESSAGE}}");
+          return;
+        }
+        form.style.display="none";
+        var ok=document.getElementById("form-success");
+        if(ok) ok.style.display="block";
+      });
+    })();
+  </script>
+  <script src="./main.js" defer></script>
+</body>
+</html>

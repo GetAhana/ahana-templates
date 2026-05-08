@@ -1,0 +1,24 @@
+{
+  "format": "ahana.template-manifest.v1",
+  "tier": "starter",
+  "version": "1.0.0",
+  "shared": [
+    "templates/shared/tokens.json"
+  ],
+  "files": [
+    "templates/starter/index.html",
+    "templates/starter/services.html",
+    "templates/starter/about.html",
+    "templates/starter/articles.html",
+    "templates/starter/contact.html",
+    "templates/starter/styles.css",
+    "templates/starter/main.js",
+    "templates/starter/robots.txt",
+    "templates/starter/sitemap.xml",
+    "templates/starter/netlify.toml",
+    "templates/starter/_redirects",
+    "templates/starter/favicon.svg",
+    "templates/starter/humans.txt",
+    "templates/starter/.gitignore"
+  ]
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} | {{PRIMARY_SERVICE}} in {{CITY}}</title>
+  <meta name="description" content="{{META_DESCRIPTION_FROM_IMAGES}}" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="./site.webmanifest" />
+  <meta property="og:image" content="{{SITE_URL}}/og-image.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111;overflow-x:hidden}
+    .container{max-width:1100px;margin:0 auto}
+    header{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-.01em}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+
+    .hero{min-height:92vh;padding:96px 1.5rem 4rem;display:flex;align-items:center;background:
+      linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(26,26,26,.55) 60%,transparent 100%),
+      url('{{HERO_IMAGE_URL}}') center/cover no-repeat;}
+    .badge{display:inline-flex;align-items:center;gap:.55rem;background:var(--a);color:var(--d);font-weight:900;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.35rem .8rem;border-radius:2px;margin-bottom:1.25rem}
+    .hero h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(3rem,8vw,5.8rem);line-height:1;color:#fff;margin-bottom:1rem}
+    .hero h1 span{color:var(--a)}
+    .sub{color:rgba(255,255,255,.82);font-size:1.1rem;line-height:1.7;max-width:640px;margin-bottom:2rem}
+    .ctas{display:flex;gap:1rem;flex-wrap:wrap}
+    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;padding:.85rem 1.9rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;padding:.85rem 1.9rem;border-radius:4px;text-decoration:none}
+    .cta2:hover{border-color:var(--a);color:var(--a)}
+
+    .section{padding:5rem 1.5rem;background:#fff}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.05}
+    h2 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:2.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
+    .card h3{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
+    .card p{margin:0;color:#666}
+    .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--p);font-weight:900;text-transform:uppercase;letter-spacing:.1em}
+
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+
+  <!-- Optional structured data (LocalBusiness + Services + Reviews) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"{{BUSINESS_NAME}}",
+    "telephone":"{{PHONE_NUMBER_E164}}",
+    "url":"{{SITE_URL}}",
+    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"},
+    "areaServed": {{AREA_SERVED_JSON}},
+    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"},
+    "review": {{REVIEWS_JSON_LD}}
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="badge">Licensed · Insured · Local</div>
+      <h1>{{PRIMARY_SERVICE}} in {{CITY}}<br/><span>Clear communication.</span></h1>
+      <p class="sub">{{HERO_SUBHEADLINE}}</p>
+      <div class="ctas">
+        <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+        <a class="cta2" href="contact.html">Request a Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="k">What you offer</div>
+      <h2>Top services homeowners call for<br/><span>all in one place</span></h2>
+      <p>Clear descriptions so you can choose the right next step—call, schedule an estimate, or send photos for quick triage.</p>
+      <div class="grid">
+        <div class="card"><h3>{{PRIMARY_KEYWORD_1}}</h3><p>{{KEYWORD_INTENT_1}}</p><div class="card-meta">Common request</div></div>
+        <div class="card"><h3>{{PRIMARY_KEYWORD_2}}</h3><p>{{KEYWORD_INTENT_2}}</p><div class="card-meta">Common request</div></div>
+        <div class="card"><h3>{{PRIMARY_KEYWORD_3}}</h3><p>{{KEYWORD_INTENT_3}}</p><div class="card-meta">Recent work</div></div>
+        <div class="card"><h3>{{PRIMARY_KEYWORD_4}}</h3><p>{{KEYWORD_INTENT_4}}</p><div class="card-meta">Helpful guides</div></div>
+      </div>
+      <p style="margin-top:1.25rem;color:#666">Additional services: {{PRIMARY_KEYWORD_5}}, {{PRIMARY_KEYWORD_6}}, {{PRIMARY_KEYWORD_7}}, {{PRIMARY_KEYWORD_8}}, {{PRIMARY_KEYWORD_9}}, {{PRIMARY_KEYWORD_10}}.</p>
+    </div>
+  </section>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+

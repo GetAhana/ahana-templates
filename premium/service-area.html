@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
+    .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
+    .chip{background:#fff;border:1px solid rgba(0,0,0,.1);padding:.35rem .9rem;border-radius:20px;font-size:.85rem;font-weight:900}
+    .map{border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);margin-top:2.25rem;background:#eee}
+    .map iframe{display:block;width:100%;height:420px;border:none}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Service Area</div>
+      <h1>Serving <span>{{SERVICE_AREA_SHORT}}</span></h1>
+      <p>{{SERVICE_AREA_INTRO}}</p>
+
+      <div class="chips">
+        {{#each SERVICE_CITIES}}
+        <span class="chip">{{this}}</span>
+        {{/each}}
+      </div>
+
+      <div class="map">
+        <iframe
+          title="{{BUSINESS_NAME}} Service Area Map"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q={{CITY}},{{STATE}}&zoom=11">
+        </iframe>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+

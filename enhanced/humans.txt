@@ -1,0 +1,10 @@
+/* TEAM */
+Business: {{BUSINESS_NAME}}
+Contact: {{EMAIL}}
+Site: {{SITE_URL}}
+
+/* THANKS */
+Templates: Ahana enhanced bundle
+
+/* STANDARDS */
+Language: en

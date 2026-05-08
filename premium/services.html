@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .hub-section{margin-top:2.75rem}
+    .hub-section:first-of-type{margin-top:2rem}
+    .hub-section .k{margin-bottom:.35rem}
+    .hub-section h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.28rem,2.8vw,1.75rem);line-height:1.15;color:var(--d);margin:.35rem 0 0}
+    .hub-section .lead{margin-top:.65rem;color:#4A4A4A;font-size:1rem;line-height:1.7;max-width:820px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin-top:1.25rem}
+    .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin-top:1.25rem}
+    @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:900px){.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.grid-3,.grid-4{grid-template-columns:1fr}}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
+    .card h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
+    .card p{margin:0;color:#666}
+    .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--p);font-weight:900;text-transform:uppercase;letter-spacing:.1em}
+    .link{display:inline-block;margin-top:1rem;color:var(--p);font-weight:900;text-decoration:none}
+    .link:hover{text-decoration:underline}
+    a.card--click{display:block;text-decoration:none;color:inherit;background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem;transition:border-color .2s,box-shadow .2s,transform .15s}
+    a.card--click:hover,a.card--click:focus-visible{border-color:var(--p);box-shadow:0 12px 28px rgba(0,0,0,.08);transform:translateY(-2px);outline:none}
+    a.card--click h2{color:var(--d)}
+    a.card--click p{color:#666}
+    a.card--click .go{margin-top:1rem;color:var(--p);font-weight:900;font-size:.95rem}
+    .svc-additional{margin-top:1.75rem;width:100%;border-radius:14px;padding:1.85rem 1.9rem 1.75rem;border:1px solid rgba(0,0,0,.1);background:linear-gradient(180deg,rgba(0,0,0,.02) 0%,var(--l) 100%)}
+    .svc-additional .k{margin-bottom:.25rem}
+    .svc-additional > h2{margin-top:0;font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.2rem,2.6vw,1.55rem);color:var(--d);max-width:none}
+    .svc-additional .lead{margin-top:.65rem;color:#4A4A4A;font-size:1rem;line-height:1.7;max-width:none}
+    .svc-additional ul{margin-top:1.15rem;padding-left:1.15rem;color:#4A4A4A;line-height:1.75;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2rem;row-gap:.35rem;list-style:disc}
+    @media(max-width:640px){.svc-additional ul{grid-template-columns:1fr}}
+    .svc-additional li{margin:0}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Services</div>
+      <h1>{{PRIMARY_SERVICE}} Services in <span>{{CITY}}</span></h1>
+      <p>{{SERVICES_INTRO}}</p>
+
+      <section class="hub-section" aria-labelledby="prem-popular-h">
+        <div class="k">{{SERVICES_HUB_POPULAR_KICKER|Most popular services}}</div>
+        <h2 id="prem-popular-h">{{SERVICES_HUB_POPULAR_TITLE|Six services with dedicated detail pages}}</h2>
+        <p class="lead">{{SERVICES_HUB_POPULAR_INTRO|Each card links to a full service page with process steps, signs, before/after, FAQs, and related internal links.}}</p>
+        <div class="grid-3">
+          <a class="card card--click" href="service-1.html">
+            <h2>{{SERVICE_1_NAME}}</h2>
+            <p>{{SERVICE_1_LONG}}</p>
+            <span class="go">{{SERVICE_1_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card card--click" href="service-2.html">
+            <h2>{{SERVICE_2_NAME}}</h2>
+            <p>{{SERVICE_2_LONG}}</p>
+            <span class="go">{{SERVICE_2_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card card--click" href="service-3.html">
+            <h2>{{SERVICE_3_NAME}}</h2>
+            <p>{{SERVICE_3_LONG}}</p>
+            <span class="go">{{SERVICE_3_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card card--click" href="service-4.html">
+            <h2>{{SERVICE_4_NAME}}</h2>
+            <p>{{SERVICE_4_LONG}}</p>
+            <span class="go">{{SERVICE_4_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card card--click" href="service-5.html">
+            <h2>{{SERVICE_5_NAME}}</h2>
+            <p>{{SERVICE_5_LONG}}</p>
+            <span class="go">{{SERVICE_5_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card card--click" href="service-6.html">
+            <h2>{{SERVICE_6_NAME}}</h2>
+            <p>{{SERVICE_6_LONG}}</p>
+            <span class="go">{{SERVICE_6_DETAIL_CTA|View service details →}}</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="hub-section" aria-labelledby="prem-core-h">
+        <div class="k">{{SERVICES_HUB_CORE_KICKER|Additional core services}}</div>
+        <h2 id="prem-core-h">{{SERVICES_HUB_CORE_TITLE|Four more priority lines (hub overview)}}</h2>
+        <p class="lead">{{SERVICES_HUB_CORE_INTRO|Priorities #7–#10 stay on this page: we quote and schedule them, but they do not receive standalone service-*.html URLs on Premium.}}</p>
+        <div class="grid-4">
+          <article class="card">
+            <h2>{{SERVICE_7_NAME}}</h2>
+            <p>{{SERVICE_7_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_7}}</div>
+          </article>
+          <article class="card">
+            <h2>{{SERVICE_8_NAME}}</h2>
+            <p>{{SERVICE_8_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_8}}</div>
+          </article>
+          <article class="card">
+            <h2>{{SERVICE_9_NAME}}</h2>
+            <p>{{SERVICE_9_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_9}}</div>
+          </article>
+          <article class="card">
+            <h2>{{SERVICE_10_NAME}}</h2>
+            <p>{{SERVICE_10_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_10}}</div>
+          </article>
+        </div>
+      </section>
+
+      <article class="card svc-additional" aria-labelledby="addl-svc-h">
+        <div class="k">{{ADDITIONAL_SERVICES_KICKER|Additional services}}</div>
+        <h2 id="addl-svc-h">{{ADDITIONAL_SERVICES_TITLE|Other work we quote and handle}}</h2>
+        <p class="lead">{{ADDITIONAL_SERVICES_INTRO|If you are not sure which service fits, call or send photos and we will guide you to the right next step.}}</p>
+        <ul>
+          {{ADDITIONAL_SERVICES_LIST_ITEMS}}
+        </ul>
+      </article>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+

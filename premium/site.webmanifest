@@ -1,0 +1,24 @@
+{
+  "name": "{{BUSINESS_NAME}}",
+  "short_name": "{{BUSINESS_NAME_SHORT}}",
+  "description": "{{META_DESCRIPTION_FROM_IMAGES}}",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "{{BRAND_PRIMARY}}",
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

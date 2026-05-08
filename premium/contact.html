@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Contact {{BUSINESS_NAME}} | Get a Quote in {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
+    .card h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
+    .big{display:inline-flex;margin-top:1rem;font-family:Syne,sans-serif;font-weight:800;font-size:1.9rem;color:var(--p);text-decoration:none}
+    label{display:block;font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#555;margin:.75rem 0 .35rem}
+    input,select,textarea{width:100%;padding:.75rem 1rem;border:2px solid rgba(0,0,0,.1);border-radius:10px;font-family:Inter,sans-serif;background:#fff}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    button{width:100%;margin-top:1rem;padding:1rem;border:none;border-radius:10px;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;cursor:pointer}
+    button:hover{background:#b8360a}
+    #ok{display:none;margin-top:1rem;font-weight:900;color:#2f6f2f}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    @media(max-width:640px){nav ul{display:none}.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Contact</div>
+      <h1>Request a quote in <span>{{CITY}}</span></h1>
+      <p>{{CONTACT_LEAD}}</p>
+
+      <div class="grid">
+        <section class="card">
+          <h2>Call</h2>
+          <p>{{CONTACT_CALL_COPY}}</p>
+          <a class="big" href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
+          <p style="margin-top:1rem;color:#666"><strong>Email:</strong> {{EMAIL}}<br><strong>Address:</strong> {{ADDRESS_ONE_LINE}}</p>
+        </section>
+        <section class="card">
+          <h2>Request a Quote</h2>
+          <p style="margin:0;color:#666">{{CONTACT_FORM_INTRO}}</p>
+          <div id="form">
+            <div class="row">
+              <div>
+                <label for="n">Name *</label>
+                <input id="n" type="text" required>
+              </div>
+              <div>
+                <label for="ph">Phone *</label>
+                <input id="ph" type="tel" required>
+              </div>
+            </div>
+            <label for="sv">Service Needed *</label>
+            <select id="sv" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>{{SERVICE_1_NAME}}</option>
+              <option>{{SERVICE_2_NAME}}</option>
+              <option>{{SERVICE_3_NAME}}</option>
+              <option>{{SERVICE_4_NAME}}</option>
+              <option>Other</option>
+            </select>
+            <div class="row">
+              <div>
+                <label for="z">Zip *</label>
+                <input id="z" type="text" maxlength="5" required>
+              </div>
+              <div>
+                <label for="t">Timing</label>
+                <select id="t">
+                  <option>ASAP</option>
+                  <option>This Week</option>
+                  <option>Within a Month</option>
+                </select>
+              </div>
+            </div>
+            <label for="d">Details</label>
+            <textarea id="d" rows="3"></textarea>
+            <button onclick="send(event)">Send Request →</button>
+          </div>
+          <div id="ok">Request received — we’ll contact you soon.</div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function send(e){
+      e.preventDefault();
+      const n=document.getElementById('n').value.trim();
+      const ph=document.getElementById('ph').value.trim();
+      const sv=document.getElementById('sv').value;
+      const z=document.getElementById('z').value.trim();
+      if(!n||!ph||!sv||!z){alert('Please fill in required fields.');return;}
+      document.getElementById('form').style.display='none';
+      document.getElementById('ok').style.display='block';
+    }
+  </script>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+

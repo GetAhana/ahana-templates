@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Privacy Policy | {{BUSINESS_NAME}}</title>
+  <meta name="description" content="{{PRIVACY_META_DESCRIPTION}}" />
+  <link rel="canonical" href="{{SITE_URL}}/privacy-policy.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:820px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
+    p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
+    ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
+    footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
+    footer a{color:var(--p);font-weight:700;text-decoration:none}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <div class="k">Legal</div>
+      <h1>Privacy Policy</h1>
+      <p>{{PRIVACY_INTRO}}</p>
+
+      <h2>Information we collect</h2>
+      <p>{{PRIVACY_COLLECTION}}</p>
+      <ul>
+        <li>{{PRIVACY_BULLET_1}}</li>
+        <li>{{PRIVACY_BULLET_2}}</li>
+        <li>{{PRIVACY_BULLET_3}}</li>
+      </ul>
+
+      <h2>How we use information</h2>
+      <p>{{PRIVACY_USE}}</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy: <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
+
+      <footer>
+        <p><a href="terms.html">Terms of Use</a> · <a href="index.html">Home</a></p>
+      </footer>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
