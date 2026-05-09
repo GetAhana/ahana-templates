@@ -10,6 +10,7 @@
     "templates/starter/services.html",
     "templates/starter/about.html",
     "templates/starter/articles.html",
+    "templates/starter/article-post-1.html",
     "templates/starter/contact.html",
     "templates/starter/styles.css",
     "templates/starter/main.js",
