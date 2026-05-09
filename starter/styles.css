@@ -239,3 +239,29 @@ footer{background:#0f0f10;color:rgba(255,255,255,.7);padding:3.25rem 1.5rem 2rem
 .depth-step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.15rem}
 .depth-step em{display:block;font-style:normal;font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--p);margin-bottom:.45rem}
 .depth-h{margin-top:3rem;padding-top:2.25rem;border-top:1px solid var(--line)}
+
+/* Single launch blog post (article-post-1.html → slug copy) */
+.article-shell{max-width:min(46rem,100%);margin:0 auto;padding-bottom:2rem}
+.article-back{margin:0 0 1rem;font-size:.95rem}
+.article-back a{color:var(--p);font-weight:800;text-decoration:none}
+.article-back a:hover{text-decoration:underline}
+.article-meta-line{font-size:.88rem;font-weight:600;color:#64748b;margin:0 0 .75rem}
+.article-meta-sep{color:#94a3b8}
+.article-cat{color:var(--p);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.72rem}
+.article-h1{font-size:clamp(1.85rem,4.2vw,2.75rem);margin:.35rem 0 0;line-height:1.08}
+.article-h1 span{color:var(--p)}
+.article-dek{margin-top:1rem;font-size:1.08rem;max-width:52ch}
+.article-tldr-wrap{margin-top:1.75rem}
+.article-tldr-wrap .article-tldr,
+.article-tldr-wrap aside.article-tldr{background:linear-gradient(135deg,var(--tint),#fff);border:1px solid rgba(29,78,216,.18);border-radius:16px;padding:1.25rem 1.35rem}
+.article-tldr-wrap .article-tldr h2,
+.article-tldr-wrap aside.article-tldr h2{font-size:1rem;letter-spacing:.12em;text-transform:uppercase;color:var(--p);margin:0 0 .75rem;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+.article-tldr-wrap ul{margin:0;padding-left:1.15rem;color:#334155;line-height:1.65}
+.article-tldr-wrap li{margin:.35rem 0}
+.article-prose{margin-top:2rem;color:#334155;font-size:1.05rem;line-height:1.82}
+.article-prose h2{font-size:clamp(1.35rem,2.8vw,1.65rem);margin:2.25rem 0 .75rem;color:var(--ink)}
+.article-prose h3{font-size:1.12rem;margin:1.5rem 0 .5rem;color:var(--ink);font-weight:800;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+.article-prose p{margin:0 0 1rem}
+.article-prose ul,.article-prose ol{margin:0 0 1rem 1.25rem;padding:0}
+.article-prose li{margin:.35rem 0}
+.article-prose a{color:var(--p);font-weight:700}
