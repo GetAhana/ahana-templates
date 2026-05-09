@@ -1,0 +1,2688 @@
+================================================================================
+FILE: tokens.json
+SOURCE: templates/shared/tokens.json
+TYPE: shared
+================================================================================
+
+{
+  "format": "ahana.tokens.v1",
+  "notes": [
+    "This is a reference list of supported placeholders (tokens) used across templates.",
+    "Your generator can replace {{TOKEN}} occurrences with values from intake/computed fields."
+  ],
+  "tokens": {
+    "BUSINESS_NAME": "Acme Plumbing Co",
+    "BUSINESS_NAME_SHORT": "Acme",
+    "OWNER_NAME": "Jane Doe",
+    "PHONE_NUMBER": "(555) 555-5555",
+    "PHONE_NUMBER_E164": "+15555555555",
+    "EMAIL": "hello@example.com",
+    "CITY": "Austin",
+    "STATE": "TX",
+    "ZIP": "78701",
+    "ADDRESS_LINE_1": "123 Main St",
+    "ADDRESS_ONE_LINE": "123 Main St, Austin, TX 78701",
+    "LICENSE_TYPE": "Licensed & Insured",
+    "YEAR_CURRENT": "2026",
+    "SITE_URL": "https://example.com",
+    "GOOGLE_BUSINESS_PROFILE_URL": "https://g.page/r/EXAMPLE",
+    "OG_IMAGE_URL": "https://example.com/og.jpg",
+    "HTML_LANG": "en",
+
+    "BRAND_PRIMARY": "#1A1A1B",
+    "BRAND_DARK": "#0B0D12",
+    "BRAND_LIGHT": "#FFFFFF",
+    "BRAND_ACCENT": "#E15A4F",
+    "BRAND_ACCENT_SOFT": "rgba(225,90,79,0.12)",
+
+    "AREA_SERVED_JSON": "[\"Austin, TX\",\"Round Rock, TX\"]",
+    "SERVICE_CITIES_ONE_LINE": "Austin, Round Rock, Cedar Park",
+
+    "PRIMARY_SERVICE": "Plumbing",
+    "PRIMARY_KEYWORD_1": "water heater repair Austin",
+    "PRIMARY_KEYWORD_2": "drain cleaning Austin"
+  }
+}
+
+
+================================================================================
+FILE: index.html
+SOURCE: templates/enhanced/index.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}</title>
+  <meta name="description" content="{{META_DESCRIPTION_FROM_IMAGES}}" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="./site.webmanifest" />
+  <meta property="og:image" content="{{SITE_URL}}/og-image.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --brand-primary:{{BRAND_PRIMARY|#FF5733}};
+      --brand-dark:{{BRAND_DARK|#1A1A1B}};
+      --brand-light:{{BRAND_LIGHT|#F7F7F7}};
+      --brand-accent:{{BRAND_ACCENT|#FF5733}};
+      --ink:#0E0E10;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--brand-light);color:var(--brand-dark);overflow-x:hidden}
+    .container{max-width:1100px;margin:0 auto}
+
+    /* Header */
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+    #sticky-header .logo span{color:var(--brand-accent)}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;transition:color .2s;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;
+      transition:transform .15s,filter .2s;white-space:nowrap
+    }
+    .btn-call-now:hover{transform:translateY(-1px);filter:brightness(.95)}
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline:hover{border-color:rgba(0,0,0,.26);color:var(--brand-primary)}
+
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+
+    /* Hero */
+    #hero{
+      min-height:92vh;
+      background:
+        radial-gradient(60% 60% at 15% 30%, rgba(0,0,0,.65) 0%, rgba(0,0,0,.0) 70%),
+        linear-gradient(135deg,rgba(18,18,19,.92) 0%,rgba(18,18,19,.60) 55%,rgba(18,18,19,.15) 100%),
+        url('{{HERO_IMAGE_URL}}') center/cover no-repeat;
+      display:flex;align-items:center;
+      padding:132px 1.5rem 4rem;
+    }
+    .hero-inner{max-width:760px}
+    .hero-kicker{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.1rem}
+    .hk{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:.35rem .75rem;font-weight:900;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+    .hk strong{color:var(--brand-accent)}
+    #hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.85rem,6.8vw,5.15rem);line-height:1.04;color:#fff;margin-bottom:.9rem}
+    #hero h1 span{color:var(--brand-accent)}
+    .sub{font-size:1.12rem;color:rgba(255,255,255,.86);max-width:640px;margin-bottom:1.55rem;line-height:1.7}
+    .cta{display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+    .btn-primary{
+      background:var(--brand-primary);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.12rem;
+      padding:.95rem 1.35rem;border-radius:12px;text-decoration:none;transition:transform .15s,filter .2s;
+      display:inline-flex;align-items:center;gap:.6rem
+    }
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(.95)}
+    .btn-secondary{
+      display:inline-flex;align-items:center;gap:.6rem;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.02rem;padding:.95rem 1.2rem;border-radius:12px;text-decoration:none;
+      background:transparent;color:var(--brand-dark);border:2px solid rgba(0,0,0,.14);
+      transition:border-color .2s,color .2s,background .2s,transform .15s;
+    }
+    .btn-secondary:hover{border-color:var(--brand-primary);color:var(--brand-primary);transform:translateY(-2px)}
+    #hero .btn-secondary,
+    .hero .btn-secondary,
+    section.section[style*="brand-dark"] .btn-secondary{
+      background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.18);
+    }
+    #hero .btn-secondary:hover,
+    .hero .btn-secondary:hover,
+    section.section[style*="brand-dark"] .btn-secondary:hover{
+      border-color:rgba(255,255,255,.35);color:var(--brand-accent);background:rgba(255,255,255,.09);transform:none;
+    }
+    .hero-proof{margin-top:1.35rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .proof{
+      background:rgba(0,0,0,.38);
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:16px;
+      padding:1.05rem 1.05rem .95rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      overflow:hidden;
+      min-height:148px;
+    }
+    .proof .p-top{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem}
+    .proof .p-title{color:rgba(255,255,255,.86);font-weight:900;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem}
+    .proof .p-val{
+      color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      font-weight:800;
+      font-size:clamp(1.05rem,1.7vw,1.35rem);
+      line-height:1.15;
+      letter-spacing:-.01em;
+      white-space:nowrap;
+      max-width:100%;
+    }
+    .proof .p-sub{
+      margin-top:.45rem;
+      color:rgba(255,255,255,.74);
+      line-height:1.6;
+      font-size:.95rem;
+    }
+    @media(max-width:860px){.hero-proof{grid-template-columns:1fr}}
+
+    .section{padding:5rem 1.5rem}
+    .label{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.5rem}
+    .title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.06;margin-bottom:1rem}
+    .title span{color:var(--brand-primary)}
+    .body{color:#4A4A4A;font-size:1.05rem;line-height:1.7;max-width:760px}
+
+    /* Home-service sections */
+    .trust-bar{background:#0f0f10;color:#fff;padding:1.25rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+    .trust-row{max-width:1100px;margin:0 auto;display:flex;gap:1.15rem;flex-wrap:wrap;justify-content:center}
+    .trust-item{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.5rem .85rem;font-weight:900;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.86)}
+    .trust-item b{color:var(--brand-accent)}
+
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.15rem;margin-top:2rem}
+    .svc{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:1.35rem}
+    .svc h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.35rem}
+    .svc p{color:#555;line-height:1.7}
+    .svc .tag{margin-top:.7rem;font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-primary)}
+
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.15rem;margin-top:2rem}
+    .step{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:1.35rem}
+    .num{width:40px;height:40px;border-radius:14px;background:var(--brand-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;margin-bottom:.9rem}
+    .step h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem}
+    .step p{margin-top:.55rem;color:#555;line-height:1.75}
+
+    .split{display:grid;grid-template-columns:1.2fr .8fr;gap:1.25rem;align-items:start}
+    .panel{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:1.5rem}
+    .panel h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.45rem}
+    .list{margin-top:.9rem;display:flex;flex-direction:column;gap:.6rem}
+    .li{display:flex;gap:.6rem;align-items:flex-start;color:#444;line-height:1.6}
+    .li svg{color:var(--brand-primary);flex-shrink:0;margin-top:3px}
+    @media(max-width:920px){.split{grid-template-columns:1fr}}
+
+    .faq{margin-top:2rem;display:grid;gap:.75rem}
+    details{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:1rem 1.15rem}
+    summary{cursor:pointer;font-weight:900;letter-spacing:.02em}
+    details p{margin-top:.75rem;color:#555;line-height:1.75}
+
+    .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
+    .c-track{display:flex;transition:transform .45s ease}
+    .c-item{min-width:100%;aspect-ratio:16/9;position:relative;background:#111}
+    .c-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+    .c-nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
+    .c-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
+    .c-btn:hover{border-color:var(--brand-primary)}
+    .c-meta{font-size:.85rem;color:#666;font-weight:700}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:2.25rem}
+    .card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;padding:1.5rem}
+    .card h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
+    .card p{color:#666;line-height:1.7}
+    .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--brand-primary);font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+
+    footer{background:#0f0f10;color:rgba(255,255,255,.65);padding:3.5rem 1.5rem 2rem}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto}
+    .footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;color:#fff;margin-bottom:.75rem}
+    .footer-logo span{color:var(--brand-accent)}
+    .footer-desc{font-size:.9rem;line-height:1.65;max-width:340px}
+    .footer-col h4{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.15em;color:#fff;margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .footer-col ul li a{color:rgba(255,255,255,.55);font-size:.9rem;text-decoration:none;transition:color .2s}
+    .footer-col ul li a:hover{color:var(--brand-accent)}
+    .footer-bottom{max-width:1100px;margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
+    @media(max-width:640px){.nav-links{display:none}#menu-toggle{display:block}.footer-grid{grid-template-columns:1fr;gap:2rem}}
+  </style>
+
+  <!-- Optional structured data (LocalBusiness) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"{{BUSINESS_NAME}}",
+    "telephone":"{{PHONE_NUMBER_E164}}",
+    "url":"{{SITE_URL}}",
+    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"},
+    "areaServed": {{AREA_SERVED_JSON}},
+    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
+  }
+  </script>
+</head>
+<body>
+  <header id="sticky-header">
+    <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a href="tel:{{PHONE_NUMBER}}" class="btn-call-now">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
+        {{PHONE_NUMBER}}
+      </a>
+      <button id="menu-toggle" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+  </header>
+  <nav id="mobile-menu">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">Testimonials</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}" style="color:var(--brand-accent)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
+
+  <section id="hero">
+    <div class="container hero-inner">
+      <div class="hero-kicker">
+        <div class="hk">Local pros in <strong>{{CITY}}, {{STATE}}</strong></div>
+        <div class="hk">{{LICENSE_TYPE}}</div>
+        <div class="hk">Rated {{REVIEW_RATING}}★ ({{REVIEW_COUNT}})</div>
+      </div>
+      <h1>{{PRIMARY_SERVICE}} you can<br/><span>count on</span>.</h1>
+      <p class="sub">{{HERO_SUBHEADLINE}}</p>
+      <div class="cta">
+        <a class="btn-primary" href="tel:{{PHONE_NUMBER}}">
+          Call {{PHONE_NUMBER}}
+        </a>
+        <a class="btn-secondary" href="contact.html">Get a free estimate</a>
+      </div>
+
+      <div class="hero-proof">
+        <div class="proof">
+          <div class="p-top"><div class="p-title">Fast response</div><div class="p-val">Same-week</div></div>
+          <div class="p-sub">Estimates and inspections with clear next steps.</div>
+        </div>
+        <div class="proof">
+          <div class="p-top"><div class="p-title">Photo updates</div><div class="p-val">Documented</div></div>
+          <div class="p-sub">We show what we found and what we fixed.</div>
+        </div>
+        <div class="proof">
+          <div class="p-top"><div class="p-title">Warranty</div><div class="p-val">{{WARRANTY_SHORT}}</div></div>
+          <div class="p-sub">Workmanship backed by a real guarantee.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <div class="trust-row">
+      <div class="trust-item"><b>Licensed</b> &amp; insured</div>
+      <div class="trust-item"><b>Financing</b> available</div>
+      <div class="trust-item"><b>Emergency</b> service</div>
+      <div class="trust-item"><b>Upfront</b> pricing</div>
+      <div class="trust-item"><b>Local</b> crew</div>
+    </div>
+  </div>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <div class="label">Services</div>
+      <h2 class="title">The services that drive the most calls<br/><span>in {{CITY}}</span></h2>
+      <p class="body">A few of the most common reasons homeowners call us—clear scope, clear next step.</p>
+
+      <div class="svc-grid">
+        <article class="svc">
+          <h3>{{SERVICE_1_NAME}}</h3>
+          <p>{{SERVICE_1_DESC}}</p>
+          <div class="tag">{{PRIMARY_KEYWORD_1}}</div>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_2_NAME}}</h3>
+          <p>{{SERVICE_2_DESC}}</p>
+          <div class="tag">{{PRIMARY_KEYWORD_2}}</div>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_3_NAME}}</h3>
+          <p>{{SERVICE_3_DESC}}</p>
+          <div class="tag">{{PRIMARY_KEYWORD_3}}</div>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_4_NAME}}</h3>
+          <p>{{SERVICE_4_DESC}}</p>
+          <div class="tag">{{PRIMARY_KEYWORD_4}}</div>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_5_NAME}}</h3>
+          <p>{{SERVICE_5_DESC}}</p>
+          <div class="tag">{{PRIMARY_KEYWORD_5}}</div>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_6_NAME}}</h3>
+          <p>{{SERVICE_6_DESC}}</p>
+          <div class="tag">{{PRIMARY_KEYWORD_6}}</div>
+        </article>
+      </div>
+
+      <div style="margin-top:1.75rem">
+        <a class="btn-primary" href="services.html">See all services →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--brand-light)">
+    <div class="container">
+      <div class="label">How it works</div>
+      <h2 class="title">A simple process with<br/><span>no surprises</span></h2>
+      <p class="body">Homeowners want clarity. Here’s how we take you from “problem” to “done” fast.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Call or request an estimate</h3>
+          <p>Tell us what’s going on. We’ll confirm availability and schedule a time that works.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Inspection + clear plan</h3>
+          <p>We inspect, take photos, and explain options. You get straightforward pricing and timelines.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Complete the job</h3>
+          <p>Clean crews, quality materials, and a final walkthrough. We stand behind our work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="label">Our work</div>
+      <h2 class="title">Real projects in and around<br/><span>{{CITY}}</span></h2>
+      <p class="body">A short carousel of recent projects—before/after shots and the details homeowners care about.</p>
+
+      <div class="carousel" data-carousel>
+        <div class="c-track" data-track>
+          <div class="c-item"><img src="{{GALLERY_1_URL}}" alt="{{GALLERY_1_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_2_URL}}" alt="{{GALLERY_2_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_3_URL}}" alt="{{GALLERY_3_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_4_URL}}" alt="{{GALLERY_4_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_5_URL}}" alt="{{GALLERY_5_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_6_URL}}" alt="{{GALLERY_6_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_7_URL}}" alt="{{GALLERY_7_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_8_URL}}" alt="{{GALLERY_8_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_9_URL}}" alt="{{GALLERY_9_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_10_URL}}" alt="{{GALLERY_10_ALT}}"></div>
+        </div>
+        <div class="c-nav">
+          <button class="c-btn" data-prev>Prev</button>
+          <div class="c-meta"><span data-index>1</span> / <span data-total>10</span></div>
+          <button class="c-btn" data-next>Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <div class="label">Service area</div>
+      <h2 class="title">Serving {{CITY}} and nearby<br/><span>cities</span></h2>
+      <p class="body">If you’re near {{CITY}}, there’s a good chance we can help. We serve: {{SERVICE_CITIES_ONE_LINE}}.</p>
+
+      <div class="split" style="margin-top:2rem">
+        <div class="panel">
+          <h3>What you can expect</h3>
+          <div class="list">
+            <div class="li">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+              <span><strong>Upfront pricing</strong> and a clear scope before work begins</span>
+            </div>
+            <div class="li">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+              <span><strong>Fast scheduling</strong> for urgent issues when possible</span>
+            </div>
+            <div class="li">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+              <span><strong>Clean job sites</strong> and a final walkthrough</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="background:var(--brand-dark);color:#fff;border-color:rgba(255,255,255,.10)">
+          <h3 style="color:#fff">Get a free estimate</h3>
+          <p style="color:rgba(255,255,255,.78);margin-top:.55rem;line-height:1.75">Call now or request an estimate online. We’ll confirm details and next steps.</p>
+          <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.65rem">
+            <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
+            <a class="btn-outline" href="contact.html">Request estimate →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--brand-light)">
+    <div class="container">
+      <div class="label">Testimonials</div>
+      <h2 class="title">Trusted by homeowners in<br/><span>{{CITY}}</span></h2>
+      <p class="body">Here’s what customers say after the job is done. Read more on the Testimonials page.</p>
+      <div class="grid">
+        <div class="card"><h3>{{TESTIMONIAL_1_NAME}}</h3><p>“{{TESTIMONIAL_1_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_1_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_2_NAME}}</h3><p>“{{TESTIMONIAL_2_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_2_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_3_NAME}}</h3><p>“{{TESTIMONIAL_3_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_3_CITY}}</div></div>
+      </div>
+      <div style="margin-top:1.75rem">
+        <a class="btn-primary" href="testimonials.html">Read more testimonials →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <div class="label">FAQ</div>
+      <h2 class="title">Quick answers before you<br/><span>call</span></h2>
+      <p class="body">These are the most common questions we get from customers in {{CITY}}.</p>
+      <div class="faq">
+        <details>
+          <summary>Do you offer emergency service?</summary>
+          <p>{{EMERGENCY_FAQ_ANSWER}}</p>
+        </details>
+        <details>
+          <summary>How fast can you come out?</summary>
+          <p>{{SCHEDULING_FAQ_ANSWER}}</p>
+        </details>
+        <details>
+          <summary>Do you provide free estimates?</summary>
+          <p>{{ESTIMATE_FAQ_ANSWER}}</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--brand-dark);color:#fff">
+    <div class="container">
+      <div class="label" style="color:var(--brand-accent)">Get started</div>
+      <h2 class="title" style="color:#fff">Talk to a local pro<br/><span style="color:var(--brand-accent)">today</span></h2>
+      <p class="body" style="color:rgba(255,255,255,.78)">{{CTA_INTRO}}</p>
+      <div style="margin-top:1.5rem;display:flex;gap:.85rem;flex-wrap:wrap">
+        <a class="btn-primary" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+        <a class="btn-secondary" href="contact.html">Request an estimate</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
+        <p class="footer-desc">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service area}}</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}. All rights reserved.</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+    </div>
+  </footer>
+
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: services.html
+SOURCE: templates/enhanced/services.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--brand-dark)}
+    .container{max-width:1100px;margin:0 auto}
+    header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter: blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:64px;box-shadow:0 10px 28px rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
+    header .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--brand-dark);text-decoration:none}
+    header .logo span{color:var(--brand-accent)}
+    nav ul{display:flex;gap:1.5rem;list-style:none}
+    nav a{color:rgba(14,14,16,.78);font-size:.85rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
+    nav a:hover{color:var(--brand-accent)}
+    .btn{background:var(--brand-primary);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.55rem 1.1rem;border-radius:10px;text-decoration:none}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .kicker{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.5rem}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--brand-primary)}
+    p{margin-top:1rem;color:#4A4A4A;font-size:1.05rem;line-height:1.75;max-width:800px}
+    .svc-hub-section{margin-top:2.75rem}
+    .svc-hub-section:first-of-type{margin-top:2rem}
+    .svc-hub-section .kicker{margin-bottom:.35rem}
+    .svc-hub-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);line-height:1.15;color:var(--brand-dark);margin:.35rem 0 0}
+    .svc-hub-section h2 span{color:var(--brand-primary)}
+    .svc-hub-section .section-lead{margin-top:.65rem;color:#4A4A4A;font-size:1rem;line-height:1.7;max-width:820px}
+    .svc-priority-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin-top:1.25rem}
+    @media(max-width:900px){.svc-priority-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.svc-priority-grid{grid-template-columns:1fr}}
+    .svc-additional-card{margin-top:1.75rem;width:100%}
+    .svc-additional-card .kicker{margin-bottom:.25rem}
+    .svc-additional-card > h2{margin-top:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);color:var(--brand-dark);max-width:none}
+    .svc-additional-card .lead{margin-top:.65rem;color:#4A4A4A;font-size:1rem;line-height:1.7;max-width:none}
+    .svc-additional-list{margin-top:1.15rem;padding-left:1.15rem;color:#4A4A4A;line-height:1.75;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2rem;row-gap:.35rem}
+    @media(max-width:640px){.svc-additional-list{grid-template-columns:1fr}}
+    .svc-additional-list li{margin:0}
+    .card{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
+    a.card.svc-detail-card{display:block;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .15s}
+    a.card.svc-detail-card:hover,a.card.svc-detail-card:focus-visible{border-color:var(--brand-primary);box-shadow:0 12px 28px rgba(0,0,0,.08);transform:translateY(-2px);outline:none}
+    .svc-detail-go{margin-top:1rem;color:var(--brand-primary);font-weight:800;font-size:.9rem}
+    .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
+    .card p{margin-top:.5rem;color:#666;font-size:.95rem}
+    .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--brand-primary);font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+    .card.svc-additional-card{border-radius:14px;padding:1.85rem 1.9rem 1.75rem;border-color:rgba(0,0,0,.1);background:linear-gradient(180deg,rgba(0,0,0,.02) 0%,var(--brand-light) 100%)}
+    footer{background:#0f0f10;color:rgba(255,255,255,.65);padding:3.5rem 1.5rem 2rem}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto}
+    .footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;color:#fff;margin-bottom:.75rem}
+    .footer-logo span{color:var(--brand-accent)}
+    .footer-col h4{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.15em;color:#fff;margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .footer-col a{color:rgba(255,255,255,.55);text-decoration:none}
+    .footer-col a:hover{color:var(--brand-accent)}
+    .footer-bottom{max-width:1100px;margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
+    @media(max-width:640px){nav ul{display:none}.footer-grid{grid-template-columns:1fr;gap:2rem}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "areaServed": {{AREA_SERVED_JSON}},
+    "serviceType":"{{PRIMARY_SERVICE}} Services"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="kicker">Services</div>
+      <h1>Services for <span>{{CITY}}</span> Homeowners</h1>
+      <p>{{SERVICES_INTRO}}</p>
+
+      <section class="svc-hub-section" aria-labelledby="svc-popular-heading">
+        <div class="kicker">{{SERVICES_HUB_POPULAR_KICKER|Most popular services}}</div>
+        <h2 id="svc-popular-heading">{{SERVICES_HUB_POPULAR_TITLE|Three services with full detail pages}}</h2>
+        <p class="section-lead">{{SERVICES_HUB_POPULAR_INTRO|Each card below opens a dedicated page with process steps, FAQs, and before/after examples.}}</p>
+        <div class="svc-priority-grid">
+          <a class="card svc-detail-card" href="service-1.html">
+            <h2>{{SERVICE_1_NAME}}</h2>
+            <p>{{SERVICE_1_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_1}}</div>
+            <span class="svc-detail-go">{{SERVICE_1_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card svc-detail-card" href="service-2.html">
+            <h2>{{SERVICE_2_NAME}}</h2>
+            <p>{{SERVICE_2_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_2}}</div>
+            <span class="svc-detail-go">{{SERVICE_2_DETAIL_CTA|View service details →}}</span>
+          </a>
+          <a class="card svc-detail-card" href="service-3.html">
+            <h2>{{SERVICE_3_NAME}}</h2>
+            <p>{{SERVICE_3_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_3}}</div>
+            <span class="svc-detail-go">{{SERVICE_3_DETAIL_CTA|View service details →}}</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="svc-hub-section" aria-labelledby="svc-core-heading">
+        <div class="kicker">{{SERVICES_HUB_CORE_KICKER|Additional core services}}</div>
+        <h2 id="svc-core-heading">{{SERVICES_HUB_CORE_TITLE|Core services on this hub}}</h2>
+        <p class="section-lead">{{SERVICES_HUB_CORE_INTRO|These priority lines stay on the services hub—no separate URLs on the Enhanced plan. Call or send photos and we will recommend the right next step.}}</p>
+        <div class="svc-priority-grid">
+          <article class="card">
+            <h2>{{SERVICE_4_NAME}}</h2>
+            <p>{{SERVICE_4_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_4}}</div>
+          </article>
+          <article class="card">
+            <h2>{{SERVICE_5_NAME}}</h2>
+            <p>{{SERVICE_5_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_5}}</div>
+          </article>
+          <article class="card">
+            <h2>{{SERVICE_6_NAME}}</h2>
+            <p>{{SERVICE_6_LONG}}</p>
+            <div class="card-meta">{{PRIMARY_KEYWORD_6}}</div>
+          </article>
+        </div>
+      </section>
+
+      <article class="card svc-additional-card" aria-labelledby="additional-services-heading">
+        <div class="kicker">Additional services</div>
+        <h2 id="additional-services-heading">Other work we quote and handle</h2>
+        <p class="lead">{{ADDITIONAL_SERVICES_INTRO|If you’re not sure which service fits, call or send photos and we’ll guide you to the right next step.}}</p>
+        <ul class="svc-additional-list">
+          {{ADDITIONAL_SERVICES_LIST_ITEMS}}
+        </ul>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
+        <p style="max-width:340px;line-height:1.65">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service area}}</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+          <li><a href="contact.html">Request a Quote</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}.</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+    </div>
+  </footer>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: about.html
+SOURCE: templates/enhanced/about.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>About {{BUSINESS_NAME}} | {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
+    .card h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
+    .card p{margin:0;color:#666}
+    .list{margin-top:1rem;display:grid;gap:.55rem}
+    .item{display:flex;gap:.6rem;align-items:flex-start;color:#444;line-height:1.6}
+    .item svg{color:var(--p);flex-shrink:0;margin-top:3px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">About</div>
+      <h1>Local {{PRIMARY_SERVICE}}, <span>{{ABOUT_H1_ACCENT}}</span></h1>
+      <p>{{ABOUT_LEAD}}</p>
+
+      <div class="grid">
+        <section class="card">
+          <h2>{{ABOUT_HEADLINE}}</h2>
+          <p>{{ABOUT_STORY_LONG}}</p>
+          <p style="margin-top:1rem;color:#555"><strong>Owner:</strong> {{OWNER_NAME}} · {{YEARS_EXPERIENCE}}</p>
+        </section>
+        <section class="card">
+          <h2>Values</h2>
+          <p>{{VALUES_INTRO}}</p>
+          <div class="list">
+            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_1}}</span></div>
+            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_2}}</span></div>
+            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_3}}</span></div>
+            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_4}}</span></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: articles.html
+SOURCE: templates/enhanced/articles.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Articles | {{PRIMARY_SERVICE}} Tips in {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{BLOG_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:760px}
+    .posts{display:flex;flex-direction:column;gap:1rem;margin-top:2.25rem}
+    .post{
+      display:block;text-decoration:none;color:inherit;
+      background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:16px;
+      padding:1.55rem 1.6rem;
+      transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .post:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(0,0,0,.08);border-color:rgba(0,0,0,.12)}
+    .tag{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--p)}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem}
+    .post h2{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.55rem;line-height:1.15;margin-bottom:.55rem}
+    .post .excerpt{margin:0;color:#555;line-height:1.8;max-width:92ch}
+    .meta{color:#666;font-size:.9rem;font-weight:800}
+    .cta{margin-top:1rem;display:inline-flex;align-items:center;gap:.55rem;color:var(--p);font-weight:900}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Articles</div>
+      <h1>{{PRIMARY_SERVICE}} Advice for <span>{{CITY}}</span> Homeowners</h1>
+      <p>{{BLOG_INTRO}}</p>
+
+      <div class="posts">
+        <a class="post" href="{{ARTICLE_1_URL}}">
+          <div class="top">
+            <div class="tag">{{ARTICLE_1_CATEGORY|Guide}}</div>
+            <div class="meta">{{ARTICLE_1_DATE}}</div>
+          </div>
+          <h2>{{ARTICLE_1_TITLE}}</h2>
+          <p class="excerpt">{{ARTICLE_1_EXCERPT}}</p>
+          <div class="cta">Read article <span aria-hidden="true">→</span></div>
+        </a>
+
+        <a class="post" href="{{ARTICLE_2_URL}}">
+          <div class="top">
+            <div class="tag">{{ARTICLE_2_CATEGORY|Guide}}</div>
+            <div class="meta">{{ARTICLE_2_DATE}}</div>
+          </div>
+          <h2>{{ARTICLE_2_TITLE}}</h2>
+          <p class="excerpt">{{ARTICLE_2_EXCERPT}}</p>
+          <div class="cta">Read article <span aria-hidden="true">→</span></div>
+        </a>
+
+        <a class="post" href="{{ARTICLE_3_URL}}">
+          <div class="top">
+            <div class="tag">{{ARTICLE_3_CATEGORY|Guide}}</div>
+            <div class="meta">{{ARTICLE_3_DATE}}</div>
+          </div>
+          <h2>{{ARTICLE_3_TITLE}}</h2>
+          <p class="excerpt">{{ARTICLE_3_EXCERPT}}</p>
+          <div class="cta">Read article <span aria-hidden="true">→</span></div>
+        </a>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: contact.html
+SOURCE: templates/enhanced/contact.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Contact {{BUSINESS_NAME}} | Get a Quote in {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
+    .card h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
+    .big{display:inline-flex;margin-top:1rem;font-family:Syne,sans-serif;font-weight:800;font-size:1.85rem;color:var(--p);text-decoration:none}
+    label{display:block;font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#555;margin:.75rem 0 .35rem}
+    input,select,textarea{width:100%;padding:.75rem 1rem;border:2px solid rgba(0,0,0,.1);border-radius:10px;font-family:Inter,sans-serif;background:#fff}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    button{width:100%;margin-top:1rem;padding:1rem;border:none;border-radius:10px;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;cursor:pointer}
+    button:hover{background:#b8360a}
+    #ok{display:none;margin-top:1rem;font-weight:900;color:#2f6f2f}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    @media(max-width:640px){nav ul{display:none}.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Contact</div>
+      <h1>Fast Quotes in <span>{{CITY}}</span></h1>
+      <p>{{CONTACT_LEAD}}</p>
+
+      <div class="grid">
+        <section class="card">
+          <h2>Call</h2>
+          <p>{{CONTACT_CALL_COPY}}</p>
+          <a class="big" href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
+          <p style="margin-top:1rem;color:#666"><strong>Email:</strong> {{EMAIL}}<br><strong>Address:</strong> {{ADDRESS_ONE_LINE}}</p>
+        </section>
+        <section class="card">
+          <h2>Request a Quote</h2>
+          <p style="margin:0;color:#666">{{CONTACT_FORM_INTRO}}</p>
+
+          <div id="form">
+            <div class="row">
+              <div>
+                <label for="n">Name *</label>
+                <input id="n" type="text" required>
+              </div>
+              <div>
+                <label for="ph">Phone *</label>
+                <input id="ph" type="tel" required>
+              </div>
+            </div>
+            <label for="sv">Service Needed *</label>
+            <select id="sv" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>{{SERVICE_1_NAME}}</option>
+              <option>{{SERVICE_2_NAME}}</option>
+              <option>{{SERVICE_3_NAME}}</option>
+              <option>{{SERVICE_4_NAME}}</option>
+              <option>{{SERVICE_5_NAME}}</option>
+              <option>{{SERVICE_6_NAME}}</option>
+              <option>Other</option>
+            </select>
+            <div class="row">
+              <div>
+                <label for="z">Zip *</label>
+                <input id="z" type="text" maxlength="5" required>
+              </div>
+              <div>
+                <label for="t">Timing</label>
+                <select id="t">
+                  <option>ASAP</option>
+                  <option>This Week</option>
+                  <option>Within a Month</option>
+                </select>
+              </div>
+            </div>
+            <label for="d">Details</label>
+            <textarea id="d" rows="3"></textarea>
+            <button onclick="send(event)">Send Request →</button>
+          </div>
+          <div id="ok">Request received — we’ll contact you soon.</div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function send(e){
+      e.preventDefault();
+      const n=document.getElementById('n').value.trim();
+      const ph=document.getElementById('ph').value.trim();
+      const sv=document.getElementById('sv').value;
+      const z=document.getElementById('z').value.trim();
+      if(!n||!ph||!sv||!z){alert('Please fill in required fields.');return;}
+      document.getElementById('form').style.display='none';
+      document.getElementById('ok').style.display='block';
+    }
+  </script>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: service-1.html
+SOURCE: templates/enhanced/service-1.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{SERVICE_1_SEO_TITLE}}</title>
+  <meta name="description" content="{{SERVICE_1_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
+    h2 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
+    ul.detail-list{margin-top:1rem;padding:0;list-style:none;color:#444;line-height:1.75;max-width:860px}
+    ul.detail-list li{position:relative;padding-left:1.35rem;margin:.5rem 0 0}
+    ul.detail-list li:first-child{margin-top:0}
+    ul.detail-list li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--p)}
+    .ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.25rem;align-items:stretch}
+    .shot{background:var(--l);border:1px solid rgba(0,0,0,.08);border-radius:12px;overflow:hidden}
+    .shot figcaption{padding:.65rem 1rem;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--p)}
+    .shot{margin:0;min-width:0}
+    .shot img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+    .wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.15rem;margin-top:1.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.35rem}
+    .card blockquote{font-style:italic;color:#333;line-height:1.7;margin:0}
+    .by{margin-top:.85rem;font-weight:900;font-size:.9rem}
+    .by span{color:#666;font-weight:700}
+    details{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1rem 1.15rem;margin-top:.65rem}
+    summary{cursor:pointer;font-weight:900}
+    details p{margin-top:.75rem}
+    .related{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+    .related a{display:inline-flex;align-items:center;padding:.55rem 1rem;border-radius:8px;background:#fff;border:2px solid rgba(0,0,0,.1);color:var(--p);font-weight:900;text-decoration:none;font-size:.88rem}
+    .related a:hover{border-color:var(--p)}
+    .cta-bar{margin-top:2.75rem;padding:1.75rem;border-radius:12px;background:var(--d);color:#fff;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+    .cta-bar p{margin:0;max-width:520px;color:rgba(255,255,255,.82)}
+    .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
+    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2:hover{border-color:var(--a);color:var(--a)}
+    @media(max-width:560px){.ba{grid-template-columns:1fr}}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"{{SERVICE_1_NAME}}",
+    "serviceType":"{{SERVICE_1_NAME}}",
+    "description":"{{SERVICE_1_SCHEMA_DESCRIPTION}}",
+    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}","url":"{{SITE_URL}}"},
+    "areaServed":{{AREA_SERVED_JSON}}
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">{{SERVICE_1_NAME}}</div>
+      <h1>{{SERVICE_1_H1}}</h1>
+      <p>{{SERVICE_1_INTRO}}</p>
+
+      <h2>How we handle <span>{{SERVICE_1_NAME}}</span></h2>
+      <p>{{SERVICE_1_PROCESS_INTRO}}</p>
+      <ul class="detail-list">
+        <li><strong>{{SERVICE_1_STEP_1_TITLE}}</strong> — {{SERVICE_1_STEP_1_BODY}}</li>
+        <li><strong>{{SERVICE_1_STEP_2_TITLE}}</strong> — {{SERVICE_1_STEP_2_BODY}}</li>
+        <li><strong>{{SERVICE_1_STEP_3_TITLE}}</strong> — {{SERVICE_1_STEP_3_BODY}}</li>
+      </ul>
+
+      <h2>Signs you may need <span>this service</span></h2>
+      <p>{{SERVICE_1_SIGNS_INTRO}}</p>
+      <ul class="detail-list">
+        <li>{{SERVICE_1_SIGN_1}}</li>
+        <li>{{SERVICE_1_SIGN_2}}</li>
+        <li>{{SERVICE_1_SIGN_3}}</li>
+        <li>{{SERVICE_1_SIGN_4}}</li>
+        <li>{{SERVICE_1_SIGN_5}}</li>
+      </ul>
+
+      <h2>Before &amp; after <span>({{SERVICE_1_NAME}})</span></h2>
+      <p>{{SERVICE_1_GALLERY_INTRO}}</p>
+      <div class="ba">
+        <figure class="shot">
+          <img src="{{SERVICE_1_BEFORE_IMG_URL}}" alt="{{SERVICE_1_BEFORE_IMG_ALT}}" />
+          <figcaption>Before</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="{{SERVICE_1_AFTER_IMG_URL}}" alt="{{SERVICE_1_AFTER_IMG_ALT}}" />
+          <figcaption>After</figcaption>
+        </figure>
+      </div>
+
+      <h2>Homeowners mention <span>{{SERVICE_1_NAME}}</span></h2>
+      <p>{{SERVICE_1_TESTIMONIALS_INTRO}}</p>
+      <div class="wall">
+        <article class="card">
+          <blockquote>“{{SERVICE_1_TESTIMONIAL_1_TEXT}}”</blockquote>
+          <div class="by">{{SERVICE_1_TESTIMONIAL_1_NAME}} <span>· {{SERVICE_1_TESTIMONIAL_1_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{SERVICE_1_TESTIMONIAL_2_TEXT}}”</blockquote>
+          <div class="by">{{SERVICE_1_TESTIMONIAL_2_NAME}} <span>· {{SERVICE_1_TESTIMONIAL_2_CITY}}</span></div>
+        </article>
+      </div>
+
+      <h2>FAQ — <span>{{SERVICE_1_NAME}}</span></h2>
+      <details>
+        <summary>{{SERVICE_1_FAQ_Q1}}</summary>
+        <p>{{SERVICE_1_FAQ_A1}}</p>
+      </details>
+      <details>
+        <summary>{{SERVICE_1_FAQ_Q2}}</summary>
+        <p>{{SERVICE_1_FAQ_A2}}</p>
+      </details>
+      <details>
+        <summary>{{SERVICE_1_FAQ_Q3}}</summary>
+        <p>{{SERVICE_1_FAQ_A3}}</p>
+      </details>
+
+      <h2>Related <span>services</span></h2>
+      <p>{{SERVICE_1_RELATED_INTRO}}</p>
+      <div class="related">
+        <a href="service-2.html">{{SERVICE_2_NAME}}</a>
+        <a href="service-3.html">{{SERVICE_3_NAME}}</a>
+        <a href="services.html">All services</a>
+      </div>
+
+      <div class="cta-bar">
+        <p>{{SERVICE_1_CTA_COPY}}</p>
+        <div class="cta-row">
+          <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="cta2" href="contact.html">Request a quote</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: service-2.html
+SOURCE: templates/enhanced/service-2.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{SERVICE_2_SEO_TITLE}}</title>
+  <meta name="description" content="{{SERVICE_2_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
+    h2 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
+    ul.detail-list{margin-top:1rem;padding:0;list-style:none;color:#444;line-height:1.75;max-width:860px}
+    ul.detail-list li{position:relative;padding-left:1.35rem;margin:.5rem 0 0}
+    ul.detail-list li:first-child{margin-top:0}
+    ul.detail-list li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--p)}
+    .ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.25rem;align-items:stretch}
+    .shot{background:var(--l);border:1px solid rgba(0,0,0,.08);border-radius:12px;overflow:hidden}
+    .shot figcaption{padding:.65rem 1rem;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--p)}
+    .shot{margin:0;min-width:0}
+    .shot img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+    .wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.15rem;margin-top:1.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.35rem}
+    .card blockquote{font-style:italic;color:#333;line-height:1.7;margin:0}
+    .by{margin-top:.85rem;font-weight:900;font-size:.9rem}
+    .by span{color:#666;font-weight:700}
+    details{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1rem 1.15rem;margin-top:.65rem}
+    summary{cursor:pointer;font-weight:900}
+    details p{margin-top:.75rem}
+    .related{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+    .related a{display:inline-flex;align-items:center;padding:.55rem 1rem;border-radius:8px;background:#fff;border:2px solid rgba(0,0,0,.1);color:var(--p);font-weight:900;text-decoration:none;font-size:.88rem}
+    .related a:hover{border-color:var(--p)}
+    .cta-bar{margin-top:2.75rem;padding:1.75rem;border-radius:12px;background:var(--d);color:#fff;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+    .cta-bar p{margin:0;max-width:520px;color:rgba(255,255,255,.82)}
+    .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
+    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2:hover{border-color:var(--a);color:var(--a)}
+    @media(max-width:560px){.ba{grid-template-columns:1fr}}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"{{SERVICE_2_NAME}}",
+    "serviceType":"{{SERVICE_2_NAME}}",
+    "description":"{{SERVICE_2_SCHEMA_DESCRIPTION}}",
+    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}","url":"{{SITE_URL}}"},
+    "areaServed":{{AREA_SERVED_JSON}}
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">{{SERVICE_2_NAME}}</div>
+      <h1>{{SERVICE_2_H1}}</h1>
+      <p>{{SERVICE_2_INTRO}}</p>
+
+      <h2>How we handle <span>{{SERVICE_2_NAME}}</span></h2>
+      <p>{{SERVICE_2_PROCESS_INTRO}}</p>
+      <ul class="detail-list">
+        <li><strong>{{SERVICE_2_STEP_1_TITLE}}</strong> &mdash; {{SERVICE_2_STEP_1_BODY}}</li>
+        <li><strong>{{SERVICE_2_STEP_2_TITLE}}</strong> &mdash; {{SERVICE_2_STEP_2_BODY}}</li>
+        <li><strong>{{SERVICE_2_STEP_3_TITLE}}</strong> &mdash; {{SERVICE_2_STEP_3_BODY}}</li>
+      </ul>
+
+      <h2>Signs you may need <span>this service</span></h2>
+      <p>{{SERVICE_2_SIGNS_INTRO}}</p>
+      <ul class="detail-list">
+        <li>{{SERVICE_2_SIGN_1}}</li>
+        <li>{{SERVICE_2_SIGN_2}}</li>
+        <li>{{SERVICE_2_SIGN_3}}</li>
+        <li>{{SERVICE_2_SIGN_4}}</li>
+        <li>{{SERVICE_2_SIGN_5}}</li>
+      </ul>
+
+      <h2>Before &amp; after <span>({{SERVICE_2_NAME}})</span></h2>
+      <p>{{SERVICE_2_GALLERY_INTRO}}</p>
+      <div class="ba">
+        <figure class="shot">
+          <img src="{{SERVICE_2_BEFORE_IMG_URL}}" alt="{{SERVICE_2_BEFORE_IMG_ALT}}" />
+          <figcaption>Before</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="{{SERVICE_2_AFTER_IMG_URL}}" alt="{{SERVICE_2_AFTER_IMG_ALT}}" />
+          <figcaption>After</figcaption>
+        </figure>
+      </div>
+
+      <h2>Homeowners mention <span>{{SERVICE_2_NAME}}</span></h2>
+      <p>{{SERVICE_2_TESTIMONIALS_INTRO}}</p>
+      <div class="wall">
+        <article class="card">
+          <blockquote>â€œ{{SERVICE_2_TESTIMONIAL_1_TEXT}}â€</blockquote>
+          <div class="by">{{SERVICE_2_TESTIMONIAL_1_NAME}} <span>Â· {{SERVICE_2_TESTIMONIAL_1_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>â€œ{{SERVICE_2_TESTIMONIAL_2_TEXT}}â€</blockquote>
+          <div class="by">{{SERVICE_2_TESTIMONIAL_2_NAME}} <span>Â· {{SERVICE_2_TESTIMONIAL_2_CITY}}</span></div>
+        </article>
+      </div>
+
+      <h2>FAQ &mdash; <span>{{SERVICE_2_NAME}}</span></h2>
+      <details>
+        <summary>{{SERVICE_2_FAQ_Q1}}</summary>
+        <p>{{SERVICE_2_FAQ_A1}}</p>
+      </details>
+      <details>
+        <summary>{{SERVICE_2_FAQ_Q2}}</summary>
+        <p>{{SERVICE_2_FAQ_A2}}</p>
+      </details>
+      <details>
+        <summary>{{SERVICE_2_FAQ_Q3}}</summary>
+        <p>{{SERVICE_2_FAQ_A3}}</p>
+      </details>
+
+      <h2>Related <span>services</span></h2>
+      <p>{{SERVICE_2_RELATED_INTRO}}</p>
+      <div class="related">
+        <a href="service-1.html">{{SERVICE_1_NAME}}</a>
+        <a href="service-3.html">{{SERVICE_3_NAME}}</a>
+        <a href="services.html">All services</a>
+      </div>
+
+      <div class="cta-bar">
+        <p>{{SERVICE_2_CTA_COPY}}</p>
+        <div class="cta-row">
+          <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="cta2" href="contact.html">Request a quote</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: service-3.html
+SOURCE: templates/enhanced/service-3.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{SERVICE_3_SEO_TITLE}}</title>
+  <meta name="description" content="{{SERVICE_3_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
+    h2 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
+    ul.detail-list{margin-top:1rem;padding:0;list-style:none;color:#444;line-height:1.75;max-width:860px}
+    ul.detail-list li{position:relative;padding-left:1.35rem;margin:.5rem 0 0}
+    ul.detail-list li:first-child{margin-top:0}
+    ul.detail-list li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--p)}
+    .ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.25rem;align-items:stretch}
+    .shot{background:var(--l);border:1px solid rgba(0,0,0,.08);border-radius:12px;overflow:hidden}
+    .shot figcaption{padding:.65rem 1rem;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--p)}
+    .shot{margin:0;min-width:0}
+    .shot img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+    .wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.15rem;margin-top:1.25rem}
+    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.35rem}
+    .card blockquote{font-style:italic;color:#333;line-height:1.7;margin:0}
+    .by{margin-top:.85rem;font-weight:900;font-size:.9rem}
+    .by span{color:#666;font-weight:700}
+    details{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1rem 1.15rem;margin-top:.65rem}
+    summary{cursor:pointer;font-weight:900}
+    details p{margin-top:.75rem}
+    .related{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+    .related a{display:inline-flex;align-items:center;padding:.55rem 1rem;border-radius:8px;background:#fff;border:2px solid rgba(0,0,0,.1);color:var(--p);font-weight:900;text-decoration:none;font-size:.88rem}
+    .related a:hover{border-color:var(--p)}
+    .cta-bar{margin-top:2.75rem;padding:1.75rem;border-radius:12px;background:var(--d);color:#fff;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+    .cta-bar p{margin:0;max-width:520px;color:rgba(255,255,255,.82)}
+    .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
+    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2:hover{border-color:var(--a);color:var(--a)}
+    @media(max-width:560px){.ba{grid-template-columns:1fr}}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"{{SERVICE_3_NAME}}",
+    "serviceType":"{{SERVICE_3_NAME}}",
+    "description":"{{SERVICE_3_SCHEMA_DESCRIPTION}}",
+    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}","url":"{{SITE_URL}}"},
+    "areaServed":{{AREA_SERVED_JSON}}
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">{{SERVICE_3_NAME}}</div>
+      <h1>{{SERVICE_3_H1}}</h1>
+      <p>{{SERVICE_3_INTRO}}</p>
+
+      <h2>How we handle <span>{{SERVICE_3_NAME}}</span></h2>
+      <p>{{SERVICE_3_PROCESS_INTRO}}</p>
+      <ul class="detail-list">
+        <li><strong>{{SERVICE_3_STEP_1_TITLE}}</strong> &mdash; {{SERVICE_3_STEP_1_BODY}}</li>
+        <li><strong>{{SERVICE_3_STEP_2_TITLE}}</strong> &mdash; {{SERVICE_3_STEP_2_BODY}}</li>
+        <li><strong>{{SERVICE_3_STEP_3_TITLE}}</strong> &mdash; {{SERVICE_3_STEP_3_BODY}}</li>
+      </ul>
+
+      <h2>Signs you may need <span>this service</span></h2>
+      <p>{{SERVICE_3_SIGNS_INTRO}}</p>
+      <ul class="detail-list">
+        <li>{{SERVICE_3_SIGN_1}}</li>
+        <li>{{SERVICE_3_SIGN_2}}</li>
+        <li>{{SERVICE_3_SIGN_3}}</li>
+        <li>{{SERVICE_3_SIGN_4}}</li>
+        <li>{{SERVICE_3_SIGN_5}}</li>
+      </ul>
+
+      <h2>Before &amp; after <span>({{SERVICE_3_NAME}})</span></h2>
+      <p>{{SERVICE_3_GALLERY_INTRO}}</p>
+      <div class="ba">
+        <figure class="shot">
+          <img src="{{SERVICE_3_BEFORE_IMG_URL}}" alt="{{SERVICE_3_BEFORE_IMG_ALT}}" />
+          <figcaption>Before</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="{{SERVICE_3_AFTER_IMG_URL}}" alt="{{SERVICE_3_AFTER_IMG_ALT}}" />
+          <figcaption>After</figcaption>
+        </figure>
+      </div>
+
+      <h2>Homeowners mention <span>{{SERVICE_3_NAME}}</span></h2>
+      <p>{{SERVICE_3_TESTIMONIALS_INTRO}}</p>
+      <div class="wall">
+        <article class="card">
+          <blockquote>â€œ{{SERVICE_3_TESTIMONIAL_1_TEXT}}â€</blockquote>
+          <div class="by">{{SERVICE_3_TESTIMONIAL_1_NAME}} <span>Â· {{SERVICE_3_TESTIMONIAL_1_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>â€œ{{SERVICE_3_TESTIMONIAL_2_TEXT}}â€</blockquote>
+          <div class="by">{{SERVICE_3_TESTIMONIAL_2_NAME}} <span>Â· {{SERVICE_3_TESTIMONIAL_2_CITY}}</span></div>
+        </article>
+      </div>
+
+      <h2>FAQ &mdash; <span>{{SERVICE_3_NAME}}</span></h2>
+      <details>
+        <summary>{{SERVICE_3_FAQ_Q1}}</summary>
+        <p>{{SERVICE_3_FAQ_A1}}</p>
+      </details>
+      <details>
+        <summary>{{SERVICE_3_FAQ_Q2}}</summary>
+        <p>{{SERVICE_3_FAQ_A2}}</p>
+      </details>
+      <details>
+        <summary>{{SERVICE_3_FAQ_Q3}}</summary>
+        <p>{{SERVICE_3_FAQ_A3}}</p>
+      </details>
+
+      <h2>Related <span>services</span></h2>
+      <p>{{SERVICE_3_RELATED_INTRO}}</p>
+      <div class="related">
+        <a href="service-1.html">{{SERVICE_1_NAME}}</a>
+        <a href="service-2.html">{{SERVICE_2_NAME}}</a>
+        <a href="services.html">All services</a>
+      </div>
+
+      <div class="cta-bar">
+        <p>{{SERVICE_3_CTA_COPY}}</p>
+        <div class="cta-row">
+          <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="cta2" href="contact.html">Request a quote</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: privacy-policy.html
+SOURCE: templates/enhanced/privacy-policy.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Privacy Policy | {{BUSINESS_NAME}}</title>
+  <meta name="description" content="{{PRIVACY_META_DESCRIPTION}}" />
+  <link rel="canonical" href="{{SITE_URL}}/privacy-policy.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:820px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
+    p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
+    ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
+    footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
+    footer a{color:var(--p);font-weight:700;text-decoration:none}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <div class="k">Legal</div>
+      <h1>Privacy Policy</h1>
+      <p>{{PRIVACY_INTRO}}</p>
+
+      <h2>Information we collect</h2>
+      <p>{{PRIVACY_COLLECTION}}</p>
+      <ul>
+        <li>{{PRIVACY_BULLET_1}}</li>
+        <li>{{PRIVACY_BULLET_2}}</li>
+        <li>{{PRIVACY_BULLET_3}}</li>
+      </ul>
+
+      <h2>How we use information</h2>
+      <p>{{PRIVACY_USE}}</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy: <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
+
+      <footer>
+        <p><a href="terms.html">Terms of Use</a> · <a href="index.html">Home</a></p>
+      </footer>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: terms.html
+SOURCE: templates/enhanced/terms.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Terms of Use | {{BUSINESS_NAME}}</title>
+  <meta name="description" content="{{TERMS_META_DESCRIPTION}}" />
+  <link rel="canonical" href="{{SITE_URL}}/terms.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:820px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
+    h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
+    p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
+    ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
+    footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
+    footer a{color:var(--p);font-weight:700;text-decoration:none}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <div class="k">Legal</div>
+      <h1>Terms of Use</h1>
+      <p>{{TERMS_INTRO}}</p>
+
+      <h2>Website use</h2>
+      <p>{{TERMS_WEBSITE_USE}}</p>
+
+      <h2>Estimates &amp; scheduling</h2>
+      <p>{{TERMS_ESTIMATES}}</p>
+
+      <h2>Limitation of liability</h2>
+      <p>{{TERMS_LIABILITY}}</p>
+
+      <h2>Contact</h2>
+      <p>{{BUSINESS_NAME}} · <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
+
+      <footer>
+        <p><a href="privacy-policy.html">Privacy Policy</a> · <a href="index.html">Home</a></p>
+      </footer>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: 404.html
+SOURCE: templates/enhanced/404.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Page not found | {{BUSINESS_NAME}}</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3rem)}
+    p{margin-top:1rem;color:#555;max-width:440px;line-height:1.65}
+    a{display:inline-block;margin-top:1.75rem;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none}
+    a:hover{filter:brightness(.95)}
+    code{font-size:.85rem;color:#666}
+  </style>
+</head>
+<body>
+  <p><strong>404</strong></p>
+  <h1>That page isn’t here.</h1>
+  <p>{{ERROR_404_MESSAGE}}</p>
+  <p><code>{{SITE_URL}}</code></p>
+  <a href="index.html">Back to home</a>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: offline.html
+SOURCE: templates/enhanced/offline.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Offline | {{BUSINESS_NAME}}</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.75rem,4vw,2.5rem)}
+    p{margin-top:1rem;color:#555;max-width:420px;line-height:1.65}
+    a{display:inline-block;margin-top:1.75rem;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none}
+    a[href^="tel"]{margin-left:.5rem;background:var(--d)}
+  </style>
+</head>
+<body>
+  <h1>You’re offline</h1>
+  <p>{{OFFLINE_MESSAGE}}</p>
+  <div>
+    <a href="index.html">Try again</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+  </div>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+================================================================================
+FILE: gallery.html
+SOURCE: templates/enhanced/gallery.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Gallery | {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{GALLERY_META_DESCRIPTION_FROM_IMAGES}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:760px}
+    .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
+    .track{display:flex;transition:transform .45s ease}
+    .slide{min-width:100%;aspect-ratio:16/9;background:#111}
+    .slide img{width:100%;height:100%;object-fit:cover;display:block}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--l)}
+    button{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:900;cursor:pointer}
+    button:hover{border-color:var(--p)}
+    .meta{font-size:.85rem;color:#666;font-weight:800}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Gallery</div>
+      <h1>Real Work in <span>{{CITY}}</span></h1>
+      <p>{{GALLERY_INTRO|A few recent projects—before/after shots, detail work, and cleanup standards.}}</p>
+
+      <div class="carousel" data-carousel>
+        <div class="track" data-track>
+          {{#each GALLERY_UP_TO_10}}
+          <div class="slide"><img src="{{this.url}}" alt="{{this.alt}}"></div>
+          {{/each}}
+        </div>
+        <div class="nav">
+          <button type="button" data-prev>Prev</button>
+          <div class="meta"><span data-index>1</span> / <span data-total>10</span></div>
+          <button type="button" data-next>Next</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      const root = document.querySelector('[data-carousel]');
+      if(!root) return;
+      const track = root.querySelector('[data-track]');
+      const slides = Array.from(track.children);
+      const prev = root.querySelector('[data-prev]');
+      const next = root.querySelector('[data-next]');
+      const idxEl = root.querySelector('[data-index]');
+      const totalEl = root.querySelector('[data-total]');
+      let idx=0;
+      if(!slides.length) return;
+      totalEl.textContent = slides.length;
+      function render(){ track.style.transform='translateX('+(-idx*100)+'%)'; idxEl.textContent=(idx+1); }
+      prev.addEventListener('click',()=>{ idx=(idx-1+slides.length)%slides.length; render(); });
+      next.addEventListener('click',()=>{ idx=(idx+1)%slides.length; render(); });
+      render();
+    })();
+  </script>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: testimonials.html
+SOURCE: templates/enhanced/testimonials.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{TESTIMONIALS_PAGE_LABEL|Testimonials}} | {{BUSINESS_NAME}}</title>
+  <meta name="description" content="{{TESTIMONIALS_META_DESCRIPTION|Read real homeowner feedback for {{BUSINESS_NAME}} in {{CITY}}, {{STATE}}.}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:#fff;color:var(--ink);overflow-x:hidden}
+    .container{max-width:1100px;margin:0 auto}
+
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+    #sticky-header .logo span{color:var(--brand-accent)}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){.nav-links{display:none}#menu-toggle{display:block}}
+
+    main{padding:124px 1.5rem 4rem}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.5rem}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--brand-primary)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .wall{margin-top:2.25rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.15rem}
+    .card{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:1.35rem}
+    blockquote{color:#333;line-height:1.75;font-style:italic}
+    .by{margin-top:1rem;font-weight:900}
+    .by span{color:#777;font-weight:700;margin-left:.35rem}
+    .carousel{margin-top:1.75rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
+    .track{display:flex;transition:transform .45s ease}
+    .slide{min-width:100%;aspect-ratio:16/9;background:#111}
+    .carousel.carousel--reviews .slide{min-width:100%;aspect-ratio:auto;background:transparent;padding:0 .5rem;box-sizing:border-box;display:flex;align-items:stretch}
+    .gr-card{width:100%;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:1.35rem 1.4rem;background:var(--brand-light);box-shadow:0 6px 22px rgba(0,0,0,.05)}
+    .gr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.55rem;flex-wrap:wrap}
+    .gr-mark{font-weight:900;font-size:.74rem;color:#444}
+    .gr-stars{color:#F4B400;letter-spacing:.05em;font-size:1.02rem}
+    .gr-meta{font-size:.82rem;color:#666;font-weight:600;margin-bottom:.5rem}
+    .gr-body{margin:0;color:#333;line-height:1.65;font-size:1.02rem}
+    .cnav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
+    .cbtn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
+    .cbtn:hover{border-color:var(--brand-primary)}
+    .cmeta{font-size:.85rem;color:#666;font-weight:700}
+  </style>
+</head>
+<body>
+  <header id="sticky-header">
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+      <button id="menu-toggle" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+  </header>
+  <nav id="mobile-menu">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="k">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</div>
+      <h1>Trusted by <span>{{CITY}}</span> Homeowners</h1>
+      <p>{{TESTIMONIALS_INTRO|Read recent feedback from homeowners who wanted clear options, clean crews, and documented work.}}</p>
+
+      <section class="wall">
+        {{#each TESTIMONIALS_UP_TO_8}}
+        <article class="card">
+          <blockquote>{{this.text}}</blockquote>
+          <div class="by">{{this.name}} <span>· {{this.city}}</span></div>
+        </article>
+        {{/each}}
+      </section>
+
+      <div class="k" style="margin-top:3rem">Google reviews</div>
+      <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3.2vw,2rem);line-height:1.1;margin-top:.35rem">Recent feedback on <span style="color:var(--brand-primary)">Google</span></h2>
+      <p style="margin-top:.75rem">A few recent reviews from homeowners we’ve helped—repairs, replacements, and storm inspections.</p>
+      <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile →</a></p>
+
+      <section class="carousel carousel--reviews" data-carousel aria-label="Google reviews carousel">
+        <div class="track" data-track>
+          {{#each GOOGLE_REVIEWS_CAROUSEL}}
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{this.rating}} out of 5 stars">{{this.starsDisplay}}</span>
+              </div>
+              <div class="gr-meta">{{this.author}} · {{this.relativeTime}}</div>
+              <p class="gr-body">{{this.text}}</p>
+            </article>
+          </div>
+          {{/each}}
+        </div>
+        <div class="cnav">
+          <button type="button" class="cbtn" data-prev>Prev</button>
+          <div class="cmeta"><span data-index>1</span> / <span data-total>1</span></div>
+          <button type="button" class="cbtn" data-next>Next</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      var btn=document.getElementById("menu-toggle");
+      var mm=document.getElementById("mobile-menu");
+      if(!btn||!mm) return;
+      btn.addEventListener("click",function(){mm.classList.toggle("open");});
+      mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mm.classList.remove('open');});});
+    })();
+    (function(){
+      var root=document.querySelector('[data-carousel]');
+      if(!root) return;
+      var track=root.querySelector('[data-track]');
+      var slides=Array.from(track.children);
+      var prev=root.querySelector('[data-prev]');
+      var next=root.querySelector('[data-next]');
+      var idxEl=root.querySelector('[data-index]');
+      var totalEl=root.querySelector('[data-total]');
+      var idx=0;
+      if(!slides.length) return;
+      totalEl.textContent=slides.length;
+      function render(){ track.style.transform='translateX('+(-idx*100)+'%)'; idxEl.textContent=(idx+1); }
+      prev.addEventListener('click',function(){ idx=(idx-1+slides.length)%slides.length; render(); });
+      next.addEventListener('click',function(){ idx=(idx+1)%slides.length; render(); });
+      render();
+    })();
+  </script>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: reviews.html
+SOURCE: templates/enhanced/reviews.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Reviews</title>
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="refresh" content="0; url=testimonials.html" />
+  <script>
+    window.location.replace('testimonials.html');
+  </script>
+</head>
+<body>
+  <p>If you are not redirected, <a href="testimonials.html">go to testimonials</a>.</p>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: service-area.html
+SOURCE: templates/enhanced/service-area.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header a{color:#fff;text-decoration:none}
+    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--a)}
+    nav ul{display:flex;gap:1.25rem;list-style:none}
+    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
+    nav a:hover{color:var(--a)}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    main{padding:120px 1.5rem 4rem;background:#fff}
+    .container{max-width:1100px;margin:0 auto}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
+    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--p)}
+    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
+    .chip{background:#fff;border:1px solid rgba(0,0,0,.1);padding:.35rem .9rem;border-radius:20px;font-size:.85rem;font-weight:800}
+    .map{border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);margin-top:2.25rem;background:#eee}
+    .map iframe{display:block;width:100%;height:420px;border:none}
+    @media(max-width:640px){nav ul{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <nav>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="k">Service Area</div>
+      <h1>Serving <span>{{SERVICE_AREA_SHORT}}</span></h1>
+      <p>{{SERVICE_AREA_INTRO}}</p>
+
+      <div class="chips">
+        {{#each SERVICE_CITIES}}
+        <span class="chip">{{this}}</span>
+        {{/each}}
+      </div>
+
+      <div class="map">
+        <iframe
+          title="{{BUSINESS_NAME}} Service Area Map"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q={{CITY}},{{STATE}}&zoom=11">
+        </iframe>
+      </div>
+    </div>
+  </main>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: styles.css
+SOURCE: templates/enhanced/styles.css
+TYPE: tier
+================================================================================
+
+/* Supplemental stylesheet — critical layout/CSS remains inline in HTML templates. */
+:root {
+  --ahana-brand-primary: {{BRAND_PRIMARY|#FF5733}};
+  --ahana-brand-accent: {{BRAND_ACCENT|#FF5733}};
+}
+
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  clip: auto;
+  padding: 0.65rem 1rem;
+  margin: 0;
+  z-index: 99999;
+  background: #fff;
+  color: #111;
+  border-radius: 10px;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+}
+
+================================================================================
+FILE: main.js
+SOURCE: templates/enhanced/main.js
+TYPE: tier
+================================================================================
+
+(function () {
+  var menuToggle = document.getElementById('menu-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function () {
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+      });
+    });
+  }
+
+  (function () {
+    var root = document.querySelector('[data-carousel]');
+    if (!root) return;
+    var track = root.querySelector('[data-track]');
+    var prev = root.querySelector('[data-prev]');
+    var next = root.querySelector('[data-next]');
+    var idxEl = root.querySelector('[data-index]');
+    var totalEl = root.querySelector('[data-total]');
+    if (!track || !prev || !next || !idxEl || !totalEl) return;
+    var slides = Array.from(track.children);
+    var idx = 0;
+    totalEl.textContent = String(slides.length);
+    function render() {
+      track.style.transform = 'translateX(' + -idx * 100 + '%)';
+      idxEl.textContent = String(idx + 1);
+    }
+    prev.addEventListener('click', function () {
+      idx = (idx - 1 + slides.length) % slides.length;
+      render();
+    });
+    next.addEventListener('click', function () {
+      idx = (idx + 1) % slides.length;
+      render();
+    });
+    render();
+  })();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    });
+  }
+})();
+
+================================================================================
+FILE: robots.txt
+SOURCE: templates/enhanced/robots.txt
+TYPE: tier
+================================================================================
+
+User-agent: *
+Allow: /
+
+Sitemap: {{SITE_URL}}/sitemap.xml
+
+================================================================================
+FILE: sitemap.xml
+SOURCE: templates/enhanced/sitemap.xml
+TYPE: tier
+================================================================================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{SITE_URL}}/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/services.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/articles.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/contact.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/service-1.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/service-2.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/service-3.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/privacy-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.35</priority>
+  </url>
+  <url>
+    <loc>{{SITE_URL}}/terms.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.35</priority>
+  </url>
+</urlset>
+
+================================================================================
+FILE: netlify.toml
+SOURCE: templates/enhanced/netlify.toml
+TYPE: tier
+================================================================================
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "max-age=0,no-cache,no-store,must-revalidate"
+
+================================================================================
+FILE: _redirects
+SOURCE: templates/enhanced/_redirects
+TYPE: tier
+================================================================================
+
+# Static HTML bundle — Netlify serves matching files automatically.
+
+================================================================================
+FILE: favicon.svg
+SOURCE: templates/enhanced/favicon.svg
+TYPE: tier
+================================================================================
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Site icon">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff7a45"/>
+      <stop offset="100%" stop-color="#ff5733"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <path fill="#fff" d="M18 44V20h8l10 17h.5L46 20h8v24h-7V31h-.4L37 44h-8l-8.6-13H25v13h-7z"/>
+</svg>
+
+================================================================================
+FILE: humans.txt
+SOURCE: templates/enhanced/humans.txt
+TYPE: tier
+================================================================================
+
+/* TEAM */
+Business: {{BUSINESS_NAME}}
+Contact: {{EMAIL}}
+Site: {{SITE_URL}}
+
+/* THANKS */
+Templates: Ahana enhanced bundle
+
+/* STANDARDS */
+Language: en
+
+================================================================================
+FILE: .gitignore
+SOURCE: templates/enhanced/.gitignore
+TYPE: tier
+================================================================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+.env
+.env.*
+!.env.example
+
+================================================================================
+FILE: site.webmanifest
+SOURCE: templates/enhanced/site.webmanifest
+TYPE: tier
+================================================================================
+
+{
+  "name": "{{BUSINESS_NAME}}",
+  "short_name": "{{BUSINESS_NAME_SHORT}}",
+  "description": "{{META_DESCRIPTION_FROM_IMAGES}}",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "{{BRAND_PRIMARY}}",
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
+================================================================================
+FILE: sw.js
+SOURCE: templates/enhanced/sw.js
+TYPE: tier
+================================================================================
+
+/* Ahana template — offline-capable static shell */
+var CACHE = 'ahana-enhanced-v1';
+var PRECACHE = [
+  './index.html',
+  './offline.html',
+  './styles.css',
+  './main.js',
+  './favicon.svg'
+];
+
+self.addEventListener('install', function (event) {
+  event.waitUntil(
+    caches.open(CACHE).then(function (cache) {
+      return cache.addAll(PRECACHE);
+    }).then(function () {
+      return self.skipWaiting();
+    })
+  );
+});
+
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(
+        keys.filter(function (k) { return k !== CACHE; }).map(function (k) {
+          return caches.delete(k);
+        })
+      );
+    }).then(function () {
+      return self.clients.claim();
+    })
+  );
+});
+
+self.addEventListener('fetch', function (event) {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(function () {
+        return caches.match('./offline.html');
+      })
+    );
+    return;
+  }
+  event.respondWith(
+    fetch(event.request).catch(function () {
+      return caches.match(event.request);
+    })
+  );
+});
+
+================================================================================
+FILE: apple-touch-icon.png
+SOURCE: templates/enhanced/apple-touch-icon.png
+TYPE: tier
+================================================================================
+
+�PNG
+
+   IHDR   �   �   ���e  �IDATx���1   �0�a��`7M*`��^����e�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9Hؾ&�{�    IEND�B`�
+
+================================================================================
+FILE: og-image.svg
+SOURCE: templates/enhanced/og-image.svg
+TYPE: tier
+================================================================================
+
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Open Graph preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1b"/>
+      <stop offset="100%" stop-color="#2d2d30"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="600" y="300" text-anchor="middle" fill="#ffffff" font-family="system-ui,Segoe UI,sans-serif" font-size="64" font-weight="800">{{BUSINESS_NAME}}</text>
+  <text x="600" y="380" text-anchor="middle" fill="#ff5733" font-family="system-ui,Segoe UI,sans-serif" font-size="28" font-weight="700">{{PRIMARY_KEYWORD_1}} � {{CITY}}</text>
+</svg>
+
+================================================================================
+FILE: manifest.json
+SOURCE: templates/enhanced/manifest.json
+TYPE: tier
+================================================================================
+
+{
+  "format": "ahana.template-manifest.v1",
+  "tier": "enhanced",
+  "version": "1.0.0",
+  "shared": [
+    "templates/shared/tokens.json"
+  ],
+  "files": [
+    "templates/enhanced/index.html",
+    "templates/enhanced/services.html",
+    "templates/enhanced/about.html",
+    "templates/enhanced/articles.html",
+    "templates/enhanced/contact.html",
+    "templates/enhanced/service-1.html",
+    "templates/enhanced/service-2.html",
+    "templates/enhanced/service-3.html",
+    "templates/enhanced/privacy-policy.html",
+    "templates/enhanced/terms.html",
+    "templates/enhanced/404.html",
+    "templates/enhanced/offline.html",
+    "templates/enhanced/gallery.html",
+    "templates/enhanced/testimonials.html",
+    "templates/enhanced/reviews.html",
+    "templates/enhanced/service-area.html",
+    "templates/enhanced/styles.css",
+    "templates/enhanced/main.js",
+    "templates/enhanced/robots.txt",
+    "templates/enhanced/sitemap.xml",
+    "templates/enhanced/netlify.toml",
+    "templates/enhanced/_redirects",
+    "templates/enhanced/favicon.svg",
+    "templates/enhanced/humans.txt",
+    "templates/enhanced/.gitignore",
+    "templates/enhanced/site.webmanifest",
+    "templates/enhanced/sw.js",
+    "templates/enhanced/apple-touch-icon.png",
+    "templates/enhanced/og-image.svg",
+    "templates/enhanced/manifest.json"
+  ]
+}
+

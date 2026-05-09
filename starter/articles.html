@@ -25,13 +25,15 @@
     "url":"{{SITE_URL}}/articles.html",
     "description":"{{ARTICLES_META_DESCRIPTION}}",
     "hasPart":[
-      {"@type":"WebPage","name":"{{ARTICLE_1_TITLE}}","url":"{{SITE_URL}}/{{ARTICLE_1_URL}}"}
+      {"@type":"WebPage","name":"{{ARTICLE_1_TITLE}}","url":"{{ARTICLE_1_URL}}"},
+      {"@type":"WebPage","name":"{{ARTICLE_2_TITLE}}","url":"{{ARTICLE_2_URL}}"},
+      {"@type":"WebPage","name":"{{ARTICLE_3_TITLE}}","url":"{{ARTICLE_3_URL}}"},
+      {"@type":"WebPage","name":"{{ARTICLE_4_TITLE}}","url":"{{ARTICLE_4_URL}}"}
     ]
   }
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
@@ -54,7 +56,7 @@
   <main id="main" class="depth-page">
     <div class="container">
       <div class="k">{{ARTICLES_SECTION_KICKER}}</div>
-      <h1><span>{{ARTICLES_H1_ACCENT}}</span><br>{{ARTICLES_H1_LINE_1}}</h1>
+      <h1>{{ARTICLES_H1_LINE_1}}<br><span>{{ARTICLES_H1_ACCENT}}</span></h1>
       <p class="sub" style="margin-top:.85rem">{{ARTICLES_INTRO}}</p>
       <p class="sub" style="margin-top:1rem">{{ARTICLES_INTRO_SECOND}}</p>
 
@@ -66,6 +68,36 @@
           </div>
           <div class="post-title">{{ARTICLE_1_TITLE}}</div>
           <div class="post-excerpt">{{ARTICLE_1_EXCERPT}}</div>
+          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+        </a>
+
+        <a class="post-link" href="{{ARTICLE_2_URL}}">
+          <div class="post-top">
+            <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
+            <div class="post-date">{{ARTICLE_2_DATE}}</div>
+          </div>
+          <div class="post-title">{{ARTICLE_2_TITLE}}</div>
+          <div class="post-excerpt">{{ARTICLE_2_EXCERPT}}</div>
+          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+        </a>
+
+        <a class="post-link" href="{{ARTICLE_3_URL}}">
+          <div class="post-top">
+            <div class="post-eyebrow">{{ARTICLE_3_CATEGORY}}</div>
+            <div class="post-date">{{ARTICLE_3_DATE}}</div>
+          </div>
+          <div class="post-title">{{ARTICLE_3_TITLE}}</div>
+          <div class="post-excerpt">{{ARTICLE_3_EXCERPT}}</div>
+          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+        </a>
+
+        <a class="post-link" href="{{ARTICLE_4_URL}}">
+          <div class="post-top">
+            <div class="post-eyebrow">{{ARTICLE_4_CATEGORY}}</div>
+            <div class="post-date">{{ARTICLE_4_DATE}}</div>
+          </div>
+          <div class="post-title">{{ARTICLE_4_TITLE}}</div>
+          <div class="post-excerpt">{{ARTICLE_4_EXCERPT}}</div>
           <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
         </a>
       </div>
