@@ -8,7 +8,8 @@ TYPE: shared
   "format": "ahana.tokens.v1",
   "notes": [
     "This is a reference list of supported placeholders (tokens) used across templates.",
-    "Your generator can replace {{TOKEN}} occurrences with values from intake/computed fields."
+    "Your generator can replace {{TOKEN}} occurrences with values from intake/computed fields.",
+    "FAVICON_INITIALS: computed from BUSINESS_NAME — first letter of the first word plus first letter of the second word (uppercase). If only one word, use its first two letters (uppercase). Used in favicon.svg."
   ],
   "tokens": {
     "BUSINESS_NAME": "Acme Plumbing Co",
@@ -34,6 +35,7 @@ TYPE: shared
     "BRAND_LIGHT": "#FFFFFF",
     "BRAND_ACCENT": "#E15A4F",
     "BRAND_ACCENT_SOFT": "rgba(225,90,79,0.12)",
+    "FAVICON_INITIALS": "AP",
 
     "AREA_SERVED_JSON": "[\"Austin, TX\",\"Round Rock, TX\"]",
     "SERVICE_CITIES_ONE_LINE": "Austin, Round Rock, Cedar Park",
@@ -2551,15 +2553,16 @@ SOURCE: templates/enhanced/favicon.svg
 TYPE: tier
 ================================================================================
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Site icon">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ff7a45"/>
-      <stop offset="100%" stop-color="#ff5733"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="url(#g)"/>
-  <path fill="#fff" d="M18 44V20h8l10 17h.5L46 20h8v24h-7V31h-.4L37 44h-8l-8.6-13H25v13h-7z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+  <title>{{BUSINESS_NAME}}</title>
+  <rect width="64" height="64" rx="14" fill="{{BRAND_PRIMARY}}"/>
+  <text
+    x="32" y="43"
+    font-family="system-ui, sans-serif"
+    font-size="26"
+    font-weight="800"
+    text-anchor="middle"
+    fill="#ffffff">{{FAVICON_INITIALS}}</text>
 </svg>
 
 ================================================================================
