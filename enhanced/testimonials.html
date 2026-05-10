@@ -87,7 +87,7 @@
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
       <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">Call Now</a>
-      <button id="menu-toggle" aria-label="Open menu">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
       </button>
     </div>
@@ -147,13 +147,6 @@
   </main>
 
   <script>
-    (function(){
-      var btn=document.getElementById("menu-toggle");
-      var mm=document.getElementById("mobile-menu");
-      if(!btn||!mm) return;
-      btn.addEventListener("click",function(){mm.classList.toggle("open");});
-      mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mm.classList.remove('open');});});
-    })();
     (function(){
       var root=document.querySelector('[data-carousel]');
       if(!root) return;

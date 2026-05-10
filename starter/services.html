@@ -39,7 +39,7 @@
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -49,6 +49,11 @@
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>

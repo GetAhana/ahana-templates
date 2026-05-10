@@ -33,3 +33,68 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   text-decoration: none;
 }
+
+/* Mobile nav — #menu-toggle / #mobile-menu in page templates */
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+#menu-toggle:focus-visible {
+  outline: 2px solid var(--a, var(--ahana-brand-accent));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+#mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  flex-direction: column;
+  background: var(--d, #1a1a1b);
+  padding: 0.75rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+#mobile-menu.open {
+  display: flex;
+}
+#mobile-menu a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#mobile-menu a:last-child {
+  border-bottom: 0;
+}
+header nav a.nav-current,
+#mobile-menu a.nav-current {
+  color: var(--a, var(--ahana-brand-accent)) !important;
+}
+@media (max-width: 640px) {
+  header nav ul {
+    display: none !important;
+  }
+  #menu-toggle {
+    display: inline-flex;
+  }
+}

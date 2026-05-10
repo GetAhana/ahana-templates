@@ -40,13 +40,12 @@
     .post .excerpt{margin:0;color:#555;line-height:1.8;max-width:92ch}
     .meta{color:#666;font-size:.9rem;font-weight:800}
     .cta{margin-top:1rem;display:inline-flex;align-items:center;gap:.55rem;color:var(--p);font-weight:900}
-    @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -55,8 +54,21 @@
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">

@@ -110,7 +110,7 @@ TYPE: tier
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -120,6 +120,11 @@ TYPE: tier
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
@@ -431,7 +436,7 @@ TYPE: tier
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -441,6 +446,11 @@ TYPE: tier
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
@@ -587,7 +597,7 @@ TYPE: tier
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -597,6 +607,11 @@ TYPE: tier
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
@@ -740,7 +755,7 @@ TYPE: tier
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -750,6 +765,11 @@ TYPE: tier
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
@@ -883,7 +903,7 @@ TYPE: tier
   <header>
     <div class="inner container">
       <a class="logo" href="../index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="../index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="../services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -893,6 +913,11 @@ TYPE: tier
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="../contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
@@ -988,7 +1013,7 @@ TYPE: tier
   <header>
     <div class="inner container">
       <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
@@ -998,6 +1023,11 @@ TYPE: tier
         </ul>
       </nav>
       <div class="cta">
+        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
         <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
@@ -1121,22 +1151,6 @@ TYPE: tier
     </div>
   </footer>
 
-  <script>
-    (function(){
-      var form=document.getElementById("contact-form");
-      if(!form)return;
-      form.addEventListener("submit",function(ev){
-        ev.preventDefault();
-        if(!form.checkValidity()){
-          alert("{{CONTACT_FORM_REQUIRED_FIELD_MESSAGE}}");
-          return;
-        }
-        form.style.display="none";
-        var ok=document.getElementById("form-success");
-        if(ok) ok.style.display="block";
-      });
-    })();
-  </script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -1187,6 +1201,23 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,25
 nav ul{display:flex;gap:1.8rem;list-style:none;align-items:center;justify-content:center}
 nav a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
 nav a:hover{color:var(--p)}
+header nav a.nav-current{color:var(--p)}
+.nav-toggle{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:44px;
+  height:44px;
+  padding:0 10px;
+  border:0;
+  border-radius:10px;
+  background:rgba(0,0,0,.06);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.nav-toggle-bar{display:block;height:2px;width:100%;border-radius:2px;background:var(--ink)}
+.nav-toggle:focus-visible{outline:2px solid var(--p);outline-offset:3px}
 header .cta{display:flex;gap:1rem;align-items:center;flex-wrap:nowrap}
 header .btn{display:inline-flex;align-items:center;gap:.5rem;border-radius:10px;text-decoration:none;font-weight:900}
 header .btn-outline{border:1px solid rgba(0,0,0,.16);padding:.62rem 1.05rem;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;border-radius:12px;white-space:nowrap}
@@ -1337,7 +1368,25 @@ footer{background:#0f0f10;color:rgba(255,255,255,.7);padding:3.25rem 1.5rem 2rem
 .flinks a:hover{color:var(--accent-soft)}
 .fb{max-width:1100px;margin:2rem auto 0;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.82rem}
 @media(max-width:760px){
-  header nav{display:none}
+  .nav-toggle{display:inline-flex}
+  header nav{
+    display:none;
+    position:fixed;
+    top:80px;
+    left:0;
+    right:0;
+    z-index:60;
+    background:rgba(255,255,255,.98);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 12px 28px rgba(0,0,0,.1);
+    padding:.75rem 1.25rem 1rem;
+  }
+  header nav.nav-open{display:block}
+  header nav.nav-open ul{flex-direction:column;align-items:stretch;gap:0}
+  header nav.nav-open li{border-bottom:1px solid var(--line)}
+  header nav.nav-open li:last-child{border-bottom:0}
+  header nav.nav-open a{display:block;padding:.85rem 0;white-space:normal}
   .inner{grid-template-columns:1fr 1fr}
   .inner>.cta{grid-column:2}
 }
@@ -1394,6 +1443,83 @@ TYPE: tier
 
 (function () {
   document.documentElement.classList.add('js');
+
+  var navToggle = document.querySelector('.nav-toggle');
+  var primaryNav = document.getElementById('primary-nav');
+  if (navToggle && primaryNav) {
+    function setNavOpen(open) {
+      primaryNav.classList.toggle('nav-open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    setNavOpen(false);
+    navToggle.addEventListener('click', function () {
+      setNavOpen(!primaryNav.classList.contains('nav-open'));
+    });
+    primaryNav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.matchMedia('(max-width: 760px)').matches) setNavOpen(false);
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setNavOpen(false);
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var hash = a.getAttribute('href');
+    if (!hash || hash === '#') return;
+    var target = document.querySelector(hash);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'phone_click', {
+          event_category: 'Contact',
+          event_label: a.href
+        });
+      }
+    });
+  });
+
+  var form = document.getElementById('contact-form');
+  var success = document.getElementById('form-success');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      if (form.getAttribute('data-netlify') === 'true') return;
+      var action = (form.getAttribute('action') || '').trim();
+      if (action && action !== '#' && !/^javascript:/i.test(action)) {
+        try {
+          var u = new URL(action, window.location.href);
+          if (u.origin !== window.location.origin) return;
+        } catch (err) {
+          return;
+        }
+      }
+      e.preventDefault();
+      form.style.display = 'none';
+      if (success) success.style.display = 'block';
+    });
+  }
+
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('header nav a[href]').forEach(function (a) {
+    var h = a.getAttribute('href');
+    if (!h || h.charAt(0) === '#' || /^tel:/i.test(h)) return;
+    try {
+      var file = new URL(h, window.location.href).pathname.split('/').pop() || 'index.html';
+      if (file === path) a.classList.add('nav-current');
+    } catch (err) {}
+  });
 })();
 
 ================================================================================

@@ -101,7 +101,7 @@ TYPE: tier
     .card p{margin:0;color:#666}
     .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--p);font-weight:900;text-transform:uppercase;letter-spacing:.1em}
 
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
 
   <!-- Optional structured data (LocalBusiness + Services + Reviews) -->
@@ -122,7 +122,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -132,8 +132,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <section class="hero">
     <div class="container">
@@ -228,13 +242,13 @@ TYPE: tier
     .svc-additional ul{margin-top:1.15rem;padding-left:1.15rem;color:#4A4A4A;line-height:1.75;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2rem;row-gap:.35rem;list-style:disc}
     @media(max-width:640px){.svc-additional ul{grid-template-columns:1fr}}
     .svc-additional li{margin:0}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -244,8 +258,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -376,13 +404,13 @@ TYPE: tier
     .item{display:flex;gap:.6rem;align-items:flex-start;color:#444;line-height:1.6}
     .item svg{color:var(--p);flex-shrink:0;margin-top:3px}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -392,8 +420,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -473,13 +515,12 @@ TYPE: tier
     .post .excerpt{margin:0;color:#555;line-height:1.8;max-width:92ch}
     .meta{color:#666;font-size:.9rem;font-weight:800}
     .cta{margin-top:1rem;display:inline-flex;align-items:center;gap:.55rem;color:var(--p);font-weight:900}
-    @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -488,8 +529,21 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -591,13 +645,13 @@ TYPE: tier
     button:hover{background:#b8360a}
     #ok{display:none;margin-top:1rem;font-weight:900;color:#2f6f2f}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}.row{grid-template-columns:1fr}}
+    @media(max-width:640px){.row{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -607,8 +661,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -749,7 +817,7 @@ TYPE: tier
     .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
   <script type="application/ld+json">
   {
@@ -766,7 +834,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -776,8 +844,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -929,7 +1011,7 @@ TYPE: tier
     .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
   <script type="application/ld+json">
   {
@@ -946,7 +1028,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -956,8 +1038,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -1109,7 +1205,7 @@ TYPE: tier
     .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
   <script type="application/ld+json">
   {
@@ -1126,7 +1222,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -1136,8 +1232,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -1289,7 +1399,7 @@ TYPE: tier
     .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
   <script type="application/ld+json">
   {
@@ -1306,7 +1416,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -1316,8 +1426,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -1469,7 +1593,7 @@ TYPE: tier
     .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
   <script type="application/ld+json">
   {
@@ -1486,7 +1610,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -1496,8 +1620,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -1649,7 +1787,7 @@ TYPE: tier
     .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
   <script type="application/ld+json">
   {
@@ -1666,7 +1804,7 @@ TYPE: tier
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -1676,8 +1814,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -1807,13 +1959,12 @@ TYPE: tier
     blockquote{color:#333;line-height:1.75;font-style:italic}
     .by{margin-top:1rem;font-weight:900}
     .by span{color:#777;font-weight:600;margin-left:.35rem}
-    @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -1823,8 +1974,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="wall-of-love.html">Wall of Love</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -1885,14 +2050,13 @@ TYPE: tier
     ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
     footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
     footer a{color:var(--p);font-weight:700;text-decoration:none}
-    @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav aria-label="Primary">
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="about.html">About</a></li>
@@ -1900,8 +2064,20 @@ TYPE: tier
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main id="main">
     <div class="container">
@@ -1970,14 +2146,13 @@ TYPE: tier
     ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
     footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
     footer a{color:var(--p);font-weight:700;text-decoration:none}
-    @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav aria-label="Primary">
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="about.html">About</a></li>
@@ -1985,8 +2160,20 @@ TYPE: tier
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main id="main">
     <div class="container">
@@ -2131,13 +2318,13 @@ TYPE: tier
     button{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:900;cursor:pointer}
     button:hover{border-color:var(--p)}
     .meta{font-size:.85rem;color:#666;font-weight:800}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -2147,8 +2334,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -2250,13 +2451,13 @@ TYPE: tier
     button{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:900;cursor:pointer}
     button:hover{border-color:var(--p)}
     .meta{font-size:.85rem;color:#666;font-weight:800}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -2266,8 +2467,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -2402,13 +2617,13 @@ TYPE: tier
     .chip{background:#fff;border:1px solid rgba(0,0,0,.1);padding:.35rem .9rem;border-radius:20px;font-size:.85rem;font-weight:900}
     .map{border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);margin-top:2.25rem;background:#eee}
     .map iframe{display:block;width:100%;height:420px;border:none}
-    @media(max-width:640px){nav ul{display:none}}
+    
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <nav id="site-nav" aria-label="Primary">
       <ul>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -2418,8 +2633,22 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="header-actions">
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
+  <nav id="mobile-menu" aria-label="Mobile navigation">
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -2490,6 +2719,71 @@ TYPE: tier
   text-decoration: none;
 }
 
+/* Mobile nav — #menu-toggle / #mobile-menu in page templates */
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+#menu-toggle:focus-visible {
+  outline: 2px solid var(--a, var(--ahana-brand-accent));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+#mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  flex-direction: column;
+  background: var(--d, #1a1a1b);
+  padding: 0.75rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+#mobile-menu.open {
+  display: flex;
+}
+#mobile-menu a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#mobile-menu a:last-child {
+  border-bottom: 0;
+}
+header nav a.nav-current,
+#mobile-menu a.nav-current {
+  color: var(--a, var(--ahana-brand-accent)) !important;
+}
+@media (max-width: 640px) {
+  header nav ul {
+    display: none !important;
+  }
+  #menu-toggle {
+    display: inline-flex;
+  }
+}
+
 ================================================================================
 FILE: main.js
 SOURCE: templates/premium/main.js
@@ -2497,18 +2791,77 @@ TYPE: tier
 ================================================================================
 
 (function () {
-  var menuToggle = document.getElementById('menu-toggle');
-  var mobileMenu = document.getElementById('mobile-menu');
-  if (menuToggle && mobileMenu) {
+  document.documentElement.classList.add('js');
+
+  function initMobileMenu() {
+    var menuToggle = document.getElementById('menu-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (!menuToggle || !mobileMenu) return;
+    menuToggle.setAttribute('aria-controls', 'mobile-menu');
+    function setOpen(open) {
+      mobileMenu.classList.toggle('open', open);
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    setOpen(false);
     menuToggle.addEventListener('click', function () {
-      mobileMenu.classList.toggle('open');
+      setOpen(!mobileMenu.classList.contains('open'));
     });
     mobileMenu.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
-        mobileMenu.classList.remove('open');
+        setOpen(false);
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  function initSmoothScroll() {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var hash = a.getAttribute('href');
+      if (!hash || hash === '#') return;
+      var target = document.querySelector(hash);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  function initTelTracking() {
+    document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (typeof gtag === 'function') {
+          gtag('event', 'phone_click', {
+            event_category: 'Contact',
+            event_label: a.href
+          });
+        }
       });
     });
   }
+
+  function initActiveNav() {
+    var path = window.location.pathname.split('/').pop() || 'index.html';
+    var sticky = document.getElementById('sticky-header');
+    var sel = sticky
+      ? '#sticky-header .nav-links a[href], #mobile-menu a[href]'
+      : 'header nav a[href], #mobile-menu a[href]';
+    document.querySelectorAll(sel).forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!h || h.charAt(0) === '#' || /^tel:/i.test(h)) return;
+      try {
+        var file = new URL(h, window.location.href).pathname.split('/').pop() || 'index.html';
+        if (file === path) a.classList.add('nav-current');
+      } catch (err) {}
+    });
+  }
+
+  initMobileMenu();
+  initSmoothScroll();
+  initTelTracking();
+  initActiveNav();
 
   (function () {
     var root = document.querySelector('[data-carousel]');
