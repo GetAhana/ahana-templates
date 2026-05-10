@@ -1598,7 +1598,9 @@ TYPE: tier
 ================================================================================
 
 # Static HTML bundle — Netlify serves matching files automatically.
-# Add explicit redirects here when needed (one rule per line).
+
+# Custom 404 — keeps visitors on site
+/*  /404.html  404
 
 ================================================================================
 FILE: favicon.svg
