@@ -6,11 +6,11 @@
   <title>{{CONTACT_PAGE_TITLE}}</title>
   <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
-  <link rel="canonical" href="{{SITE_URL}}/contact.html" />
+  <link rel="canonical" href="{{SITE_URL}}/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{CONTACT_PAGE_TITLE}}" />
   <meta property="og:description" content="{{CONTACT_META_DESCRIPTION}}" />
-  <meta property="og:url" content="{{SITE_URL}}/contact.html" />
+  <meta property="og:url" content="{{SITE_URL}}/contact" />
   <meta property="og:image" content="{{OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +22,7 @@
     "@context":"https://schema.org",
     "@type":"ContactPage",
     "name":"{{CONTACT_PAGE_TITLE}}",
-    "url":"{{SITE_URL}}/contact.html",
+    "url":"{{SITE_URL}}/contact",
     "about":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}"}
   }
   </script>
@@ -30,14 +30,14 @@
 <body>
   <header>
     <div class="inner container">
-      <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
       <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
-          <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="about.html">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="articles.html">{{NAV_LABEL_ARTICLES}}</a></li>
-          <li><a href="contact.html">{{NAV_LABEL_CONTACT}}</a></li>
+          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
+          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+          <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
       </nav>
       <div class="cta">
@@ -46,7 +46,7 @@
           <span class="nav-toggle-bar" aria-hidden="true"></span>
           <span class="nav-toggle-bar" aria-hidden="true"></span>
         </button>
-        <a class="btn btn-outline" href="contact.html">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
         <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
     </div>
@@ -55,7 +55,7 @@
   <main id="main" class="depth-page">
     <div class="container">
       <div class="k">{{CONTACT_SECTION_KICKER}}</div>
-      <h1>{{CONTACT_H1_LINE_1}}<br><span>{{CONTACT_H1_ACCENT}}</span></h1>
+      <h1><span>{{CONTACT_H1_ACCENT}}</span><br>{{CONTACT_H1_LINE_1}}</h1>
       <p class="sub" style="margin-top:.85rem">{{CONTACT_LEAD}}</p>
 
       <div class="grid contact-2col" style="margin-top:2rem">
@@ -133,7 +133,7 @@
 
       <div class="depth-h">
         <div class="k">{{CONTACT_FAQ_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{CONTACT_FAQ_H2_LINE_1}}<br><span>{{CONTACT_FAQ_H2_ACCENT}}</span></h2>
+        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)"><span>{{CONTACT_FAQ_H2_ACCENT}}</span><br>{{CONTACT_FAQ_H2_LINE_1}}</h2>
         <div class="faq-block">
           <details><summary>{{CONTACT_FAQ_1_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_1_ANSWER}}</div></details>
           <details><summary>{{CONTACT_FAQ_2_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_2_ANSWER}}</div></details>
@@ -156,10 +156,10 @@
       <div>
         <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
         <ul class="flinks">
-          <li><a href="index.html">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="services.html">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="about.html">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="articles.html">{{NAV_LABEL_ARTICLES}}</a></li>
+          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
+          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
         </ul>
       </div>
     </div>

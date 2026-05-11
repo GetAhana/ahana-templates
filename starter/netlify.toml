@@ -1,6 +1,10 @@
 [build]
   publish = "."
 
+# Extensionless URLs (e.g. /services → services.html) for sitemap + canonical alignment
+[build.processing.html]
+  pretty_urls = true
+
 [[headers]]
   for = "/*"
   [headers.values]

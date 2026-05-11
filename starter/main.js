@@ -68,12 +68,22 @@
     });
   }
 
-  var path = window.location.pathname.split('/').pop() || 'index.html';
+  function pathKeyFromPathname(p) {
+    var pathOnly = (p || '').split(/[?#]/)[0];
+    var trimmed = pathOnly.replace(/\/+$/, '');
+    if (!trimmed) return 'index';
+    var segs = trimmed.split('/');
+    var last = segs[segs.length - 1] || '';
+    if (last.endsWith('.html')) last = last.slice(0, -5);
+    return last || 'index';
+  }
+
+  var path = pathKeyFromPathname(window.location.pathname);
   document.querySelectorAll('header nav a[href]').forEach(function (a) {
     var h = a.getAttribute('href');
     if (!h || h.charAt(0) === '#' || /^tel:/i.test(h)) return;
     try {
-      var file = new URL(h, window.location.href).pathname.split('/').pop() || 'index.html';
+      var file = pathKeyFromPathname(new URL(h, window.location.href).pathname);
       if (file === path) a.classList.add('nav-current');
     } catch (err) {}
   });
