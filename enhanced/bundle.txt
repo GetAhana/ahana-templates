@@ -9,7 +9,8 @@ TYPE: shared
   "notes": [
     "This is a reference list of supported placeholders (tokens) used across templates.",
     "Your generator can replace {{TOKEN}} occurrences with values from intake/computed fields.",
-    "FAVICON_INITIALS: computed from BUSINESS_NAME — first letter of the first word plus first letter of the second word (uppercase). If only one word, use its first two letters (uppercase). Used in favicon.svg."
+    "FAVICON_INITIALS: computed from BUSINESS_NAME ? first letter of the first word plus first letter of the second word (uppercase). If only one word, use its first two letters (uppercase). Used in favicon.svg.",
+    "BUILD_DATE: ISO 8601 date (YYYY-MM-DD) for humans.txt Last update; set at bundle or deploy time."
   ],
   "tokens": {
     "BUSINESS_NAME": "Acme Plumbing Co",
@@ -25,6 +26,7 @@ TYPE: shared
     "ADDRESS_ONE_LINE": "123 Main St, Austin, TX 78701",
     "LICENSE_TYPE": "Licensed & Insured",
     "YEAR_CURRENT": "2026",
+    "BUILD_DATE": "2026-05-08",
     "SITE_URL": "https://example.com",
     "GOOGLE_BUSINESS_PROFILE_URL": "https://g.page/r/EXAMPLE",
     "OG_IMAGE_URL": "https://example.com/og.jpg",
@@ -309,7 +311,7 @@ TYPE: tier
       <div class="hero-kicker">
         <div class="hk">Local pros in <strong>{{CITY}}, {{STATE}}</strong></div>
         <div class="hk">{{LICENSE_TYPE}}</div>
-        <div class="hk">Rated {{REVIEW_RATING}}★ ({{REVIEW_COUNT}})</div>
+        <div class="hk">Rated {{REVIEW_RATING}}? ({{REVIEW_COUNT}})</div>
       </div>
       <h1>{{PRIMARY_SERVICE}} you can<br/><span>count on</span>.</h1>
       <p class="sub">{{HERO_SUBHEADLINE}}</p>
@@ -351,7 +353,7 @@ TYPE: tier
     <div class="container">
       <div class="label">Services</div>
       <h2 class="title">The services that drive the most calls<br/><span>in {{CITY}}</span></h2>
-      <p class="body">A few of the most common reasons homeowners call us—clear scope, clear next step.</p>
+      <p class="body">A few of the most common reasons homeowners call us?clear scope, clear next step.</p>
 
       <div class="svc-grid">
         <article class="svc">
@@ -387,7 +389,7 @@ TYPE: tier
       </div>
 
       <div style="margin-top:1.75rem">
-        <a class="btn-primary" href="services.html">See all services →</a>
+        <a class="btn-primary" href="services.html">See all services ?</a>
       </div>
     </div>
   </section>
@@ -396,13 +398,13 @@ TYPE: tier
     <div class="container">
       <div class="label">How it works</div>
       <h2 class="title">A simple process with<br/><span>no surprises</span></h2>
-      <p class="body">Homeowners want clarity. Here’s how we take you from “problem” to “done” fast.</p>
+      <p class="body">Homeowners want clarity. Here?s how we take you from ?problem? to ?done? fast.</p>
 
       <div class="steps">
         <div class="step">
           <div class="num">1</div>
           <h3>Call or request an estimate</h3>
-          <p>Tell us what’s going on. We’ll confirm availability and schedule a time that works.</p>
+          <p>Tell us what?s going on. We?ll confirm availability and schedule a time that works.</p>
         </div>
         <div class="step">
           <div class="num">2</div>
@@ -422,7 +424,7 @@ TYPE: tier
     <div class="container">
       <div class="label">Our work</div>
       <h2 class="title">Real projects in and around<br/><span>{{CITY}}</span></h2>
-      <p class="body">A short carousel of recent projects—before/after shots and the details homeowners care about.</p>
+      <p class="body">A short carousel of recent projects?before/after shots and the details homeowners care about.</p>
 
       <div class="carousel" data-carousel>
         <div class="c-track" data-track>
@@ -450,7 +452,7 @@ TYPE: tier
     <div class="container">
       <div class="label">Service area</div>
       <h2 class="title">Serving {{CITY}} and nearby<br/><span>cities</span></h2>
-      <p class="body">If you’re near {{CITY}}, there’s a good chance we can help. We serve: {{SERVICE_CITIES_ONE_LINE}}.</p>
+      <p class="body">If you?re near {{CITY}}, there?s a good chance we can help. We serve: {{SERVICE_CITIES_ONE_LINE}}.</p>
 
       <div class="split" style="margin-top:2rem">
         <div class="panel">
@@ -472,10 +474,10 @@ TYPE: tier
         </div>
         <div class="panel" style="background:var(--brand-dark);color:#fff;border-color:rgba(255,255,255,.10)">
           <h3 style="color:#fff">Get a free estimate</h3>
-          <p style="color:rgba(255,255,255,.78);margin-top:.55rem;line-height:1.75">Call now or request an estimate online. We’ll confirm details and next steps.</p>
+          <p style="color:rgba(255,255,255,.78);margin-top:.55rem;line-height:1.75">Call now or request an estimate online. We?ll confirm details and next steps.</p>
           <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.65rem">
             <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
-            <a class="btn-outline" href="contact.html">Request estimate →</a>
+            <a class="btn-outline" href="contact.html">Request estimate ?</a>
           </div>
         </div>
       </div>
@@ -486,14 +488,14 @@ TYPE: tier
     <div class="container">
       <div class="label">Testimonials</div>
       <h2 class="title">Trusted by homeowners in<br/><span>{{CITY}}</span></h2>
-      <p class="body">Here’s what customers say after the job is done. Read more on the Testimonials page.</p>
+      <p class="body">Here?s what customers say after the job is done. Read more on the Testimonials page.</p>
       <div class="grid">
-        <div class="card"><h3>{{TESTIMONIAL_1_NAME}}</h3><p>“{{TESTIMONIAL_1_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_1_CITY}}</div></div>
-        <div class="card"><h3>{{TESTIMONIAL_2_NAME}}</h3><p>“{{TESTIMONIAL_2_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_2_CITY}}</div></div>
-        <div class="card"><h3>{{TESTIMONIAL_3_NAME}}</h3><p>“{{TESTIMONIAL_3_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_3_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_1_NAME}}</h3><p>?{{TESTIMONIAL_1_TEXT}}?</p><div class="card-meta">{{TESTIMONIAL_1_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_2_NAME}}</h3><p>?{{TESTIMONIAL_2_TEXT}}?</p><div class="card-meta">{{TESTIMONIAL_2_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_3_NAME}}</h3><p>?{{TESTIMONIAL_3_TEXT}}?</p><div class="card-meta">{{TESTIMONIAL_3_CITY}}</div></div>
       </div>
       <div style="margin-top:1.75rem">
-        <a class="btn-primary" href="testimonials.html">Read more testimonials →</a>
+        <a class="btn-primary" href="testimonials.html">Read more testimonials ?</a>
       </div>
     </div>
   </section>
@@ -557,8 +559,8 @@ TYPE: tier
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}. All rights reserved.</span>
-      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+      <span>? {{YEAR_CURRENT}} {{BUSINESS_NAME}}. All rights reserved.</span>
+      <span>{{CITY}}, {{STATE}} ? {{LICENSE_TYPE}}</span>
     </div>
   </footer>
 
@@ -677,19 +679,19 @@ TYPE: tier
             <h2>{{SERVICE_1_NAME}}</h2>
             <p>{{SERVICE_1_LONG}}</p>
             <div class="card-meta">{{PRIMARY_KEYWORD_1}}</div>
-            <span class="svc-detail-go">{{SERVICE_1_DETAIL_CTA|View service details →}}</span>
+            <span class="svc-detail-go">{{SERVICE_1_DETAIL_CTA|View service details ?}}</span>
           </a>
           <a class="card svc-detail-card" href="service-2.html">
             <h2>{{SERVICE_2_NAME}}</h2>
             <p>{{SERVICE_2_LONG}}</p>
             <div class="card-meta">{{PRIMARY_KEYWORD_2}}</div>
-            <span class="svc-detail-go">{{SERVICE_2_DETAIL_CTA|View service details →}}</span>
+            <span class="svc-detail-go">{{SERVICE_2_DETAIL_CTA|View service details ?}}</span>
           </a>
           <a class="card svc-detail-card" href="service-3.html">
             <h2>{{SERVICE_3_NAME}}</h2>
             <p>{{SERVICE_3_LONG}}</p>
             <div class="card-meta">{{PRIMARY_KEYWORD_3}}</div>
-            <span class="svc-detail-go">{{SERVICE_3_DETAIL_CTA|View service details →}}</span>
+            <span class="svc-detail-go">{{SERVICE_3_DETAIL_CTA|View service details ?}}</span>
           </a>
         </div>
       </section>
@@ -697,7 +699,7 @@ TYPE: tier
       <section class="svc-hub-section" aria-labelledby="svc-core-heading">
         <div class="kicker">{{SERVICES_HUB_CORE_KICKER|Additional core services}}</div>
         <h2 id="svc-core-heading">{{SERVICES_HUB_CORE_TITLE|Core services on this hub}}</h2>
-        <p class="section-lead">{{SERVICES_HUB_CORE_INTRO|These priority lines stay on the services hub—no separate URLs on the Enhanced plan. Call or send photos and we will recommend the right next step.}}</p>
+        <p class="section-lead">{{SERVICES_HUB_CORE_INTRO|These priority lines stay on the services hub?no separate URLs on the Enhanced plan. Call or send photos and we will recommend the right next step.}}</p>
         <div class="svc-priority-grid">
           <article class="card">
             <h2>{{SERVICE_4_NAME}}</h2>
@@ -720,7 +722,7 @@ TYPE: tier
       <article class="card svc-additional-card" aria-labelledby="additional-services-heading">
         <div class="kicker">Additional services</div>
         <h2 id="additional-services-heading">Other work we quote and handle</h2>
-        <p class="lead">{{ADDITIONAL_SERVICES_INTRO|If you’re not sure which service fits, call or send photos and we’ll guide you to the right next step.}}</p>
+        <p class="lead">{{ADDITIONAL_SERVICES_INTRO|If you?re not sure which service fits, call or send photos and we?ll guide you to the right next step.}}</p>
         <ul class="svc-additional-list">
           {{ADDITIONAL_SERVICES_LIST_ITEMS}}
         </ul>
@@ -756,8 +758,8 @@ TYPE: tier
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}.</span>
-      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+      <span>? {{YEAR_CURRENT}} {{BUSINESS_NAME}}.</span>
+      <span>{{CITY}}, {{STATE}} ? {{LICENSE_TYPE}}</span>
     </div>
   </footer>
   <script src="./main.js" defer></script>
@@ -836,7 +838,7 @@ TYPE: tier
         <section class="card">
           <h2>{{ABOUT_HEADLINE}}</h2>
           <p>{{ABOUT_STORY_LONG}}</p>
-          <p style="margin-top:1rem;color:#555"><strong>Owner:</strong> {{OWNER_NAME}} · {{YEARS_EXPERIENCE}}</p>
+          <p style="margin-top:1rem;color:#555"><strong>Owner:</strong> {{OWNER_NAME}} ? {{YEARS_EXPERIENCE}}</p>
         </section>
         <section class="card">
           <h2>Values</h2>
@@ -936,7 +938,7 @@ TYPE: tier
           </div>
           <h2>{{ARTICLE_1_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_1_EXCERPT}}</p>
-          <div class="cta">Read article <span aria-hidden="true">→</span></div>
+          <div class="cta">Read article <span aria-hidden="true">?</span></div>
         </a>
 
         <a class="post" href="{{ARTICLE_2_URL}}">
@@ -946,7 +948,7 @@ TYPE: tier
           </div>
           <h2>{{ARTICLE_2_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_2_EXCERPT}}</p>
-          <div class="cta">Read article <span aria-hidden="true">→</span></div>
+          <div class="cta">Read article <span aria-hidden="true">?</span></div>
         </a>
 
         <a class="post" href="{{ARTICLE_3_URL}}">
@@ -956,7 +958,7 @@ TYPE: tier
           </div>
           <h2>{{ARTICLE_3_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_3_EXCERPT}}</p>
-          <div class="cta">Read article <span aria-hidden="true">→</span></div>
+          <div class="cta">Read article <span aria-hidden="true">?</span></div>
         </a>
       </div>
     </div>
@@ -1061,7 +1063,7 @@ TYPE: tier
             </div>
             <label for="sv">Service Needed *</label>
             <select id="sv" required>
-              <option value="" disabled selected>Choose…</option>
+              <option value="" disabled selected>Choose?</option>
               <option>{{SERVICE_1_NAME}}</option>
               <option>{{SERVICE_2_NAME}}</option>
               <option>{{SERVICE_3_NAME}}</option>
@@ -1086,9 +1088,9 @@ TYPE: tier
             </div>
             <label for="d">Details</label>
             <textarea id="d" rows="3"></textarea>
-            <button onclick="send(event)">Send Request →</button>
+            <button onclick="send(event)">Send Request ?</button>
           </div>
-          <div id="ok">Request received — we’ll contact you soon.</div>
+          <div id="ok">Request received ? we?ll contact you soon.</div>
         </section>
       </div>
     </div>
@@ -1213,9 +1215,9 @@ TYPE: tier
       <h2>How we handle <span>{{SERVICE_1_NAME}}</span></h2>
       <p>{{SERVICE_1_PROCESS_INTRO}}</p>
       <ul class="detail-list">
-        <li><strong>{{SERVICE_1_STEP_1_TITLE}}</strong> — {{SERVICE_1_STEP_1_BODY}}</li>
-        <li><strong>{{SERVICE_1_STEP_2_TITLE}}</strong> — {{SERVICE_1_STEP_2_BODY}}</li>
-        <li><strong>{{SERVICE_1_STEP_3_TITLE}}</strong> — {{SERVICE_1_STEP_3_BODY}}</li>
+        <li><strong>{{SERVICE_1_STEP_1_TITLE}}</strong> ? {{SERVICE_1_STEP_1_BODY}}</li>
+        <li><strong>{{SERVICE_1_STEP_2_TITLE}}</strong> ? {{SERVICE_1_STEP_2_BODY}}</li>
+        <li><strong>{{SERVICE_1_STEP_3_TITLE}}</strong> ? {{SERVICE_1_STEP_3_BODY}}</li>
       </ul>
 
       <h2>Signs you may need <span>this service</span></h2>
@@ -1245,16 +1247,16 @@ TYPE: tier
       <p>{{SERVICE_1_TESTIMONIALS_INTRO}}</p>
       <div class="wall">
         <article class="card">
-          <blockquote>“{{SERVICE_1_TESTIMONIAL_1_TEXT}}”</blockquote>
-          <div class="by">{{SERVICE_1_TESTIMONIAL_1_NAME}} <span>· {{SERVICE_1_TESTIMONIAL_1_CITY}}</span></div>
+          <blockquote>?{{SERVICE_1_TESTIMONIAL_1_TEXT}}?</blockquote>
+          <div class="by">{{SERVICE_1_TESTIMONIAL_1_NAME}} <span>? {{SERVICE_1_TESTIMONIAL_1_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>“{{SERVICE_1_TESTIMONIAL_2_TEXT}}”</blockquote>
-          <div class="by">{{SERVICE_1_TESTIMONIAL_2_NAME}} <span>· {{SERVICE_1_TESTIMONIAL_2_CITY}}</span></div>
+          <blockquote>?{{SERVICE_1_TESTIMONIAL_2_TEXT}}?</blockquote>
+          <div class="by">{{SERVICE_1_TESTIMONIAL_2_NAME}} <span>? {{SERVICE_1_TESTIMONIAL_2_CITY}}</span></div>
         </article>
       </div>
 
-      <h2>FAQ — <span>{{SERVICE_1_NAME}}</span></h2>
+      <h2>FAQ ? <span>{{SERVICE_1_NAME}}</span></h2>
       <details>
         <summary>{{SERVICE_1_FAQ_Q1}}</summary>
         <p>{{SERVICE_1_FAQ_A1}}</p>
@@ -1423,12 +1425,12 @@ TYPE: tier
       <p>{{SERVICE_2_TESTIMONIALS_INTRO}}</p>
       <div class="wall">
         <article class="card">
-          <blockquote>â€œ{{SERVICE_2_TESTIMONIAL_1_TEXT}}â€</blockquote>
-          <div class="by">{{SERVICE_2_TESTIMONIAL_1_NAME}} <span>Â· {{SERVICE_2_TESTIMONIAL_1_CITY}}</span></div>
+          <blockquote>???{{SERVICE_2_TESTIMONIAL_1_TEXT}}???</blockquote>
+          <div class="by">{{SERVICE_2_TESTIMONIAL_1_NAME}} <span>?? {{SERVICE_2_TESTIMONIAL_1_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>â€œ{{SERVICE_2_TESTIMONIAL_2_TEXT}}â€</blockquote>
-          <div class="by">{{SERVICE_2_TESTIMONIAL_2_NAME}} <span>Â· {{SERVICE_2_TESTIMONIAL_2_CITY}}</span></div>
+          <blockquote>???{{SERVICE_2_TESTIMONIAL_2_TEXT}}???</blockquote>
+          <div class="by">{{SERVICE_2_TESTIMONIAL_2_NAME}} <span>?? {{SERVICE_2_TESTIMONIAL_2_CITY}}</span></div>
         </article>
       </div>
 
@@ -1601,12 +1603,12 @@ TYPE: tier
       <p>{{SERVICE_3_TESTIMONIALS_INTRO}}</p>
       <div class="wall">
         <article class="card">
-          <blockquote>â€œ{{SERVICE_3_TESTIMONIAL_1_TEXT}}â€</blockquote>
-          <div class="by">{{SERVICE_3_TESTIMONIAL_1_NAME}} <span>Â· {{SERVICE_3_TESTIMONIAL_1_CITY}}</span></div>
+          <blockquote>???{{SERVICE_3_TESTIMONIAL_1_TEXT}}???</blockquote>
+          <div class="by">{{SERVICE_3_TESTIMONIAL_1_NAME}} <span>?? {{SERVICE_3_TESTIMONIAL_1_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>â€œ{{SERVICE_3_TESTIMONIAL_2_TEXT}}â€</blockquote>
-          <div class="by">{{SERVICE_3_TESTIMONIAL_2_NAME}} <span>Â· {{SERVICE_3_TESTIMONIAL_2_CITY}}</span></div>
+          <blockquote>???{{SERVICE_3_TESTIMONIAL_2_TEXT}}???</blockquote>
+          <div class="by">{{SERVICE_3_TESTIMONIAL_2_NAME}} <span>?? {{SERVICE_3_TESTIMONIAL_2_CITY}}</span></div>
         </article>
       </div>
 
@@ -1719,10 +1721,10 @@ TYPE: tier
       <p>{{PRIVACY_USE}}</p>
 
       <h2>Contact</h2>
-      <p>Questions about this policy: <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
+      <p>Questions about this policy: <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> ? {{PHONE_NUMBER}}</p>
 
       <footer>
-        <p><a href="terms.html">Terms of Use</a> · <a href="index.html">Home</a></p>
+        <p><a href="terms.html">Terms of Use</a> ? <a href="index.html">Home</a></p>
       </footer>
     </div>
   </main>
@@ -1802,10 +1804,10 @@ TYPE: tier
       <p>{{TERMS_LIABILITY}}</p>
 
       <h2>Contact</h2>
-      <p>{{BUSINESS_NAME}} · <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
+      <p>{{BUSINESS_NAME}} ? <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> ? {{PHONE_NUMBER}}</p>
 
       <footer>
-        <p><a href="privacy-policy.html">Privacy Policy</a> · <a href="index.html">Home</a></p>
+        <p><a href="privacy-policy.html">Privacy Policy</a> ? <a href="index.html">Home</a></p>
       </footer>
     </div>
   </main>
@@ -1842,7 +1844,7 @@ TYPE: tier
 </head>
 <body>
   <p><strong>404</strong></p>
-  <h1>That page isn’t here.</h1>
+  <h1>That page isn?t here.</h1>
   <p>{{ERROR_404_MESSAGE}}</p>
   <p><code>{{SITE_URL}}</code></p>
   <a href="index.html">Back to home</a>
@@ -1877,7 +1879,7 @@ TYPE: tier
   </style>
 </head>
 <body>
-  <h1>You’re offline</h1>
+  <h1>You?re offline</h1>
   <p>{{OFFLINE_MESSAGE}}</p>
   <div>
     <a href="index.html">Try again</a>
@@ -1952,7 +1954,7 @@ TYPE: tier
     <div class="container">
       <div class="k">Gallery</div>
       <h1>Real Work in <span>{{CITY}}</span></h1>
-      <p>{{GALLERY_INTRO|A few recent projects—before/after shots, detail work, and cleanup standards.}}</p>
+      <p>{{GALLERY_INTRO|A few recent projects?before/after shots, detail work, and cleanup standards.}}</p>
 
       <div class="carousel" data-carousel>
         <div class="track" data-track>
@@ -2113,15 +2115,15 @@ TYPE: tier
         {{#each TESTIMONIALS_UP_TO_8}}
         <article class="card">
           <blockquote>{{this.text}}</blockquote>
-          <div class="by">{{this.name}} <span>· {{this.city}}</span></div>
+          <div class="by">{{this.name}} <span>? {{this.city}}</span></div>
         </article>
         {{/each}}
       </section>
 
       <div class="k" style="margin-top:3rem">Google reviews</div>
       <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3.2vw,2rem);line-height:1.1;margin-top:.35rem">Recent feedback on <span style="color:var(--brand-primary)">Google</span></h2>
-      <p style="margin-top:.75rem">A few recent reviews from homeowners we’ve helped—repairs, replacements, and storm inspections.</p>
-      <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile →</a></p>
+      <p style="margin-top:.75rem">A few recent reviews from homeowners we?ve helped?repairs, replacements, and storm inspections.</p>
+      <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile ?</a></p>
 
       <section class="carousel carousel--reviews" data-carousel aria-label="Google reviews carousel">
         <div class="track" data-track>
@@ -2132,7 +2134,7 @@ TYPE: tier
                 <span class="gr-mark">Google review</span>
                 <span class="gr-stars" aria-label="{{this.rating}} out of 5 stars">{{this.starsDisplay}}</span>
               </div>
-              <div class="gr-meta">{{this.author}} · {{this.relativeTime}}</div>
+              <div class="gr-meta">{{this.author}} ? {{this.relativeTime}}</div>
               <p class="gr-body">{{this.text}}</p>
             </article>
           </div>
@@ -2166,33 +2168,6 @@ TYPE: tier
       render();
     })();
   </script>
-  <script src="./main.js" defer></script>
-</body>
-</html>
-
-
-================================================================================
-FILE: reviews.html
-SOURCE: templates/enhanced/reviews.html
-TYPE: tier
-================================================================================
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css" />
-  <title>{{BUSINESS_NAME}} Reviews</title>
-  <meta name="robots" content="noindex" />
-  <meta http-equiv="refresh" content="0; url=testimonials.html" />
-  <script>
-    window.location.replace('testimonials.html');
-  </script>
-</head>
-<body>
-  <p>If you are not redirected, <a href="testimonials.html">go to testimonials</a>.</p>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -2288,7 +2263,7 @@ SOURCE: templates/enhanced/styles.css
 TYPE: tier
 ================================================================================
 
-/* Supplemental stylesheet — critical layout/CSS remains inline in HTML templates. */
+/* Supplemental stylesheet ? critical layout/CSS remains inline in HTML templates. */
 :root {
   --ahana-brand-primary: {{BRAND_PRIMARY|#FF5733}};
   --ahana-brand-accent: {{BRAND_ACCENT|#FF5733}};
@@ -2542,9 +2517,9 @@ SOURCE: templates/enhanced/_redirects
 TYPE: tier
 ================================================================================
 
-# Static HTML bundle — Netlify serves matching files automatically.
+# Static HTML bundle ? Netlify serves matching files automatically.
 
-# Custom 404 — keeps visitors on site
+# Custom 404 ? keeps visitors on site
 /*  /404.html  404
 
 ================================================================================
@@ -2572,15 +2547,26 @@ TYPE: tier
 ================================================================================
 
 /* TEAM */
+Developer & SEO Manager: Ahana Digital
+Contact: hello@ahanadigital.com
+Site: https://ahanadigital.com
+Location: Toronto, Ontario, Canada
+
+/* CLIENT */
 Business: {{BUSINESS_NAME}}
 Contact: {{EMAIL}}
 Site: {{SITE_URL}}
+Location: {{CITY}}, {{STATE}}
+
+/* SITE */
+Last update: {{BUILD_DATE}}
+Standards: HTML5, CSS3; accessibility practices targeting WCAG 2.1 AA
+Hosting: Netlify
+Language: {{HTML_LANG|en}}
 
 /* THANKS */
-Templates: Ahana enhanced bundle
-
-/* STANDARDS */
-Language: en
+Built for the tradespeople who keep
+our homes running.
 
 ================================================================================
 FILE: .gitignore
@@ -2597,7 +2583,7 @@ desktop.ini
 *.log
 npm-debug.log*
 
-# Environment — never commit
+# Environment ? never commit
 .env
 .env.*
 !.env.example
@@ -2611,7 +2597,7 @@ dist/
 .cache/
 .netlify/
 
-# Editor — personal (paths under this tier only)
+# Editor ? personal (paths under this tier only)
 .vscode/
 .idea/
 *.swp
@@ -2653,7 +2639,7 @@ SOURCE: templates/enhanced/sw.js
 TYPE: tier
 ================================================================================
 
-/* Ahana template — offline-capable static shell */
+/* Ahana template ? offline-capable static shell */
 var CACHE = 'ahana-enhanced-v1';
 var PRECACHE = [
   './index.html',
@@ -2709,9 +2695,11 @@ SOURCE: templates/enhanced/apple-touch-icon.png
 TYPE: tier
 ================================================================================
 
-�PNG
+?PNG
 
-   IHDR   �   �   ���e  �IDATx���1   �0�a��`7M*`��^����e�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9H� ��d�9Hؾ&�{�    IEND�B`�
+   
+IHDR   ?   ?   ???e  ?IDATx???1
+   ?0?a??`7M*`??^????e?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H? ??d?9H?&?{?    IEND?B`?
 
 ================================================================================
 FILE: og-image.svg
@@ -2728,6 +2716,6 @@ TYPE: tier
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <text x="600" y="300" text-anchor="middle" fill="#ffffff" font-family="system-ui,Segoe UI,sans-serif" font-size="64" font-weight="800">{{BUSINESS_NAME}}</text>
-  <text x="600" y="380" text-anchor="middle" fill="#ff5733" font-family="system-ui,Segoe UI,sans-serif" font-size="28" font-weight="700">{{PRIMARY_KEYWORD_1}} � {{CITY}}</text>
+  <text x="600" y="380" text-anchor="middle" fill="#ff5733" font-family="system-ui,Segoe UI,sans-serif" font-size="28" font-weight="700">{{PRIMARY_KEYWORD_1}} ? {{CITY}}</text>
 </svg>
 

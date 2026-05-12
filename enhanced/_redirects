@@ -1,4 +1,8 @@
-# Static HTML bundle — Netlify serves matching files automatically.
+# Extensionless paths are handled by Pretty URLs in netlify.toml.
+
+# Reviews URL removed — page consolidated into testimonials
+/reviews /testimonials 301
+/reviews.html /testimonials.html 301
 
 # Custom 404 — keeps visitors on site
 /*  /404.html  404
