@@ -71,9 +71,7 @@
   initTelTracking();
   initActiveNav();
 
-  (function () {
-    var root = document.querySelector('[data-carousel]');
-    if (!root) return;
+  document.querySelectorAll('[data-carousel]').forEach(function (root) {
     var track = root.querySelector('[data-track]');
     var prev = root.querySelector('[data-prev]');
     var next = root.querySelector('[data-next]');
@@ -81,6 +79,7 @@
     var totalEl = root.querySelector('[data-total]');
     if (!track || !prev || !next || !idxEl || !totalEl) return;
     var slides = Array.from(track.children);
+    if (!slides.length) return;
     var idx = 0;
     totalEl.textContent = String(slides.length);
     function render() {
@@ -96,7 +95,7 @@
       render();
     });
     render();
-  })();
+  });
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {

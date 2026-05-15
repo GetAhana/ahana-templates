@@ -1,10 +1,21 @@
 /* TEAM */
+Developer & SEO Manager: Ahana Digital
+Contact: hello@ahanadigital.com
+Site: https://ahanadigital.com
+Location: Toronto, Ontario, Canada
+
+/* CLIENT */
 Business: {{BUSINESS_NAME}}
 Contact: {{EMAIL}}
 Site: {{SITE_URL}}
+Location: {{CITY}}, {{STATE}}
+
+/* SITE */
+Last update: {{BUILD_DATE}}
+Standards: HTML5, CSS3; accessibility practices targeting WCAG 2.1 AA
+Hosting: Netlify
+Language: {{HTML_LANG|en}}
 
 /* THANKS */
-Templates: Ahana enhanced bundle
-
-/* STANDARDS */
-Language: en
+Built for the tradespeople who keep
+our homes running.

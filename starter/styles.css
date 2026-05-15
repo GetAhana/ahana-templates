@@ -185,6 +185,15 @@ h1 span,h2 span{color:var(--p)}
 .card h3{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.35rem}
 .card p{color:#555;line-height:1.75}
 .tag{margin-top:.7rem;font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--p)}
+
+/* Catalogue service cards (home + services page): equal height, clearer titles, subtle depth */
+.grid.service-cards{align-items:stretch}
+.grid.service-cards .card{display:flex;flex-direction:column;min-height:100%;padding:1.5rem 1.35rem 1.35rem;box-shadow:0 4px 20px rgba(11,13,18,.06);border-color:rgba(11,13,18,.1);transition:transform .18s ease,box-shadow .18s ease}
+.grid.service-cards .card:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(11,13,18,.11)}
+.grid.service-cards .card h3{font-size:clamp(1.2rem,2.1vw,1.42rem);line-height:1.22;letter-spacing:-.025em;color:var(--ink);margin-bottom:.4rem}
+.grid.service-cards .card p{flex:1;margin-top:.15rem;margin-bottom:0}
+.grid.service-cards .card .tag{margin-top:auto;padding-top:1rem}
+
 .post-list{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
 .post-link{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:18px;padding:1.35rem 1.35rem 1.2rem}
 .post-link[role="article"]{cursor:default}

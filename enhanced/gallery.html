@@ -7,33 +7,55 @@
   <link rel="stylesheet" href="./styles.css" />
   <title>{{BUSINESS_NAME}} Gallery | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{GALLERY_META_DESCRIPTION_FROM_IMAGES}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{
+      --container-w:1100px;
+      --brand-primary:{{BRAND_PRIMARY|#FF5733}};
+      --brand-dark:{{BRAND_DARK|#1A1A1B}};
+      --brand-light:{{BRAND_LIGHT|#F7F7F7}};
+      --brand-accent:{{BRAND_ACCENT|#FF5733}};
+      --ink:#0E0E10;
+    }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    body{font-family:'Inter',sans-serif;background:var(--brand-light);color:var(--brand-dark)}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--brand-dark);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
+    .logo span{color:var(--brand-accent)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    nav a:hover{color:var(--brand-accent)}
+    .btn{background:var(--brand-primary);color:#fff;padding:.5rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem}
-    .container{max-width:1100px;margin:0 auto}
-    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
-    h1 span{color:var(--p)}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
+    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.5rem}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1 span{color:var(--brand-primary)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:760px}
+    /* Same carousel as index.html (main.js expects data-carousel / data-track / data-prev / data-next / data-index / data-total) */
     .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
-    .track{display:flex;transition:transform .45s ease}
-    .slide{min-width:100%;aspect-ratio:16/9;background:#111}
-    .slide img{width:100%;height:100%;object-fit:cover;display:block}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--l)}
-    button{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:900;cursor:pointer}
-    button:hover{border-color:var(--p)}
-    .meta{font-size:.85rem;color:#666;font-weight:800}
+    .c-track{display:flex;transition:transform .45s ease}
+    .c-item{min-width:100%;aspect-ratio:16/9;position:relative;background:#111}
+    .c-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+    .c-nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
+    .c-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer;font-family:inherit}
+    .c-btn:hover{border-color:var(--brand-primary)}
+    .c-meta{font-size:.85rem;color:#666;font-weight:700}
+    .gallery-after{margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1)}
+    .gallery-after h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);line-height:1.2;color:var(--brand-dark);max-width:720px}
+    .gallery-after h2 span{color:var(--brand-primary)}
+    .gallery-cta-row{margin-top:1.25rem;display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+    .gallery-cta-primary{
+      display:inline-flex;align-items:center;justify-content:center;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.02rem;padding:.85rem 1.25rem;border-radius:12px;text-decoration:none;transition:transform .15s,filter .2s;
+    }
+    .gallery-cta-primary:hover{transform:translateY(-2px);filter:brightness(.95)}
+    .gallery-cta-secondary{
+      display:inline-flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,.14);color:var(--brand-dark);
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;padding:.8rem 1.2rem;border-radius:12px;text-decoration:none;background:#fff;transition:border-color .2s,color .2s;
+    }
+    .gallery-cta-secondary:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
     @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
@@ -60,40 +82,36 @@
       <p>{{GALLERY_INTRO|A few recent projects—before/after shots, detail work, and cleanup standards.}}</p>
 
       <div class="carousel" data-carousel>
-        <div class="track" data-track>
-          {{#each GALLERY_UP_TO_10}}
-          <div class="slide"><img src="{{this.url}}" alt="{{this.alt}}"></div>
-          {{/each}}
+        <div class="c-track" data-track>
+          <div class="c-item"><img src="{{GALLERY_1_URL}}" alt="{{GALLERY_1_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_2_URL}}" alt="{{GALLERY_2_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_3_URL}}" alt="{{GALLERY_3_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_4_URL}}" alt="{{GALLERY_4_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_5_URL}}" alt="{{GALLERY_5_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_6_URL}}" alt="{{GALLERY_6_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_7_URL}}" alt="{{GALLERY_7_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_8_URL}}" alt="{{GALLERY_8_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_9_URL}}" alt="{{GALLERY_9_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_10_URL}}" alt="{{GALLERY_10_ALT}}"></div>
         </div>
-        <div class="nav">
-          <button type="button" data-prev>Prev</button>
-          <div class="meta"><span data-index>1</span> / <span data-total>10</span></div>
-          <button type="button" data-next>Next</button>
+        <div class="c-nav">
+          <button type="button" class="c-btn" data-prev>Prev</button>
+          <div class="c-meta"><span data-index>1</span> / <span data-total>10</span></div>
+          <button type="button" class="c-btn" data-next>Next</button>
         </div>
       </div>
+
+      <section class="gallery-after" aria-labelledby="gallery-primary-heading">
+        <h2 id="gallery-primary-heading"><span>{{PRIMARY_SERVICE}}</span> in {{CITY}}</h2>
+        <p>{{SERVICES_INTRO|Clear scopes, photo documentation, and crews who keep the site clean from tear-off to final walkthrough.}}</p>
+        <div class="gallery-cta-row">
+          <a class="gallery-cta-primary" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="gallery-cta-secondary" href="contact.html">Get a free estimate →</a>
+        </div>
+      </section>
     </div>
   </main>
 
-  <script>
-    (function(){
-      const root = document.querySelector('[data-carousel]');
-      if(!root) return;
-      const track = root.querySelector('[data-track]');
-      const slides = Array.from(track.children);
-      const prev = root.querySelector('[data-prev]');
-      const next = root.querySelector('[data-next]');
-      const idxEl = root.querySelector('[data-index]');
-      const totalEl = root.querySelector('[data-total]');
-      let idx=0;
-      if(!slides.length) return;
-      totalEl.textContent = slides.length;
-      function render(){ track.style.transform='translateX('+(-idx*100)+'%)'; idxEl.textContent=(idx+1); }
-      prev.addEventListener('click',()=>{ idx=(idx-1+slides.length)%slides.length; render(); });
-      next.addEventListener('click',()=>{ idx=(idx+1)%slides.length; render(); });
-      render();
-    })();
-  </script>
   <script src="./main.js" defer></script>
 </body>
 </html>
-

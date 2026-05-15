@@ -1,4 +1,4 @@
-# Static HTML bundle — Netlify serves matching files automatically.
+# Extensionless paths are handled by Pretty URLs in netlify.toml.
 
 # Custom 404 — keeps visitors on site
 /*  /404.html  404
