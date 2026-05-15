@@ -19,10 +19,14 @@
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:var(--brand-light);color:var(--brand-dark)}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--brand-dark);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--brand-dark);height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{position:relative;z-index:2;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--brand-accent)}
+    .header-nav-layer{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+    .header-nav-layer nav{pointer-events:auto;max-width:min(760px,calc(100vw - 20rem))}
+    .header-nav-layer nav ul{justify-content:center}
+    .header-ctas{position:relative;z-index:2;flex-shrink:0}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--brand-accent)}
@@ -33,15 +37,6 @@
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--brand-primary)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:760px}
-    /* Same carousel as index.html (main.js expects data-carousel / data-track / data-prev / data-next / data-index / data-total) */
-    .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
-    .c-track{display:flex;transition:transform .45s ease}
-    .c-item{min-width:100%;aspect-ratio:16/9;position:relative;background:#111}
-    .c-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
-    .c-nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
-    .c-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer;font-family:inherit}
-    .c-btn:hover{border-color:var(--brand-primary)}
-    .c-meta{font-size:.85rem;color:#666;font-weight:700}
     .gallery-after{margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1)}
     .gallery-after h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);line-height:1.2;color:var(--brand-dark);max-width:720px}
     .gallery-after h2 span{color:var(--brand-primary)}
@@ -56,14 +51,16 @@
       font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;padding:.8rem 1.2rem;border-radius:12px;text-decoration:none;background:#fff;transition:border-color .2s,color .2s;
     }
     .gallery-cta-secondary:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
-    @media(max-width:640px){nav ul{display:none}}
+    @media(max-width:640px){.header-nav-layer{display:none}nav ul{display:none}}
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
     <nav>
       <ul>
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -72,7 +69,10 @@
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
+    </div>
+    <div class="header-ctas">
     <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
   </header>
 
   <main>

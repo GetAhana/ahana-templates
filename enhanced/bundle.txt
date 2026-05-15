@@ -90,22 +90,31 @@ TYPE: tier
       position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:1rem;
       padding:0 clamp(1.25rem,3.2vw,2.75rem);
       height:80px;
       box-shadow:0 10px 28px rgba(0,0,0,.08);
       border-bottom:1px solid rgba(0,0,0,.08);
     }
-    #sticky-header .logo{justify-self:start;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
     #sticky-header .logo span{color:var(--brand-accent)}
-    #sticky-header nav{justify-self:center}
-    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
     .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;transition:color .2s;white-space:nowrap}
     .nav-links a:hover{color:var(--brand-primary)}
 
-    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;justify-self:end}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
     .btn-call-now{
       display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
       font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;
@@ -276,15 +285,6 @@ TYPE: tier
     summary{cursor:pointer;font-weight:900;letter-spacing:.02em}
     details p{margin-top:.75rem;color:#555;line-height:1.75}
 
-    .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
-    .c-track{display:flex;transition:transform .45s ease}
-    .c-item{min-width:100%;aspect-ratio:16/9;position:relative;background:#111}
-    .c-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
-    .c-nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
-    .c-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
-    .c-btn:hover{border-color:var(--brand-primary)}
-    .c-meta{font-size:.85rem;color:#666;font-weight:700}
-
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2.25rem}
     .card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;padding:1.5rem}
     .card h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
@@ -302,8 +302,7 @@ TYPE: tier
     .footer-col ul li a:hover{color:var(--brand-accent)}
     .footer-bottom{max-width:var(--container-w);margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
     @media(max-width:640px){
-      #sticky-header{display:flex;justify-content:space-between;align-items:center}
-      #sticky-header nav{display:none}
+      #sticky-header .header-nav-layer{display:none}
       .nav-links{display:none}
       #menu-toggle{display:block}
       .footer-grid{grid-template-columns:1fr;gap:2rem}
@@ -327,8 +326,10 @@ TYPE: tier
 <body>
   <header id="sticky-header">
     <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
       <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
@@ -337,6 +338,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
+    </div>
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
       <a href="tel:{{PHONE_NUMBER}}" class="btn-call-now">
@@ -349,6 +351,7 @@ TYPE: tier
     </div>
   </header>
   <nav id="mobile-menu">
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="gallery.html">Gallery</a>
     <a href="testimonials.html">Testimonials</a>
@@ -486,9 +489,9 @@ TYPE: tier
           <div class="c-item"><img src="{{GALLERY_10_URL}}" alt="{{GALLERY_10_ALT}}"></div>
         </div>
         <div class="c-nav">
-          <button class="c-btn" data-prev>Prev</button>
+          <button type="button" class="c-btn" data-prev>Prev</button>
           <div class="c-meta"><span data-index>1</span> / <span data-total>10</span></div>
-          <button class="c-btn" data-next>Next</button>
+          <button type="button" class="c-btn" data-next>Next</button>
         </div>
       </div>
     </div>
@@ -820,28 +823,28 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>About {{BUSINESS_NAME}} | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.25rem}
     .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
-    .card h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
+    .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
     .card p{margin:0;color:#666}
     .list{margin-top:1rem;display:grid;gap:.55rem}
     .item{display:flex;gap:.6rem;align-items:flex-start;color:#444;line-height:1.6}
@@ -915,19 +918,19 @@ TYPE: tier
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:760px}
     .posts{display:flex;flex-direction:column;gap:1rem;margin-top:2.25rem}
@@ -940,7 +943,7 @@ TYPE: tier
     .post:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(0,0,0,.08);border-color:rgba(0,0,0,.12)}
     .tag{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--p)}
     .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem}
-    .post h2{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.55rem;line-height:1.15;margin-bottom:.55rem}
+    .post h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;line-height:1.15;margin-bottom:.55rem}
     .post .excerpt{margin:0;color:#555;line-height:1.8;max-width:92ch}
     .meta{color:#666;font-size:.9rem;font-weight:800}
     .cta{margin-top:1rem;display:inline-flex;align-items:center;gap:.55rem;color:var(--p);font-weight:900}
@@ -1041,15 +1044,15 @@ TYPE: tier
   <style>
     :root{--container-w:1100px;--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w);margin:0 auto;width:100%}
     .article-back{margin:0 0 1.25rem;font-size:.95rem;font-weight:700}
@@ -1058,26 +1061,26 @@ TYPE: tier
     .article-meta-line{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:1rem}
     .article-cat{color:var(--p)}
     .article-meta-sep{font-weight:600;color:#aaa}
-    .article-h1{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(2rem,4.2vw,3rem);line-height:1.08;margin-bottom:.75rem}
+    .article-h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4.2vw,3rem);line-height:1.08;margin-bottom:.75rem}
     .article-h1 span{color:var(--p)}
     .article-dek{margin-top:.5rem;color:#4A4A4A;line-height:1.75;max-width:720px;font-size:1.05rem}
     .article-tldr-wrap{margin-top:1.75rem;padding:1.35rem 1.4rem;border-radius:16px;background:var(--l);border:1px solid rgba(0,0,0,.08)}
-    .article-tldr-wrap :where(h2,h3){font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:.65rem;color:var(--d)}
+    .article-tldr-wrap :where(h2,h3){font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:.65rem;color:var(--d)}
     .article-tldr-wrap ul{margin:.5rem 0 0 1.1rem;color:#444;line-height:1.75}
     .article-body{margin-top:2rem}
     .article-prose{color:#333;line-height:1.8;font-size:1.02rem;max-width:720px}
     .article-prose > * + *{margin-top:1rem}
-    .article-prose h2{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(1.35rem,2.5vw,1.65rem);margin:2rem 0 .75rem;color:var(--d)}
-    .article-prose h3{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.12rem;margin:1.5rem 0 .5rem;color:var(--d)}
+    .article-prose h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,2.5vw,1.65rem);margin:2rem 0 .75rem;color:var(--d)}
+    .article-prose h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.12rem;margin:1.5rem 0 .5rem;color:var(--d)}
     .article-prose p{margin:.85rem 0}
     .article-prose ul,.article-prose ol{margin:.85rem 0 .85rem 1.25rem}
     .article-prose li{margin:.35rem 0}
     .article-prose a{color:var(--p);font-weight:700}
     .cta-band{margin-top:2.75rem;padding:1.75rem 1.5rem;border-radius:16px;background:linear-gradient(135deg,rgba(255,87,51,.08),#fff);border:1px solid rgba(0,0,0,.08);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
-    .cta-band h2{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(1.25rem,2.5vw,1.6rem);margin-bottom:.35rem;color:var(--d)}
+    .cta-band h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.25rem,2.5vw,1.6rem);margin-bottom:.35rem;color:var(--d)}
     .cta-band .sub{margin:0;max-width:520px;color:#555;line-height:1.65;font-size:.98rem}
     .cta-band .btn-row{display:flex;gap:.75rem;flex-wrap:wrap}
-    .btn-outline{display:inline-flex;align-items:center;background:transparent;border:2px solid rgba(0,0,0,.14);color:var(--d);font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;padding:.65rem 1.1rem;border-radius:10px;text-decoration:none}
+    .btn-outline{display:inline-flex;align-items:center;background:transparent;border:2px solid rgba(0,0,0,.14);color:var(--d);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.65rem 1.1rem;border-radius:10px;text-decoration:none}
     .btn-outline:hover{border-color:var(--p);color:var(--p)}
     @media(max-width:640px){nav ul{display:none}}
   </style>
@@ -1144,34 +1147,34 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>Contact {{BUSINESS_NAME}} | Get a Quote in {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.25rem}
     .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
-    .card h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
-    .big{display:inline-flex;margin-top:1rem;font-family:Syne,sans-serif;font-weight:800;font-size:1.85rem;color:var(--p);text-decoration:none}
+    .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
+    .big{display:inline-flex;margin-top:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.85rem;color:var(--p);text-decoration:none}
     label{display:block;font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#555;margin:.75rem 0 .35rem}
     input,select,textarea{width:100%;padding:.75rem 1rem;border:2px solid rgba(0,0,0,.1);border-radius:10px;font-family:Inter,sans-serif;background:#fff}
     input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p)}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    button{width:100%;margin-top:1rem;padding:1rem;border:none;border-radius:10px;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;cursor:pointer}
+    button{width:100%;margin-top:1rem;padding:1rem;border:none;border-radius:10px;background:var(--p);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.2rem;cursor:pointer}
     button:hover{background:#b8360a}
     #ok{display:none;margin-top:1rem;font-weight:900;color:#2f6f2f}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
@@ -1289,25 +1292,25 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>{{SERVICE_1_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_1_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
-    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
+    h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
     h2 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
     ul.detail-list{margin-top:1rem;padding:0;list-style:none;color:#444;line-height:1.75;max-width:860px}
@@ -1333,8 +1336,8 @@ TYPE: tier
     .cta-bar{margin-top:2.75rem;padding:1.75rem;border-radius:12px;background:var(--d);color:#fff;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
     .cta-bar p{margin:0;max-width:520px;color:rgba(255,255,255,.82)}
     .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
-    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
-    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta1{background:var(--p);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
     @media(max-width:640px){nav ul{display:none}}
@@ -1467,25 +1470,25 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>{{SERVICE_2_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_2_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
-    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
+    h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
     h2 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
     ul.detail-list{margin-top:1rem;padding:0;list-style:none;color:#444;line-height:1.75;max-width:860px}
@@ -1511,8 +1514,8 @@ TYPE: tier
     .cta-bar{margin-top:2.75rem;padding:1.75rem;border-radius:12px;background:var(--d);color:#fff;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
     .cta-bar p{margin:0;max-width:520px;color:rgba(255,255,255,.82)}
     .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
-    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
-    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta1{background:var(--p);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
     @media(max-width:640px){nav ul{display:none}}
@@ -1645,25 +1648,25 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>{{SERVICE_3_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_3_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
-    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
+    h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.95rem);margin-top:2.5rem;margin-bottom:.75rem}
     h2 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:860px}
     ul.detail-list{margin-top:1rem;padding:0;list-style:none;color:#444;line-height:1.75;max-width:860px}
@@ -1689,8 +1692,8 @@ TYPE: tier
     .cta-bar{margin-top:2.75rem;padding:1.75rem;border-radius:12px;background:var(--d);color:#fff;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
     .cta-bar p{margin:0;max-width:520px;color:rgba(255,255,255,.82)}
     .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
-    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
-    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta1{background:var(--p);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
+    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.35rem;border-radius:4px;text-decoration:none}
     .cta2:hover{border-color:var(--a);color:var(--a)}
     @media(max-width:560px){.ba{grid-template-columns:1fr}}
     @media(max-width:640px){nav ul{display:none}}
@@ -1824,24 +1827,24 @@ TYPE: tier
   <title>Privacy Policy | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{PRIVACY_META_DESCRIPTION}}" />
   <link rel="canonical" href="{{SITE_URL}}/privacy-policy.html" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:820px;margin:0 auto}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
-    h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
+    h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
     p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
     ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
     footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
@@ -1909,24 +1912,24 @@ TYPE: tier
   <title>Terms of Use | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{TERMS_META_DESCRIPTION}}" />
   <link rel="canonical" href="{{SITE_URL}}/terms.html" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:820px;margin:0 auto}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
-    h2{font-family:Syne,sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
+    h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
     p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
     ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
     footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
@@ -1991,14 +1994,14 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>Page not found | {{BUSINESS_NAME}}</title>
   <meta name="robots" content="noindex" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3rem)}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3rem)}
     p{margin-top:1rem;color:#555;max-width:440px;line-height:1.65}
-    a{display:inline-block;margin-top:1.75rem;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none}
+    a{display:inline-block;margin-top:1.75rem;background:var(--p);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none}
     a:hover{filter:brightness(.95)}
     code{font-size:.85rem;color:#666}
   </style>
@@ -2028,14 +2031,14 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>Offline | {{BUSINESS_NAME}}</title>
   <meta name="robots" content="noindex" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.75rem,4vw,2.5rem)}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.75rem,4vw,2.5rem)}
     p{margin-top:1rem;color:#555;max-width:420px;line-height:1.65}
-    a{display:inline-block;margin-top:1.75rem;background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none}
+    a{display:inline-block;margin-top:1.75rem;background:var(--p);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none}
     a[href^="tel"]{margin-left:.5rem;background:var(--d)}
   </style>
 </head>
@@ -2091,14 +2094,6 @@ TYPE: tier
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--brand-primary)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:760px}
-    .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
-    .c-track{display:flex;transition:transform .45s ease}
-    .c-item{min-width:100%;aspect-ratio:16/9;position:relative;background:#111}
-    .c-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
-    .c-nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
-    .c-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer;font-family:inherit}
-    .c-btn:hover{border-color:var(--brand-primary)}
-    .c-meta{font-size:.85rem;color:#666;font-weight:700}
     .gallery-after{margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1)}
     .gallery-after h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);line-height:1.2;color:var(--brand-dark);max-width:720px}
     .gallery-after h2 span{color:var(--brand-primary)}
@@ -2193,28 +2188,37 @@ TYPE: tier
   <style>
     :root{--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:#fff;color:var(--ink);overflow-x:hidden}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--ink);overflow-x:hidden}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
 
     #sticky-header{
       position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:1rem;
       padding:0 clamp(1.25rem,3.2vw,2.75rem);
       height:80px;
       box-shadow:0 10px 28px rgba(0,0,0,.08);
       border-bottom:1px solid rgba(0,0,0,.08);
     }
-    #sticky-header .logo{justify-self:start;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
     #sticky-header .logo span{color:var(--brand-accent)}
-    #sticky-header nav{justify-self:center}
-    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
     .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
     .nav-links a:hover{color:var(--brand-primary)}
-    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;justify-self:end}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
     .btn-call-now{
       display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
       font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
@@ -2229,8 +2233,7 @@ TYPE: tier
     #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
     #mobile-menu.open{display:flex}
     @media(max-width:860px){
-      #sticky-header{display:flex;justify-content:space-between;align-items:center}
-      #sticky-header nav{display:none}
+      #sticky-header .header-nav-layer{display:none}
       .nav-links{display:none}
       #menu-toggle{display:block}
     }
@@ -2264,8 +2267,10 @@ TYPE: tier
 <body>
   <header id="sticky-header">
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
       <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -2274,6 +2279,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
+    </div>
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
       <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">Call Now</a>
@@ -2283,6 +2289,7 @@ TYPE: tier
     </div>
   </header>
   <nav id="mobile-menu">
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="gallery.html">Gallery</a>
     <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
@@ -2299,62 +2306,137 @@ TYPE: tier
       <p>{{TESTIMONIALS_INTRO|Read recent feedback from homeowners who wanted clear options, clean crews, and documented work.}}</p>
 
       <section class="wall">
-        {{#each TESTIMONIALS_UP_TO_8}}
         <article class="card">
-          <blockquote>{{this.text}}</blockquote>
-          <div class="by">{{this.name}} <span>? {{this.city}}</span></div>
+          <blockquote>“{{TESTIMONIAL_1_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_1_NAME}} <span>· {{TESTIMONIAL_1_CITY}}</span></div>
         </article>
-        {{/each}}
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_2_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_2_NAME}} <span>· {{TESTIMONIAL_2_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_3_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_3_NAME}} <span>· {{TESTIMONIAL_3_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_4_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_4_NAME}} <span>· {{TESTIMONIAL_4_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_5_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_5_NAME}} <span>· {{TESTIMONIAL_5_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_6_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_6_NAME}} <span>· {{TESTIMONIAL_6_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_7_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_7_NAME}} <span>· {{TESTIMONIAL_7_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_8_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_8_NAME}} <span>· {{TESTIMONIAL_8_CITY}}</span></div>
+        </article>
       </section>
 
       <div class="k" style="margin-top:3rem">Google reviews</div>
       <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3.2vw,2rem);line-height:1.1;margin-top:.35rem">Recent feedback on <span style="color:var(--brand-primary)">Google</span></h2>
-      <p style="margin-top:.75rem">A few recent reviews from homeowners we?ve helped?repairs, replacements, and storm inspections.</p>
-      <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile ?</a></p>
+      <p style="margin-top:.75rem">{{GOOGLE_REVIEWS_SECTION_INTRO|A few recent reviews from homeowners we've helped—repairs, replacements, and storm inspections.}}</p>
+      <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile →</a></p>
 
       <section class="carousel carousel--reviews" data-carousel aria-label="Google reviews carousel">
         <div class="track" data-track>
-          {{#each GOOGLE_REVIEWS_CAROUSEL}}
           <div class="slide">
             <article class="gr-card">
               <div class="gr-top">
                 <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{this.rating}} out of 5 stars">{{this.starsDisplay}}</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_1_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_1_STARS_DISPLAY|★★★★★}}</span>
               </div>
-              <div class="gr-meta">{{this.author}} ? {{this.relativeTime}}</div>
-              <p class="gr-body">{{this.text}}</p>
+              <div class="gr-meta">{{GOOGLE_REVIEW_1_AUTHOR}} · {{GOOGLE_REVIEW_1_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_1_TEXT}}”</p>
             </article>
           </div>
-          {{/each}}
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_2_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_2_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_2_AUTHOR}} · {{GOOGLE_REVIEW_2_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_2_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_3_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_3_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_3_AUTHOR}} · {{GOOGLE_REVIEW_3_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_3_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_4_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_4_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_4_AUTHOR}} · {{GOOGLE_REVIEW_4_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_4_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_5_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_5_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_5_AUTHOR}} · {{GOOGLE_REVIEW_5_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_5_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_6_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_6_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_6_AUTHOR}} · {{GOOGLE_REVIEW_6_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_6_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_7_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_7_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_7_AUTHOR}} · {{GOOGLE_REVIEW_7_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_7_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_8_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_8_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_8_AUTHOR}} · {{GOOGLE_REVIEW_8_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_8_TEXT}}”</p>
+            </article>
+          </div>
         </div>
         <div class="cnav">
           <button type="button" class="cbtn" data-prev>Prev</button>
-          <div class="cmeta"><span data-index>1</span> / <span data-total>1</span></div>
+          <div class="cmeta"><span data-index>1</span> / <span data-total>8</span></div>
           <button type="button" class="cbtn" data-next>Next</button>
         </div>
       </section>
     </div>
   </main>
 
-  <script>
-    (function(){
-      var root=document.querySelector('[data-carousel]');
-      if(!root) return;
-      var track=root.querySelector('[data-track]');
-      var slides=Array.from(track.children);
-      var prev=root.querySelector('[data-prev]');
-      var next=root.querySelector('[data-next]');
-      var idxEl=root.querySelector('[data-index]');
-      var totalEl=root.querySelector('[data-total]');
-      var idx=0;
-      if(!slides.length) return;
-      totalEl.textContent=slides.length;
-      function render(){ track.style.transform='translateX('+(-idx*100)+'%)'; idxEl.textContent=(idx+1); }
-      prev.addEventListener('click',function(){ idx=(idx-1+slides.length)%slides.length; render(); });
-      next.addEventListener('click',function(){ idx=(idx+1)%slides.length; render(); });
-      render();
-    })();
-  </script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -2375,29 +2457,32 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{--container-w:1100px;--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
     header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
-    .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
+    .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem;min-height:1.5rem}
     .chip{background:#fff;border:1px solid rgba(0,0,0,.1);padding:.35rem .9rem;border-radius:20px;font-size:.85rem;font-weight:800}
-    .map{border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);margin-top:2.25rem;background:#eee}
-    .map iframe{display:block;width:100%;height:420px;border:none}
+    .map{margin-top:2.25rem;border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);background:#e8eaed}
+    #service-area-map{height:420px;width:100%;z-index:1}
+    .leaflet-container{font-family:'Inter',system-ui,sans-serif}
+    .map-legend{font-size:.85rem;color:#555;margin-top:.65rem;max-width:820px;line-height:1.5}
     @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
@@ -2419,24 +2504,113 @@ TYPE: tier
 
   <main>
     <div class="container">
-      <div class="k">Service Area</div>
+      <div class="k">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</div>
       <h1>Serving <span>{{SERVICE_AREA_SHORT}}</span></h1>
       <p>{{SERVICE_AREA_INTRO}}</p>
 
-      <div class="chips">
-        {{#each SERVICE_CITIES}}
-        <span class="chip">{{this}}</span>
-        {{/each}}
-      </div>
+      <div class="chips" id="service-area-chips" role="list" aria-label="Communities served"></div>
+      <script type="application/json" id="svc-cities-json">{{SERVICE_CITIES}}</script>
+      <noscript>
+        <p class="chips" style="margin-top:1.75rem"><strong>Areas:</strong> {{SERVICE_CITIES_ONE_LINE}}</p>
+      </noscript>
 
-      <div class="map">
-        <iframe
-          title="{{BUSINESS_NAME}} Service Area Map"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q={{CITY}},{{STATE}}&zoom=11">
-        </iframe>
+      <div class="map" id="area-map-wrap">
+        <div id="service-area-map" role="img" aria-label="Map centered on {{BUSINESS_NAME}} with markers for cities served"></div>
       </div>
+      <p class="map-legend">{{SERVICE_AREA_MAP_LEGEND|Orange pins show areas we routinely serve. Map uses OpenStreetMap—no Google Maps API key required.}}</p>
+      <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
+
+      <script type="application/json" id="area-markers-json">{{SERVICE_AREA_MAP_MARKERS_JSON}}</script>
+      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+      <script>
+        (function () {
+          var chipHost = document.getElementById('service-area-chips');
+          var rawCities = document.getElementById('svc-cities-json');
+          if (chipHost && rawCities && rawCities.textContent.trim()) {
+            try {
+              var cities = JSON.parse(rawCities.textContent);
+              if (Array.isArray(cities)) {
+                cities.forEach(function (lab) {
+                  if (lab == null || String(lab).trim() === '') return;
+                  var sp = document.createElement('span');
+                  sp.className = 'chip';
+                  sp.setAttribute('role', 'listitem');
+                  sp.textContent = String(lab).trim();
+                  chipHost.appendChild(sp);
+                });
+              }
+            } catch (e) {}
+          }
+          if (chipHost && chipHost.childElementCount === 0) {
+            var fb = document.createElement('p');
+            fb.className = 'chips';
+            fb.style.marginTop = '1.75rem';
+            fb.style.fontWeight = '700';
+            fb.textContent = '{{SERVICE_CITIES_ONE_LINE}}';
+            chipHost.parentNode.insertBefore(fb, chipHost.nextSibling);
+          }
+
+          if (typeof L === 'undefined' || !document.getElementById('service-area-map')) return;
+
+          var lat = parseFloat(String('{{MAP_CENTER_LAT}}').trim());
+          var lng = parseFloat(String('{{MAP_CENTER_LNG}}').trim());
+          if (!isFinite(lat) || !isFinite(lng)) {
+            lat = 39.8283;
+            lng = -98.5795;
+          }
+          var zoom = parseInt('{{MAP_ZOOM|10}}', 10);
+          if (!isFinite(zoom) || zoom < 4 || zoom > 16) zoom = 10;
+
+          var map = L.map('service-area-map', { scrollWheelZoom: false }).setView([lat, lng], zoom);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+
+          var markers = [];
+          var rawMarkers = document.getElementById('area-markers-json');
+          if (rawMarkers && rawMarkers.textContent.trim()) {
+            try {
+              var parsed = JSON.parse(rawMarkers.textContent);
+              if (Array.isArray(parsed)) {
+                parsed.forEach(function (m) {
+                  if (!m) return;
+                  var la = Number(m.lat);
+                  var ln = Number(m.lng);
+                  if (!isFinite(la) || !isFinite(ln)) return;
+                  var label = m.label != null ? String(m.label) : '';
+                  var mk = L.circleMarker([la, ln], {
+                    radius: 10,
+                    color: '#c2410c',
+                    weight: 2,
+                    fillColor: '#f97316',
+                    fillOpacity: 0.55
+                  }).addTo(map);
+                  if (label) mk.bindPopup(label);
+                  markers.push(mk);
+                });
+              }
+            } catch (e2) {}
+          }
+
+          if (markers.length) {
+            var fg = L.featureGroup(markers);
+            map.fitBounds(fg.getBounds().pad(0.18));
+          } else {
+            var bizEl = document.getElementById('biz-name-for-map');
+            var bizName = bizEl && bizEl.textContent ? bizEl.textContent.trim() : 'Our location';
+            L.circleMarker([lat, lng], {
+              radius: 11,
+              color: '#c2410c',
+              weight: 2,
+              fillColor: '#f97316',
+              fillOpacity: 0.65
+            })
+              .addTo(map)
+              .bindPopup(bizName);
+          }
+        })();
+      </script>
     </div>
   </main>
   <script src="./main.js" defer></script>
@@ -2450,10 +2624,12 @@ SOURCE: templates/enhanced/styles.css
 TYPE: tier
 ================================================================================
 
-/* Supplemental stylesheet ? critical layout/CSS remains inline in HTML templates. */
+/* Supplemental stylesheet — critical layout/CSS remains inline in HTML templates. */
 :root {
   --ahana-brand-primary: {{BRAND_PRIMARY|#FF5733}};
   --ahana-brand-accent: {{BRAND_ACCENT|#FF5733}};
+  /* Match templates/starter + samples/enhanced content column */
+  --container-w: 1100px;
 }
 
 .skip-link {
@@ -2489,6 +2665,62 @@ TYPE: tier
 #sticky-header .nav-links a.nav-current,
 #mobile-menu a.nav-current {
   color: var(--brand-primary);
+}
+
+/* Home + gallery image carousel — main.js [data-carousel]; not .carousel--reviews (testimonials) */
+.carousel:not(.carousel--reviews) {
+  margin-top: 2.25rem;
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.carousel:not(.carousel--reviews) .c-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.45s ease;
+}
+.carousel:not(.carousel--reviews) .c-item {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #111;
+}
+.carousel:not(.carousel--reviews) .c-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.92;
+}
+.carousel:not(.carousel--reviews) .c-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  background: var(--brand-light, #f7f7f7);
+}
+.carousel:not(.carousel--reviews) .c-btn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+}
+.carousel:not(.carousel--reviews) .c-btn:hover {
+  border-color: var(--brand-primary, #ff5733);
+}
+.carousel:not(.carousel--reviews) .c-meta {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 700;
 }
 
 ================================================================================

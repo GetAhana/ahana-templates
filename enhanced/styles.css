@@ -40,3 +40,59 @@
 #mobile-menu a.nav-current {
   color: var(--brand-primary);
 }
+
+/* Home + gallery image carousel — main.js [data-carousel]; not .carousel--reviews (testimonials) */
+.carousel:not(.carousel--reviews) {
+  margin-top: 2.25rem;
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.carousel:not(.carousel--reviews) .c-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.45s ease;
+}
+.carousel:not(.carousel--reviews) .c-item {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #111;
+}
+.carousel:not(.carousel--reviews) .c-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.92;
+}
+.carousel:not(.carousel--reviews) .c-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  background: var(--brand-light, #f7f7f7);
+}
+.carousel:not(.carousel--reviews) .c-btn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+}
+.carousel:not(.carousel--reviews) .c-btn:hover {
+  border-color: var(--brand-primary, #ff5733);
+}
+.carousel:not(.carousel--reviews) .c-meta {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 700;
+}

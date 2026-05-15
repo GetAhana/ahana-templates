@@ -27,15 +27,19 @@
   <style>
     :root{--container-w:1100px;--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
+    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
     header a{color:#fff;text-decoration:none}
-    .logo{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.5rem}
+    .logo{position:relative;z-index:2;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
     .logo span{color:var(--a)}
+    .header-nav-layer{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+    .header-nav-layer nav{pointer-events:auto;max-width:min(760px,calc(100vw - 20rem))}
+    .header-nav-layer nav ul{justify-content:center}
+    .header-ctas{position:relative;z-index:2;flex-shrink:0}
     nav ul{display:flex;gap:1.25rem;list-style:none}
     nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
     nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800}
+    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
     main{padding:120px 1.5rem 4rem;background:#fff}
     .container{max-width:var(--container-w);margin:0 auto;width:100%}
     .article-back{margin:0 0 1.25rem;font-size:.95rem;font-weight:700}
@@ -44,28 +48,28 @@
     .article-meta-line{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:1rem}
     .article-cat{color:var(--p)}
     .article-meta-sep{font-weight:600;color:#aaa}
-    .article-h1{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(2rem,4.2vw,3rem);line-height:1.08;margin-bottom:.75rem}
+    .article-h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4.2vw,3rem);line-height:1.08;margin-bottom:.75rem}
     .article-h1 span{color:var(--p)}
     .article-dek{margin-top:.5rem;color:#4A4A4A;line-height:1.75;max-width:720px;font-size:1.05rem}
     .article-tldr-wrap{margin-top:1.75rem;padding:1.35rem 1.4rem;border-radius:16px;background:var(--l);border:1px solid rgba(0,0,0,.08)}
-    .article-tldr-wrap :where(h2,h3){font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:.65rem;color:var(--d)}
+    .article-tldr-wrap :where(h2,h3){font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:.65rem;color:var(--d)}
     .article-tldr-wrap ul{margin:.5rem 0 0 1.1rem;color:#444;line-height:1.75}
     .article-body{margin-top:2rem}
     .article-prose{color:#333;line-height:1.8;font-size:1.02rem;max-width:720px}
     .article-prose > * + *{margin-top:1rem}
-    .article-prose h2{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(1.35rem,2.5vw,1.65rem);margin:2rem 0 .75rem;color:var(--d)}
-    .article-prose h3{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:1.12rem;margin:1.5rem 0 .5rem;color:var(--d)}
+    .article-prose h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,2.5vw,1.65rem);margin:2rem 0 .75rem;color:var(--d)}
+    .article-prose h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.12rem;margin:1.5rem 0 .5rem;color:var(--d)}
     .article-prose p{margin:.85rem 0}
     .article-prose ul,.article-prose ol{margin:.85rem 0 .85rem 1.25rem}
     .article-prose li{margin:.35rem 0}
     .article-prose a{color:var(--p);font-weight:700}
     .cta-band{margin-top:2.75rem;padding:1.75rem 1.5rem;border-radius:16px;background:linear-gradient(135deg,rgba(255,87,51,.08),#fff);border:1px solid rgba(0,0,0,.08);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
-    .cta-band h2{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(1.25rem,2.5vw,1.6rem);margin-bottom:.35rem;color:var(--d)}
+    .cta-band h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.25rem,2.5vw,1.6rem);margin-bottom:.35rem;color:var(--d)}
     .cta-band .sub{margin:0;max-width:520px;color:#555;line-height:1.65;font-size:.98rem}
     .cta-band .btn-row{display:flex;gap:.75rem;flex-wrap:wrap}
-    .btn-outline{display:inline-flex;align-items:center;background:transparent;border:2px solid rgba(0,0,0,.14);color:var(--d);font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;padding:.65rem 1.1rem;border-radius:10px;text-decoration:none}
+    .btn-outline{display:inline-flex;align-items:center;background:transparent;border:2px solid rgba(0,0,0,.14);color:var(--d);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.65rem 1.1rem;border-radius:10px;text-decoration:none}
     .btn-outline:hover{border-color:var(--p);color:var(--p)}
-    @media(max-width:640px){nav ul{display:none}}
+    @media(max-width:640px){.header-nav-layer{display:none}nav ul{display:none}}
   </style>
   <script type="application/ld+json">
 {{ARTICLE_POST_SCHEMA_JSON}}
@@ -75,8 +79,10 @@
   <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
   <header>
     <a class="logo" href="../index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
     <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
       <ul>
+        <li><a href="../index.html">Home</a></li>
         <li><a href="../services.html">Services</a></li>
         <li><a href="../gallery.html">Gallery</a></li>
         <li><a href="../testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -85,7 +91,10 @@
         <li><a href="../service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
+    </div>
+    <div class="header-ctas">
     <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+    </div>
   </header>
 
   <main id="main">

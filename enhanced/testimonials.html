@@ -11,28 +11,37 @@
   <style>
     :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:#fff;color:var(--ink);overflow-x:hidden}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--ink);overflow-x:hidden}
     .container{max-width:var(--container-w);margin:0 auto;width:100%}
 
     #sticky-header{
       position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:1rem;
       padding:0 clamp(1.25rem,3.2vw,2.75rem);
       height:80px;
       box-shadow:0 10px 28px rgba(0,0,0,.08);
       border-bottom:1px solid rgba(0,0,0,.08);
     }
-    #sticky-header .logo{justify-self:start;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
     #sticky-header .logo span{color:var(--brand-accent)}
-    #sticky-header nav{justify-self:center}
-    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
     .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
     .nav-links a:hover{color:var(--brand-primary)}
-    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;justify-self:end}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
     .btn-call-now{
       display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
       font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
@@ -47,8 +56,7 @@
     #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
     #mobile-menu.open{display:flex}
     @media(max-width:860px){
-      #sticky-header{display:flex;justify-content:space-between;align-items:center}
-      #sticky-header nav{display:none}
+      #sticky-header .header-nav-layer{display:none}
       .nav-links{display:none}
       #menu-toggle{display:block}
     }
@@ -82,8 +90,10 @@
 <body>
   <header id="sticky-header">
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
       <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -92,6 +102,7 @@
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
+    </div>
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
       <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">Call Now</a>
@@ -101,6 +112,7 @@
     </div>
   </header>
   <nav id="mobile-menu">
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="gallery.html">Gallery</a>
     <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
@@ -117,63 +129,137 @@
       <p>{{TESTIMONIALS_INTRO|Read recent feedback from homeowners who wanted clear options, clean crews, and documented work.}}</p>
 
       <section class="wall">
-        {{#each TESTIMONIALS_UP_TO_8}}
         <article class="card">
-          <blockquote>{{this.text}}</blockquote>
-          <div class="by">{{this.name}} <span>· {{this.city}}</span></div>
+          <blockquote>“{{TESTIMONIAL_1_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_1_NAME}} <span>· {{TESTIMONIAL_1_CITY}}</span></div>
         </article>
-        {{/each}}
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_2_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_2_NAME}} <span>· {{TESTIMONIAL_2_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_3_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_3_NAME}} <span>· {{TESTIMONIAL_3_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_4_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_4_NAME}} <span>· {{TESTIMONIAL_4_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_5_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_5_NAME}} <span>· {{TESTIMONIAL_5_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_6_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_6_NAME}} <span>· {{TESTIMONIAL_6_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_7_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_7_NAME}} <span>· {{TESTIMONIAL_7_CITY}}</span></div>
+        </article>
+        <article class="card">
+          <blockquote>“{{TESTIMONIAL_8_TEXT}}”</blockquote>
+          <div class="by">{{TESTIMONIAL_8_NAME}} <span>· {{TESTIMONIAL_8_CITY}}</span></div>
+        </article>
       </section>
 
       <div class="k" style="margin-top:3rem">Google reviews</div>
       <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3.2vw,2rem);line-height:1.1;margin-top:.35rem">Recent feedback on <span style="color:var(--brand-primary)">Google</span></h2>
-      <p style="margin-top:.75rem">A few recent reviews from homeowners we’ve helped—repairs, replacements, and storm inspections.</p>
+      <p style="margin-top:.75rem">{{GOOGLE_REVIEWS_SECTION_INTRO|A few recent reviews from homeowners we've helped—repairs, replacements, and storm inspections.}}</p>
       <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile →</a></p>
 
       <section class="carousel carousel--reviews" data-carousel aria-label="Google reviews carousel">
         <div class="track" data-track>
-          {{#each GOOGLE_REVIEWS_CAROUSEL}}
           <div class="slide">
             <article class="gr-card">
               <div class="gr-top">
                 <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{this.rating}} out of 5 stars">{{this.starsDisplay}}</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_1_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_1_STARS_DISPLAY|★★★★★}}</span>
               </div>
-              <div class="gr-meta">{{this.author}} · {{this.relativeTime}}</div>
-              <p class="gr-body">{{this.text}}</p>
+              <div class="gr-meta">{{GOOGLE_REVIEW_1_AUTHOR}} · {{GOOGLE_REVIEW_1_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_1_TEXT}}”</p>
             </article>
           </div>
-          {{/each}}
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_2_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_2_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_2_AUTHOR}} · {{GOOGLE_REVIEW_2_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_2_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_3_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_3_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_3_AUTHOR}} · {{GOOGLE_REVIEW_3_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_3_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_4_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_4_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_4_AUTHOR}} · {{GOOGLE_REVIEW_4_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_4_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_5_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_5_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_5_AUTHOR}} · {{GOOGLE_REVIEW_5_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_5_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_6_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_6_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_6_AUTHOR}} · {{GOOGLE_REVIEW_6_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_6_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_7_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_7_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_7_AUTHOR}} · {{GOOGLE_REVIEW_7_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_7_TEXT}}”</p>
+            </article>
+          </div>
+          <div class="slide">
+            <article class="gr-card">
+              <div class="gr-top">
+                <span class="gr-mark">Google review</span>
+                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_8_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_8_STARS_DISPLAY|★★★★★}}</span>
+              </div>
+              <div class="gr-meta">{{GOOGLE_REVIEW_8_AUTHOR}} · {{GOOGLE_REVIEW_8_RELATIVE_TIME}}</div>
+              <p class="gr-body">“{{GOOGLE_REVIEW_8_TEXT}}”</p>
+            </article>
+          </div>
         </div>
         <div class="cnav">
           <button type="button" class="cbtn" data-prev>Prev</button>
-          <div class="cmeta"><span data-index>1</span> / <span data-total>1</span></div>
+          <div class="cmeta"><span data-index>1</span> / <span data-total>8</span></div>
           <button type="button" class="cbtn" data-next>Next</button>
         </div>
       </section>
     </div>
   </main>
 
-  <script>
-    (function(){
-      var root=document.querySelector('[data-carousel]');
-      if(!root) return;
-      var track=root.querySelector('[data-track]');
-      var slides=Array.from(track.children);
-      var prev=root.querySelector('[data-prev]');
-      var next=root.querySelector('[data-next]');
-      var idxEl=root.querySelector('[data-index]');
-      var totalEl=root.querySelector('[data-total]');
-      var idx=0;
-      if(!slides.length) return;
-      totalEl.textContent=slides.length;
-      function render(){ track.style.transform='translateX('+(-idx*100)+'%)'; idxEl.textContent=(idx+1); }
-      prev.addEventListener('click',function(){ idx=(idx-1+slides.length)%slides.length; render(); });
-      next.addEventListener('click',function(){ idx=(idx+1)%slides.length; render(); });
-      render();
-    })();
-  </script>
   <script src="./main.js" defer></script>
 </body>
 </html>
-

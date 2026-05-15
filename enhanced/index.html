@@ -33,22 +33,31 @@
       position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:1rem;
       padding:0 clamp(1.25rem,3.2vw,2.75rem);
       height:80px;
       box-shadow:0 10px 28px rgba(0,0,0,.08);
       border-bottom:1px solid rgba(0,0,0,.08);
     }
-    #sticky-header .logo{justify-self:start;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
     #sticky-header .logo span{color:var(--brand-accent)}
-    #sticky-header nav{justify-self:center}
-    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
     .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;transition:color .2s;white-space:nowrap}
     .nav-links a:hover{color:var(--brand-primary)}
 
-    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;justify-self:end}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
     .btn-call-now{
       display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
       font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;
@@ -232,15 +241,6 @@
     summary{cursor:pointer;font-weight:900;letter-spacing:.02em}
     details p{margin-top:.75rem;color:#555;line-height:1.75}
 
-    .carousel{margin-top:2.25rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
-    .c-track{display:flex;transition:transform .45s ease}
-    .c-item{min-width:100%;aspect-ratio:16/9;position:relative;background:#111}
-    .c-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
-    .c-nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
-    .c-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
-    .c-btn:hover{border-color:var(--brand-primary)}
-    .c-meta{font-size:.85rem;color:#666;font-weight:700}
-
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2.25rem}
     .card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;padding:1.5rem}
     .card h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
@@ -258,8 +258,7 @@
     .footer-col ul li a:hover{color:var(--brand-accent)}
     .footer-bottom{max-width:var(--container-w);margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
     @media(max-width:640px){
-      #sticky-header{display:flex;justify-content:space-between;align-items:center}
-      #sticky-header nav{display:none}
+      #sticky-header .header-nav-layer{display:none}
       .nav-links{display:none}
       #menu-toggle{display:block}
       .footer-grid{grid-template-columns:1fr;gap:2rem}
@@ -288,8 +287,10 @@
 <body>
   <header id="sticky-header">
     <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
       <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
@@ -298,6 +299,7 @@
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
+    </div>
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
       <a href="tel:{{PHONE_NUMBER}}" class="btn-call-now">
@@ -310,6 +312,7 @@
     </div>
   </header>
   <nav id="mobile-menu">
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="gallery.html">Gallery</a>
     <a href="testimonials.html">Testimonials</a>
@@ -447,9 +450,9 @@
           <div class="c-item"><img src="{{GALLERY_10_URL}}" alt="{{GALLERY_10_ALT}}"></div>
         </div>
         <div class="c-nav">
-          <button class="c-btn" data-prev>Prev</button>
+          <button type="button" class="c-btn" data-prev>Prev</button>
           <div class="c-meta"><span data-index>1</span> / <span data-total>10</span></div>
-          <button class="c-btn" data-next>Next</button>
+          <button type="button" class="c-btn" data-next>Next</button>
         </div>
       </div>
     </div>
