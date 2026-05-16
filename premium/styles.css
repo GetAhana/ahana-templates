@@ -2,6 +2,8 @@
 :root {
   --ahana-brand-primary: {{BRAND_PRIMARY|#FF5733}};
   --ahana-brand-accent: {{BRAND_ACCENT|#FF5733}};
+  /* Match templates/starter + samples/enhanced content column */
+  --container-w: 1100px;
 }
 
 .skip-link {
@@ -34,67 +36,289 @@
   text-decoration: none;
 }
 
-/* Mobile nav — #menu-toggle / #mobile-menu in page templates */
-#menu-toggle {
-  display: none;
+#sticky-header .nav-links a.nav-current,
+#mobile-menu a.nav-current {
+  color: var(--brand-primary);
+}
+
+/* Home + gallery image carousel — main.js [data-carousel]; not .carousel--reviews (testimonials) */
+.carousel:not(.carousel--reviews) {
+  margin-top: 2.25rem;
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.carousel:not(.carousel--reviews) .c-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.45s ease;
+}
+.carousel:not(.carousel--reviews) .c-item {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #111;
+}
+.carousel:not(.carousel--reviews) .c-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.92;
+}
+.carousel:not(.carousel--reviews) .c-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  background: var(--brand-light, #f7f7f7);
+}
+.carousel:not(.carousel--reviews) .c-btn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+}
+.carousel:not(.carousel--reviews) .c-btn:hover {
+  border-color: var(--brand-primary, #ff5733);
+}
+.carousel:not(.carousel--reviews) .c-meta {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 700;
+}
+
+/* Premium — service area submenu (light sticky header + mobile sheet) */
+#sticky-header .nav-links li.nav-dd {
+  position: relative;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+.nav-dd-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.35rem;
-  color: #fff;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
+  font: inherit;
+  color: rgba(14, 14, 16, 0.78);
+  font-weight: 900;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0;
+  white-space: nowrap;
   -webkit-tap-highlight-color: transparent;
 }
-#menu-toggle:focus-visible {
-  outline: 2px solid var(--a, var(--ahana-brand-accent));
-  outline-offset: 3px;
-  border-radius: 6px;
+.nav-dd-trigger:hover,
+.nav-dd-trigger:focus-visible {
+  color: var(--brand-primary, #ff5733);
 }
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
+.nav-dd-trigger.nav-current {
+  color: var(--brand-primary, #ff5733) !important;
 }
-#mobile-menu {
+.nav-dd-caret {
+  font-size: 0.62em;
+  opacity: 0.85;
+  transform: translateY(1px);
+}
+.nav-dd-panel {
   display: none;
-  position: fixed;
-  top: 64px;
+  position: absolute;
   left: 0;
-  right: 0;
-  z-index: 40;
-  flex-direction: column;
-  background: var(--d, #1a1a1b);
-  padding: 0.75rem 1.5rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  top: calc(100% + 0.55rem);
+  min-width: 230px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 0.35rem 0;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+  z-index: 120;
+  list-style: none;
+  margin: 0;
 }
-#mobile-menu.open {
-  display: flex;
+.nav-dd-panel li {
+  margin: 0;
 }
-#mobile-menu a {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-  font-weight: 900;
-  font-size: 0.78rem;
+.nav-dd-panel a {
+  display: block;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.1em;
+  color: rgba(14, 14, 16, 0.82);
+  text-decoration: none;
+  font-weight: 800;
+  white-space: nowrap;
 }
-#mobile-menu a:last-child {
-  border-bottom: 0;
+.nav-dd-panel a:hover,
+.nav-dd-panel a:focus-visible {
+  color: var(--brand-primary, #ff5733);
+  background: rgba(255, 87, 51, 0.06);
 }
-header nav a.nav-current,
-#mobile-menu a.nav-current {
-  color: var(--a, var(--ahana-brand-accent)) !important;
+.nav-dd:hover .nav-dd-panel,
+.nav-dd:focus-within .nav-dd-panel {
+  display: block;
 }
-@media (max-width: 640px) {
-  header nav ul {
-    display: none !important;
-  }
-  #menu-toggle {
-    display: inline-flex;
-  }
+#sticky-header .nav-dd-panel a.nav-current {
+  color: var(--brand-primary, #ff5733) !important;
+}
+
+.mobile-nav-dd {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.mobile-nav-dd-label {
+  color: rgba(14, 14, 16, 0.45);
+  font-weight: 900;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.35rem 0 0.15rem;
+}
+#mobile-menu .mobile-nav-dd a {
+  padding-left: 0.85rem !important;
+  font-size: 0.82rem !important;
+}
+
+/* Service area hub — local landing cards */
+.local-pages-section {
+  margin-top: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.local-pages-section h2 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  line-height: 1.1;
+  margin: 0 0 0.35rem;
+  color: #1a1a1b;
+}
+.local-pages-section h2 span {
+  color: var(--brand-primary, #ff5733);
+}
+.local-pages-section .section-lead {
+  margin: 0 0 1.25rem;
+  color: #5a6570;
+  line-height: 1.7;
+  max-width: 860px;
+  font-size: 0.98rem;
+}
+.local-pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.local-page-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--brand-light, #f7f7f7);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.local-page-card:hover {
+  border-color: var(--brand-primary, #ff5733);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+.local-page-card__k {
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--brand-primary, #ff5733);
+}
+.local-page-card strong {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #111;
+}
+.local-page-card__d {
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.55;
+}
+
+/* Local landing pages (location-*.html) */
+.loc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.loc-card {
+  background: var(--brand-light, #f7f7f7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 1.35rem 1.4rem;
+}
+.loc-card h3 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  color: #2f3d4a;
+}
+.loc-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.65;
+}
+.loc-cross {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+.loc-cross a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  color: var(--brand-primary, #ff5733);
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.loc-cross a:hover {
+  border-color: var(--brand-primary, #ff5733);
+}
+.loc-map {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+  background: #eee;
+}
+.loc-map iframe {
+  display: block;
+  width: 100%;
+  height: 360px;
+  border: none;
 }

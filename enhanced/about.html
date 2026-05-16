@@ -22,34 +22,108 @@
       --brand-dark:{{BRAND_DARK|#1A1A1B}};
       --brand-light:{{BRAND_LIGHT|#F7F7F7}};
       --brand-accent:{{BRAND_ACCENT|#FF5733}};
+      --ink:#0E0E10;
       --line:rgba(0,0,0,.08);
       --muted:#5a6570;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:#fff;color:var(--brand-dark);overflow-x:hidden}
     .container{max-width:var(--container-w);margin:0 auto;width:100%;padding:0 1.5rem}
-    header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 1.5rem;height:64px;box-shadow:0 10px 28px rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
-    header .logo{position:relative;z-index:2;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--brand-dark);text-decoration:none}
-    header .logo span{color:var(--brand-accent)}
-    .header-nav-layer{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-    .header-nav-layer nav{pointer-events:auto;max-width:min(760px,calc(100vw - 20rem))}
-    .header-nav-layer nav ul{justify-content:center}
-    .header-ctas{position:relative;z-index:2;flex-shrink:0}
-    nav ul{display:flex;gap:1.5rem;list-style:none}
-    nav a{color:rgba(14,14,16,.78);font-size:.85rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
-    nav a:hover{color:var(--brand-accent)}
-    .btn{background:var(--brand-primary);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.55rem 1.1rem;border-radius:10px;text-decoration:none}
-    main.depth-page{padding:120px 0 4.5rem;background:#fff}
-    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.6rem}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main.depth-page{padding:124px 0 4.5rem;background:#fff}
+    .k{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--brand-primary);
+      margin-bottom:.75rem;padding:.28rem 0 .28rem .85rem;border-left:3px solid var(--brand-primary);
+      background:linear-gradient(90deg,color-mix(in srgb,var(--brand-primary) 14%,transparent),transparent 92%)
+    }
     .depth-page h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;line-height:1.06;font-size:clamp(2rem,4.4vw,3.2rem);color:var(--brand-dark)}
     .depth-page h1 span{color:var(--brand-primary)}
-    .sub{margin-top:.85rem;color:var(--muted);font-size:1.02rem;line-height:1.65;max-width:42rem}
-    .depth-mission{display:grid;grid-template-columns:1.12fr .88fr;gap:2rem;margin-top:2rem;align-items:start}
-    @media(max-width:900px){.depth-mission{grid-template-columns:1fr}}
-    .depth-aside{background:var(--brand-dark);color:#fff;border-radius:18px;padding:1.75rem;border:1px solid rgba(255,255,255,.1)}
-    .depth-quote{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-style:italic;font-size:clamp(1.05rem,2.2vw,1.22rem);line-height:1.4;margin-bottom:1rem;color:#fff}
-    .depth-attr{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
-    .depth-h{margin-top:3rem;padding-top:2.25rem;border-top:1px solid var(--line)}
+    .sub{margin-top:1rem;color:var(--muted);font-size:1.03rem;line-height:1.72;max-width:min(40rem,100%)}
+    .about-hero{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(240px,min(32vw,340px));
+      gap:clamp(1.5rem,4vw,3.25rem);
+      align-items:start;
+      margin-top:.35rem;
+    }
+    .about-hero-copy{min-width:0}
+    .about-pullquote.depth-aside{
+      position:sticky;top:calc(80px + 1.25rem);
+      box-shadow:0 18px 40px rgba(0,0,0,.12);
+    }
+    @media(max-width:900px){
+      .about-hero{grid-template-columns:1fr;gap:1.75rem}
+      .about-pullquote.depth-aside{position:relative;top:auto}
+    }
+    .about-story{
+      margin-top:clamp(2.5rem,5vw,3.75rem);
+      padding-top:clamp(2rem,4vw,2.75rem);
+      border-top:1px solid var(--line);
+      max-width:min(52rem,100%);
+    }
+    .about-h2{
+      margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.75rem,3.5vw,2.65rem);
+      line-height:1.08;color:var(--brand-dark)
+    }
+    .about-h2 .accent{color:var(--brand-primary)}
+    .about-prose{margin-top:1.35rem;border-left:1px solid rgba(0,0,0,.08);padding-left:clamp(1rem,2.5vw,1.5rem)}
+    .about-prose p{color:var(--muted);font-size:1.02rem;line-height:1.75;max-width:42rem;margin-top:1.05rem}
+    .about-prose p:first-child{margin-top:0}
+    .depth-aside{background:var(--brand-dark);color:#fff;border-radius:18px;padding:1.5rem 1.6rem;border:1px solid rgba(255,255,255,.1)}
+    .depth-quote{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-style:italic;font-size:clamp(1.02rem,2vw,1.2rem);line-height:1.45;margin:0 0 1.1rem;color:#fff}
+    .depth-attr{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.55);line-height:1.45}
+    .depth-h{margin-top:clamp(2.75rem,5vw,3.5rem);padding-top:clamp(2rem,3.5vw,2.5rem);border-top:1px solid var(--line)}
+    .about-block-h2{
+      margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.65rem,3vw,2.35rem);
+      line-height:1.12;color:var(--brand-dark)
+    }
+    .about-block-h2 .accent{color:var(--brand-primary)}
     .values-6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}
     @media(max-width:900px){.values-6{grid-template-columns:1fr}}
     .depth-val{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.2rem}
@@ -84,7 +158,7 @@
     .footer-col a{color:rgba(255,255,255,.55);text-decoration:none}
     .footer-col a:hover{color:var(--brand-accent)}
     .footer-bottom{max-width:var(--container-w);margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
-    @media(max-width:640px){.header-nav-layer{display:none}nav ul{display:none}.footer-grid{grid-template-columns:1fr;gap:2rem}}
+    @media(max-width:640px){.footer-grid{grid-template-columns:1fr;gap:2rem}}
   </style>
   <script type="application/ld+json">
   {
@@ -98,11 +172,11 @@
   </script>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+  <header id="sticky-header">
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
     <div class="header-nav-layer">
-    <nav>
-      <ul>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
@@ -114,33 +188,51 @@
     </nav>
     </div>
     <div class="header-ctas">
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
     </div>
   </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
 
   <main id="main" class="depth-page">
     <div class="container">
-      <div class="k">{{ABOUT_SECTION_KICKER}}</div>
-      <h1>{{ABOUT_H1_LINE_1}}<br /><span>{{ABOUT_H1_ACCENT}}</span></h1>
-      <p class="sub">{{ABOUT_LEAD}}</p>
-
-      <div class="depth-mission">
-        <div>
-          <div class="k">{{ABOUT_MISSION_SECTION_KICKER}}</div>
-          <h2 style="margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.75rem,3.5vw,2.65rem);line-height:1.08;color:var(--brand-dark)">{{ABOUT_MISSION_H2_LINE_1}}<br /><span style="color:var(--brand-primary)">{{ABOUT_MISSION_H2_ACCENT}}</span></h2>
-          <p class="sub">{{ABOUT_MISSION_P1}}</p>
-          <p class="sub" style="margin-top:1rem">{{ABOUT_MISSION_P2}}</p>
-          <p class="sub" style="margin-top:1rem">{{ABOUT_MISSION_P3}}</p>
+      <div class="about-hero">
+        <div class="about-hero-copy">
+          <div class="k">{{ABOUT_SECTION_KICKER}}</div>
+          <h1>{{ABOUT_H1_LINE_1}}<br /><span>{{ABOUT_H1_ACCENT}}</span></h1>
+          <p class="sub">{{ABOUT_LEAD}}</p>
         </div>
-        <aside class="depth-aside">
+        <aside class="depth-aside about-pullquote" aria-label="Leadership quote">
           <p class="depth-quote">{{ABOUT_MISSION_PULL_QUOTE}}</p>
           <p class="depth-attr"><strong>{{ABOUT_MISSION_PULL_QUOTE_NAME}}</strong> · {{ABOUT_MISSION_PULL_QUOTE_BYLINE}}</p>
         </aside>
       </div>
 
+      <section class="about-story" aria-labelledby="about-mission-heading">
+        <div class="k">{{ABOUT_MISSION_SECTION_KICKER}}</div>
+        <h2 id="about-mission-heading" class="about-h2">{{ABOUT_MISSION_H2_LINE_1}}<br /><span class="accent">{{ABOUT_MISSION_H2_ACCENT}}</span></h2>
+        <div class="about-prose">
+          <p>{{ABOUT_MISSION_P1}}</p>
+          <p>{{ABOUT_MISSION_P2}}</p>
+          <p>{{ABOUT_MISSION_P3}}</p>
+        </div>
+      </section>
+
       <div class="depth-h">
         <div class="k">{{ABOUT_VALUES_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.65rem,3vw,2.35rem);line-height:1.1;color:var(--brand-dark)">{{ABOUT_VALUES_H2_LINE_1}}<br /><span style="color:var(--brand-primary)">{{ABOUT_VALUES_H2_ACCENT}}</span></h2>
+        <h2 class="about-block-h2">{{ABOUT_VALUES_H2_LINE_1}}<br /><span class="accent">{{ABOUT_VALUES_H2_ACCENT}}</span></h2>
       </div>
       <div class="values-6">
         <div class="depth-val"><span class="depth-vn" aria-hidden="true">01</span><h3>{{ABOUT_VALUE_TILE_1_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_1_BODY}}</p></div>
@@ -153,7 +245,7 @@
 
       <div class="depth-h">
         <div class="k">{{ABOUT_SERVE_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.65rem,3vw,2.35rem);line-height:1.1;color:var(--brand-dark)">{{ABOUT_SERVE_H2_LINE_1}}<br /><span style="color:var(--brand-primary)">{{ABOUT_SERVE_H2_ACCENT}}</span></h2>
+        <h2 class="about-block-h2">{{ABOUT_SERVE_H2_LINE_1}}<br /><span class="accent">{{ABOUT_SERVE_H2_ACCENT}}</span></h2>
         <p class="sub">{{ABOUT_SERVE_INTRO}}</p>
         <div class="grid">
           <div class="card"><h3>{{ABOUT_SERVE_CARD_1_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_1_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_1_TAG}}</div></div>
@@ -164,7 +256,7 @@
 
       <div class="depth-h">
         <div class="k">{{ABOUT_FAQ_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.65rem,3vw,2.35rem);line-height:1.1;color:var(--brand-dark)">{{ABOUT_FAQ_H2_LINE_1}}<br /><span style="color:var(--brand-primary)">{{ABOUT_FAQ_H2_ACCENT}}</span></h2>
+        <h2 class="about-block-h2">{{ABOUT_FAQ_H2_LINE_1}}<br /><span class="accent">{{ABOUT_FAQ_H2_ACCENT}}</span></h2>
         <div class="faq-block">
           <details><summary>{{ABOUT_FAQ_1_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_1_ANSWER}}</div></details>
           <details><summary>{{ABOUT_FAQ_2_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_2_ANSWER}}</div></details>
@@ -206,7 +298,7 @@
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
           <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
           <li><a href="contact.html">Request a Quote</a></li>
         </ul>

@@ -1,5 +1,5 @@
 /* Ahana template — offline-capable static shell */
-var CACHE = 'ahana-premium-v1';
+var CACHE = 'ahana-enhanced-v1';
 var PRECACHE = [
   './index.html',
   './offline.html',

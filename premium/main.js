@@ -54,7 +54,7 @@
     var path = window.location.pathname.split('/').pop() || 'index.html';
     var sticky = document.getElementById('sticky-header');
     var sel = sticky
-      ? '#sticky-header .nav-links a[href], #mobile-menu a[href]'
+      ? '#sticky-header .nav-links a[href], #sticky-header .nav-dd-panel a[href], #mobile-menu a[href]'
       : 'header nav a[href], #mobile-menu a[href]';
     document.querySelectorAll(sel).forEach(function (a) {
       var h = a.getAttribute('href');
@@ -64,6 +64,13 @@
         if (file === path) a.classList.add('nav-current');
       } catch (err) {}
     });
+    var trig = document.querySelector('.nav-dd-trigger');
+    if (
+      trig &&
+      (path === 'service-area.html' || /^location-[123]\.html$/.test(path))
+    ) {
+      trig.classList.add('nav-current');
+    }
   }
 
   initMobileMenu();
@@ -71,9 +78,7 @@
   initTelTracking();
   initActiveNav();
 
-  (function () {
-    var root = document.querySelector('[data-carousel]');
-    if (!root) return;
+  document.querySelectorAll('[data-carousel]').forEach(function (root) {
     var track = root.querySelector('[data-track]');
     var prev = root.querySelector('[data-prev]');
     var next = root.querySelector('[data-next]');
@@ -81,6 +86,7 @@
     var totalEl = root.querySelector('[data-total]');
     if (!track || !prev || !next || !idxEl || !totalEl) return;
     var slides = Array.from(track.children);
+    if (!slides.length) return;
     var idx = 0;
     totalEl.textContent = String(slides.length);
     function render() {
@@ -96,7 +102,7 @@
       render();
     });
     render();
-  })();
+  });
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {

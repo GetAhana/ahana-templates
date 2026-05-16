@@ -341,7 +341,7 @@ TYPE: tier
     </div>
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
-      <a href="tel:{{PHONE_NUMBER}}" class="btn-call-now">
+      <a href="tel:{{PHONE_NUMBER_E164}}" class="btn-call-now">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
         {{PHONE_NUMBER}}
       </a>
@@ -358,7 +358,7 @@ TYPE: tier
     <a href="about.html">About</a>
     <a href="articles.html">Articles</a>
     <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
-    <a href="tel:{{PHONE_NUMBER}}" style="color:var(--brand-accent)!important;">{{PHONE_NUMBER}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-accent)!important;">{{PHONE_NUMBER}}</a>
   </nav>
 
   <section id="hero">
@@ -371,7 +371,7 @@ TYPE: tier
       <h1>{{PRIMARY_SERVICE}} you can<br/><span>count on</span>.</h1>
       <p class="sub">{{HERO_SUBHEADLINE}}</p>
       <div class="cta">
-        <a class="btn-primary" href="tel:{{PHONE_NUMBER}}">
+        <a class="btn-primary" href="tel:{{PHONE_NUMBER_E164}}">
           Call {{PHONE_NUMBER}}
         </a>
         <a class="btn-secondary" href="contact.html">Get a free estimate</a>
@@ -525,7 +525,7 @@ TYPE: tier
           <h3>Get a free estimate</h3>
           <p style="color:rgba(255,255,255,.78);margin-top:.55rem;line-height:1.75">Call now or request an estimate online. We?ll confirm details and next steps.</p>
           <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.65rem">
-            <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
+            <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a>
             <a class="btn-outline" href="contact.html">Request estimate ?</a>
           </div>
         </div>
@@ -577,7 +577,7 @@ TYPE: tier
       <h2 class="title" style="color:#fff">Talk to a local pro<br/><span style="color:var(--brand-accent)">today</span></h2>
       <p class="body" style="color:rgba(255,255,255,.78)">{{CTA_INTRO}}</p>
       <div style="margin-top:1.5rem;display:flex;gap:.85rem;flex-wrap:wrap">
-        <a class="btn-primary" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+        <a class="btn-primary" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
         <a class="btn-secondary" href="contact.html">Request an estimate</a>
       </div>
     </div>
@@ -602,7 +602,7 @@ TYPE: tier
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
           <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
         </ul>
       </div>
@@ -635,45 +635,94 @@ TYPE: tier
   <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}}}
+    :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',sans-serif;background:#fff;color:var(--brand-dark)}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--brand-dark);overflow-x:hidden}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main{padding:124px 1.5rem 5.5rem;background:#fff}
     .container{max-width:var(--container-w);margin:0 auto;width:100%}
-    header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter: blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:64px;box-shadow:0 10px 28px rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
-    header .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--brand-dark);text-decoration:none}
-    header .logo span{color:var(--brand-accent)}
-    nav ul{display:flex;gap:1.5rem;list-style:none}
-    nav a{color:rgba(14,14,16,.78);font-size:.85rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
-    nav a:hover{color:var(--brand-accent)}
-    .btn{background:var(--brand-primary);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.55rem 1.1rem;border-radius:10px;text-decoration:none}
-    main{padding:120px 1.5rem 4rem;background:#fff}
     .kicker{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.5rem}
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--brand-primary)}
-    p{margin-top:1rem;color:#4A4A4A;font-size:1.05rem;line-height:1.75;max-width:800px}
+    p{margin-top:1rem;color:#4a5560;font-size:1.02rem;line-height:1.65;max-width:800px}
     .svc-hub-section{margin-top:2.75rem}
     .svc-hub-section:first-of-type{margin-top:2rem}
     .svc-hub-section .kicker{margin-bottom:.35rem}
     .svc-hub-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);line-height:1.15;color:var(--brand-dark);margin:.35rem 0 0}
     .svc-hub-section h2 span{color:var(--brand-primary)}
-    .svc-hub-section .section-lead{margin-top:.65rem;color:#4A4A4A;font-size:1rem;line-height:1.7;max-width:820px}
-    .svc-priority-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin-top:1.25rem}
+    .svc-hub-section .section-lead{margin-top:.55rem;color:#5a6570;font-size:.98rem;line-height:1.65;max-width:720px}
+    .svc-priority-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin-top:1.1rem;align-items:stretch}
     @media(max-width:900px){.svc-priority-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:560px){.svc-priority-grid{grid-template-columns:1fr}}
-    .svc-additional-card{margin-top:1.75rem;width:100%}
-    .svc-additional-card .kicker{margin-bottom:.25rem}
-    .svc-additional-card > h2{margin-top:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.85rem);color:var(--brand-dark);max-width:none}
-    .svc-additional-card .lead{margin-top:.65rem;color:#4A4A4A;font-size:1rem;line-height:1.7;max-width:none}
+    .feature-ico{display:block;width:44px;height:44px;color:var(--brand-primary);margin-bottom:.5rem}
+    .feature-ico svg{width:100%;height:100%;display:block}
+    .feature-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.12rem;margin:0;color:#4a5d6e;line-height:1.25}
+    a.feature-card,a.card.feature-card{text-decoration:none;color:inherit}
+    .feature-card p{margin-top:.45rem;color:#5a6570;font-size:.93rem;line-height:1.55;flex:1;max-width:none}
+    .feature-lm{margin-top:auto;padding-top:.9rem;font-weight:800;font-size:.88rem;color:var(--brand-primary)}
+    a.feature-lm{text-decoration:none}
+    a.feature-lm:hover{text-decoration:underline}
+    .svc-add-more{margin-top:1.75rem;border:1px solid rgba(0,0,0,.1);border-radius:14px;background:var(--brand-light);padding:1.25rem 1.15rem 1.35rem}
+    .svc-add-more .lead{margin-top:.5rem;color:#5a6570;font-size:.95rem;line-height:1.65;max-width:none}
+    .sticky-svc-cta{position:fixed;bottom:0;left:0;right:0;z-index:90;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.75rem;padding:.75rem 1.25rem;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid rgba(0,0,0,.1);box-shadow:0 -10px 28px rgba(0,0,0,.1)}
+    .sticky-svc-cta a{display:inline-flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.92rem;text-decoration:none;border-radius:10px;padding:.62rem 1.2rem}
+    .sticky-svc-primary{background:var(--brand-primary);color:#fff}
+    .sticky-svc-call{border:2px solid rgba(0,0,0,.12);color:var(--brand-dark);background:#fff}
+    .svc-more-h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.2rem,2.8vw,1.65rem);margin:.35rem 0 0;color:var(--brand-dark)}
+    .svc-add-more .kicker{margin-bottom:.25rem}
     .svc-additional-list{margin-top:1.15rem;padding-left:1.15rem;color:#4A4A4A;line-height:1.75;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2rem;row-gap:.35rem}
     @media(max-width:640px){.svc-additional-list{grid-template-columns:1fr}}
     .svc-additional-list li{margin:0}
-    .card{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
-    a.card.svc-detail-card{display:block;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .15s}
+    .card{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem;display:flex;flex-direction:column;height:100%}
+    a.card.svc-detail-card{display:flex;flex-direction:column;height:100%;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .15s}
     a.card.svc-detail-card:hover,a.card.svc-detail-card:focus-visible{border-color:var(--brand-primary);box-shadow:0 12px 28px rgba(0,0,0,.08);transform:translateY(-2px);outline:none}
-    .svc-detail-go{margin-top:1rem;color:var(--brand-primary);font-weight:800;font-size:.9rem}
-    .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
-    .card p{margin-top:.5rem;color:#666;font-size:.95rem}
-    .card.svc-additional-card{border-radius:14px;padding:1.85rem 1.9rem 1.75rem;border-color:rgba(0,0,0,.1);background:linear-gradient(180deg,rgba(0,0,0,.02) 0%,var(--brand-light) 100%)}
+    .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem;color:#4a5d6e}
+    .card p{margin-top:.5rem;color:#6b7785;font-size:.95rem;line-height:1.65;flex:1}
     footer{background:#0f0f10;color:rgba(255,255,255,.65);padding:3.5rem 1.5rem 2rem}
     .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:var(--container-w);margin:0 auto}
     .footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;color:#fff;margin-bottom:.75rem}
@@ -683,7 +732,7 @@ TYPE: tier
     .footer-col a{color:rgba(255,255,255,.55);text-decoration:none}
     .footer-col a:hover{color:var(--brand-accent)}
     .footer-bottom{max-width:var(--container-w);margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
-    @media(max-width:640px){nav ul{display:none}.footer-grid{grid-template-columns:1fr;gap:2rem}}
+    @media(max-width:640px){.footer-grid{grid-template-columns:1fr;gap:2rem}}
   </style>
   <script type="application/ld+json">
   {
@@ -696,46 +745,68 @@ TYPE: tier
   </script>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
-      <ul>
+  <header id="sticky-header">
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="articles.html">Articles</a></li>
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
   </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
 
   <main>
     <div class="container">
       <div class="kicker">Services</div>
       <h1>Services for <span>{{CITY}}</span> Homeowners</h1>
-      <p>{{SERVICES_INTRO}}</p>
+      <p>{{SERVICES_INTRO|Houston-area heat, hail, and wind cycles stress every layer of the roof—we answer with licensed crews and clear scopes. Text photos of damage; we route you to the right fix fast.}}</p>
 
       <section class="svc-hub-section" aria-labelledby="svc-popular-heading">
         <div class="kicker">{{SERVICES_HUB_POPULAR_KICKER|Most popular services}}</div>
-        <h2 id="svc-popular-heading">{{SERVICES_HUB_POPULAR_TITLE|Three services with full detail pages}}</h2>
-        <p class="section-lead">{{SERVICES_HUB_POPULAR_INTRO|Each card below opens a dedicated page with process steps, FAQs, and before/after examples.}}</p>
+        <h2 id="svc-popular-heading">{{SERVICES_HUB_POPULAR_TITLE|Featured services (full detail pages)}}</h2>
+        <p class="section-lead">{{SERVICES_HUB_POPULAR_INTRO|Each card opens a dedicated page with FAQs, process, and before/after photos.}}</p>
         <div class="svc-priority-grid">
-          <a class="card svc-detail-card" href="service-1.html">
-            <h2>{{SERVICE_1_NAME}}</h2>
-            <p>{{SERVICE_1_LONG}}</p>
-            <span class="svc-detail-go">{{SERVICE_1_DETAIL_CTA|View service details ?}}</span>
+          <a class="card svc-detail-card feature-card" href="service-1.html">
+            <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 10.5L12 4l9 6.5"/><path d="M9 21V12h6v9"/></svg></span>
+            <h3>{{SERVICE_1_NAME}}</h3>
+            <p>{{SERVICE_1_DESC}}</p>
+            <span class="feature-lm">Learn more</span>
           </a>
-          <a class="card svc-detail-card" href="service-2.html">
-            <h2>{{SERVICE_2_NAME}}</h2>
-            <p>{{SERVICE_2_LONG}}</p>
-            <span class="svc-detail-go">{{SERVICE_2_DETAIL_CTA|View service details ?}}</span>
+          <a class="card svc-detail-card feature-card" href="service-2.html">
+            <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"/><path d="M6 7v11a2 2 0 002 2h8a2 2 0 002-2V7"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></span>
+            <h3>{{SERVICE_2_NAME}}</h3>
+            <p>{{SERVICE_2_DESC}}</p>
+            <span class="feature-lm">Learn more</span>
           </a>
-          <a class="card svc-detail-card" href="service-3.html">
-            <h2>{{SERVICE_3_NAME}}</h2>
-            <p>{{SERVICE_3_LONG}}</p>
-            <span class="svc-detail-go">{{SERVICE_3_DETAIL_CTA|View service details ?}}</span>
+          <a class="card svc-detail-card feature-card" href="service-3.html">
+            <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+            <h3>{{SERVICE_3_NAME}}</h3>
+            <p>{{SERVICE_3_DESC}}</p>
+            <span class="feature-lm">Learn more</span>
           </a>
         </div>
       </section>
@@ -743,31 +814,364 @@ TYPE: tier
       <section class="svc-hub-section" aria-labelledby="svc-core-heading">
         <div class="kicker">{{SERVICES_HUB_CORE_KICKER|Additional core services}}</div>
         <h2 id="svc-core-heading">{{SERVICES_HUB_CORE_TITLE|Core services on this hub}}</h2>
-        <p class="section-lead">{{SERVICES_HUB_CORE_INTRO|These priority lines stay on the services hub?no separate URLs on the Enhanced plan. Call or send photos and we will recommend the right next step.}}</p>
+        <p class="section-lead">{{SERVICES_HUB_CORE_INTRO|Same crews and warranties—only the three cards above get full detail URLs on Enhanced.}}</p>
         <div class="svc-priority-grid">
-          <article class="card">
-            <h2>{{SERVICE_4_NAME}}</h2>
-            <p>{{SERVICE_4_LONG}}</p>
+          <article class="card feature-card">
+            <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18"/><path d="M4.5 10.5l7.5-7.5 7.5 7.5"/></svg></span>
+            <h3>{{SERVICE_4_NAME}}</h3>
+            <p>{{SERVICE_4_DESC}}</p>
+            <a class="feature-lm" href="contact.html">Learn more</a>
           </article>
-          <article class="card">
-            <h2>{{SERVICE_5_NAME}}</h2>
-            <p>{{SERVICE_5_LONG}}</p>
+          <article class="card feature-card">
+            <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg></span>
+            <h3>{{SERVICE_5_NAME}}</h3>
+            <p>{{SERVICE_5_DESC}}</p>
+            <a class="feature-lm" href="contact.html">Learn more</a>
           </article>
-          <article class="card">
-            <h2>{{SERVICE_6_NAME}}</h2>
-            <p>{{SERVICE_6_LONG}}</p>
+          <article class="card feature-card">
+            <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg></span>
+            <h3>{{SERVICE_6_NAME}}</h3>
+            <p>{{SERVICE_6_DESC}}</p>
+            <a class="feature-lm" href="contact.html">Learn more</a>
           </article>
         </div>
       </section>
 
-      <article class="card svc-additional-card" aria-labelledby="additional-services-heading">
+      <section class="svc-add-more" aria-labelledby="additional-services-heading">
         <div class="kicker">Additional services</div>
-        <h2 id="additional-services-heading">Other work we quote and handle</h2>
-        <p class="lead">{{ADDITIONAL_SERVICES_INTRO|If you?re not sure which service fits, call or send photos and we?ll guide you to the right next step.}}</p>
+        <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+        <p class="lead">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
         <ul class="svc-additional-list">
           {{ADDITIONAL_SERVICES_LIST_ITEMS}}
         </ul>
-      </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="sticky-svc-cta" role="region" aria-label="Quick estimate">
+    <a class="sticky-svc-primary" href="contact.html">Get free estimate</a>
+    <a class="sticky-svc-call" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
+        <p style="max-width:340px;line-height:1.65">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service area}}</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+          <li><a href="contact.html">Request a Quote</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}.</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+    </div>
+  </footer>
+  <script src="./main.js" defer></script>
+</body>
+</html>
+
+
+================================================================================
+FILE: about.html
+SOURCE: templates/enhanced/about.html
+TYPE: tier
+================================================================================
+
+<!DOCTYPE html>
+<html lang="{{HTML_LANG|en}}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>{{ABOUT_PAGE_TITLE}}</title>
+  <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
+  <meta name="theme-color" content="{{BRAND_PRIMARY|#FF5733}}" />
+  <link rel="canonical" href="{{SITE_URL}}/about" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ABOUT_PAGE_TITLE}}" />
+  <meta property="og:description" content="{{ABOUT_META_DESCRIPTION}}" />
+  <meta property="og:url" content="{{SITE_URL}}/about" />
+  <meta property="og:image" content="{{SITE_URL}}/og-image.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --container-w:1100px;
+      --brand-primary:{{BRAND_PRIMARY|#FF5733}};
+      --brand-dark:{{BRAND_DARK|#1A1A1B}};
+      --brand-light:{{BRAND_LIGHT|#F7F7F7}};
+      --brand-accent:{{BRAND_ACCENT|#FF5733}};
+      --ink:#0E0E10;
+      --line:rgba(0,0,0,.08);
+      --muted:#5a6570;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--brand-dark);overflow-x:hidden}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%;padding:0 1.5rem}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main.depth-page{padding:124px 0 4.5rem;background:#fff}
+    .k{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--brand-primary);
+      margin-bottom:.75rem;padding:.28rem 0 .28rem .85rem;border-left:3px solid var(--brand-primary);
+      background:linear-gradient(90deg,color-mix(in srgb,var(--brand-primary) 14%,transparent),transparent 92%)
+    }
+    .depth-page h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;line-height:1.06;font-size:clamp(2rem,4.4vw,3.2rem);color:var(--brand-dark)}
+    .depth-page h1 span{color:var(--brand-primary)}
+    .sub{margin-top:1rem;color:var(--muted);font-size:1.03rem;line-height:1.72;max-width:min(40rem,100%)}
+    .about-hero{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(240px,min(32vw,340px));
+      gap:clamp(1.5rem,4vw,3.25rem);
+      align-items:start;
+      margin-top:.35rem;
+    }
+    .about-hero-copy{min-width:0}
+    .about-pullquote.depth-aside{
+      position:sticky;top:calc(80px + 1.25rem);
+      box-shadow:0 18px 40px rgba(0,0,0,.12);
+    }
+    @media(max-width:900px){
+      .about-hero{grid-template-columns:1fr;gap:1.75rem}
+      .about-pullquote.depth-aside{position:relative;top:auto}
+    }
+    .about-story{
+      margin-top:clamp(2.5rem,5vw,3.75rem);
+      padding-top:clamp(2rem,4vw,2.75rem);
+      border-top:1px solid var(--line);
+      max-width:min(52rem,100%);
+    }
+    .about-h2{
+      margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.75rem,3.5vw,2.65rem);
+      line-height:1.08;color:var(--brand-dark)
+    }
+    .about-h2 .accent{color:var(--brand-primary)}
+    .about-prose{margin-top:1.35rem;border-left:1px solid rgba(0,0,0,.08);padding-left:clamp(1rem,2.5vw,1.5rem)}
+    .about-prose p{color:var(--muted);font-size:1.02rem;line-height:1.75;max-width:42rem;margin-top:1.05rem}
+    .about-prose p:first-child{margin-top:0}
+    .depth-aside{background:var(--brand-dark);color:#fff;border-radius:18px;padding:1.5rem 1.6rem;border:1px solid rgba(255,255,255,.1)}
+    .depth-quote{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-style:italic;font-size:clamp(1.02rem,2vw,1.2rem);line-height:1.45;margin:0 0 1.1rem;color:#fff}
+    .depth-attr{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.55);line-height:1.45}
+    .depth-h{margin-top:clamp(2.75rem,5vw,3.5rem);padding-top:clamp(2rem,3.5vw,2.5rem);border-top:1px solid var(--line)}
+    .about-block-h2{
+      margin-top:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.65rem,3vw,2.35rem);
+      line-height:1.12;color:var(--brand-dark)
+    }
+    .about-block-h2 .accent{color:var(--brand-primary)}
+    .values-6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}
+    @media(max-width:900px){.values-6{grid-template-columns:1fr}}
+    .depth-val{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.2rem}
+    .depth-val h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.08rem;margin-bottom:.35rem;color:var(--brand-dark)}
+    .depth-val p{font-size:.95rem;color:#555;line-height:1.6}
+    .depth-vn{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2.25rem;color:var(--brand-primary);opacity:.18;float:right;margin:-.2rem 0 .25rem .75rem;line-height:1}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.15rem;margin-top:1.5rem}
+    .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.35rem}
+    .card h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.28rem;margin-bottom:.35rem;color:var(--brand-dark)}
+    .card p{color:#555;line-height:1.65;font-size:.95rem;margin:0}
+    .tag{margin-top:.7rem;font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-primary)}
+    .faq-block{margin-top:2rem;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+    .faq-block details{border-bottom:1px solid var(--line)}
+    .faq-block details:last-child{border-bottom:0}
+    .faq-block summary{cursor:pointer;padding:1rem 1.15rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+    .faq-block summary::-webkit-details-marker{display:none}
+    .faq-block summary::after{content:"+";color:var(--brand-primary);font-weight:900;font-size:1.1rem}
+    .faq-block details[open] summary::after{content:"–"}
+    .faq-block .faq-a{padding:0 1.15rem 1.1rem;color:#555;line-height:1.65;font-size:.95rem}
+    .cta-band{margin-top:2.5rem;padding:1.75rem 1.5rem;border-radius:18px;background:linear-gradient(135deg,var(--brand-light),#fff);border:1px solid rgba(0,0,0,.1);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+    main .btn,main .btn:visited{display:inline-flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.02rem;line-height:1.2;text-decoration:none;border-radius:12px;padding:.9rem 1.35rem;border:2px solid transparent;transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease}
+    main .btn.btn-primary,main .btn.btn-primary:visited{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    main .btn.btn-primary:hover{transform:translateY(-2px);filter:brightness(.98)}
+    main .btn.btn-outline,main .btn.btn-outline:visited{background:#fff;color:var(--brand-dark);border-color:rgba(0,0,0,.14);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+    main .btn.btn-outline:hover{color:var(--brand-primary);border-color:var(--brand-primary);transform:translateY(-2px)}
+    footer{background:#0f0f10;color:rgba(255,255,255,.65);padding:3.5rem 1.5rem 2rem}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:var(--container-w);margin:0 auto}
+    .footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;color:#fff;margin-bottom:.75rem}
+    .footer-logo span{color:var(--brand-accent)}
+    .footer-col h4{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.15em;color:#fff;margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .footer-col a{color:rgba(255,255,255,.55);text-decoration:none}
+    .footer-col a:hover{color:var(--brand-accent)}
+    .footer-bottom{max-width:var(--container-w);margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
+    @media(max-width:640px){.footer-grid{grid-template-columns:1fr;gap:2rem}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"{{BUSINESS_NAME}}",
+    "telephone":"{{PHONE_NUMBER_E164}}",
+    "url":"{{SITE_URL}}/about",
+    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}
+  }
+  </script>
+</head>
+<body>
+  <header id="sticky-header">
+    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+      </ul>
+    </nav>
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+  </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
+
+  <main id="main" class="depth-page">
+    <div class="container">
+      <div class="about-hero">
+        <div class="about-hero-copy">
+          <div class="k">{{ABOUT_SECTION_KICKER}}</div>
+          <h1>{{ABOUT_H1_LINE_1}}<br /><span>{{ABOUT_H1_ACCENT}}</span></h1>
+          <p class="sub">{{ABOUT_LEAD}}</p>
+        </div>
+        <aside class="depth-aside about-pullquote" aria-label="Leadership quote">
+          <p class="depth-quote">{{ABOUT_MISSION_PULL_QUOTE}}</p>
+          <p class="depth-attr"><strong>{{ABOUT_MISSION_PULL_QUOTE_NAME}}</strong> · {{ABOUT_MISSION_PULL_QUOTE_BYLINE}}</p>
+        </aside>
+      </div>
+
+      <section class="about-story" aria-labelledby="about-mission-heading">
+        <div class="k">{{ABOUT_MISSION_SECTION_KICKER}}</div>
+        <h2 id="about-mission-heading" class="about-h2">{{ABOUT_MISSION_H2_LINE_1}}<br /><span class="accent">{{ABOUT_MISSION_H2_ACCENT}}</span></h2>
+        <div class="about-prose">
+          <p>{{ABOUT_MISSION_P1}}</p>
+          <p>{{ABOUT_MISSION_P2}}</p>
+          <p>{{ABOUT_MISSION_P3}}</p>
+        </div>
+      </section>
+
+      <div class="depth-h">
+        <div class="k">{{ABOUT_VALUES_SECTION_KICKER}}</div>
+        <h2 class="about-block-h2">{{ABOUT_VALUES_H2_LINE_1}}<br /><span class="accent">{{ABOUT_VALUES_H2_ACCENT}}</span></h2>
+      </div>
+      <div class="values-6">
+        <div class="depth-val"><span class="depth-vn" aria-hidden="true">01</span><h3>{{ABOUT_VALUE_TILE_1_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_1_BODY}}</p></div>
+        <div class="depth-val"><span class="depth-vn" aria-hidden="true">02</span><h3>{{ABOUT_VALUE_TILE_2_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_2_BODY}}</p></div>
+        <div class="depth-val"><span class="depth-vn" aria-hidden="true">03</span><h3>{{ABOUT_VALUE_TILE_3_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_3_BODY}}</p></div>
+        <div class="depth-val"><span class="depth-vn" aria-hidden="true">04</span><h3>{{ABOUT_VALUE_TILE_4_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_4_BODY}}</p></div>
+        <div class="depth-val"><span class="depth-vn" aria-hidden="true">05</span><h3>{{ABOUT_VALUE_TILE_5_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_5_BODY}}</p></div>
+        <div class="depth-val"><span class="depth-vn" aria-hidden="true">06</span><h3>{{ABOUT_VALUE_TILE_6_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_6_BODY}}</p></div>
+      </div>
+
+      <div class="depth-h">
+        <div class="k">{{ABOUT_SERVE_SECTION_KICKER}}</div>
+        <h2 class="about-block-h2">{{ABOUT_SERVE_H2_LINE_1}}<br /><span class="accent">{{ABOUT_SERVE_H2_ACCENT}}</span></h2>
+        <p class="sub">{{ABOUT_SERVE_INTRO}}</p>
+        <div class="grid">
+          <div class="card"><h3>{{ABOUT_SERVE_CARD_1_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_1_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_1_TAG}}</div></div>
+          <div class="card"><h3>{{ABOUT_SERVE_CARD_2_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_2_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_2_TAG}}</div></div>
+          <div class="card"><h3>{{ABOUT_SERVE_CARD_3_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_3_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_3_TAG}}</div></div>
+        </div>
+      </div>
+
+      <div class="depth-h">
+        <div class="k">{{ABOUT_FAQ_SECTION_KICKER}}</div>
+        <h2 class="about-block-h2">{{ABOUT_FAQ_H2_LINE_1}}<br /><span class="accent">{{ABOUT_FAQ_H2_ACCENT}}</span></h2>
+        <div class="faq-block">
+          <details><summary>{{ABOUT_FAQ_1_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_1_ANSWER}}</div></details>
+          <details><summary>{{ABOUT_FAQ_2_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_2_ANSWER}}</div></details>
+          <details><summary>{{ABOUT_FAQ_3_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_3_ANSWER}}</div></details>
+        </div>
+      </div>
+
+      <div class="cta-band">
+        <div>
+          <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,2.8vw,1.85rem);margin-bottom:.35rem;color:var(--brand-dark)">{{ABOUT_CTA_HEADLINE}}</h2>
+          <p class="sub" style="margin:0;max-width:520px">{{ABOUT_CTA_SUB}}</p>
+        </div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <a class="btn btn-primary" href="contact.html">{{ABOUT_CTA_PRIMARY_LABEL}}</a>
+          <a class="btn btn-outline" href="services.html">{{ABOUT_CTA_SECONDARY_LABEL}}</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -792,112 +1196,20 @@ TYPE: tier
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
           <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
           <li><a href="contact.html">Request a Quote</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>? {{YEAR_CURRENT}} {{BUSINESS_NAME}}.</span>
-      <span>{{CITY}}, {{STATE}} ? {{LICENSE_TYPE}}</span>
+      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}.</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
   <script src="./main.js" defer></script>
 </body>
 </html>
-
-
-================================================================================
-FILE: about.html
-SOURCE: templates/enhanced/about.html
-TYPE: tier
-================================================================================
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css" />
-  <title>About {{BUSINESS_NAME}} | {{CITY}}, {{STATE}}</title>
-  <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
-    main{padding:120px 1.5rem 4rem;background:#fff}
-    .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
-    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
-    h1 span{color:var(--p)}
-    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.25rem}
-    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
-    .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.5rem}
-    .card p{margin:0;color:#666}
-    .list{margin-top:1rem;display:grid;gap:.55rem}
-    .item{display:flex;gap:.6rem;align-items:flex-start;color:#444;line-height:1.6}
-    .item svg{color:var(--p);flex-shrink:0;margin-top:3px}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    @media(max-width:640px){nav ul{display:none}}
-  </style>
-</head>
-<body>
-  <header>
-    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
-      <ul>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="articles.html">Articles</a></li>
-        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
-      </ul>
-    </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
-  </header>
-
-  <main>
-    <div class="container">
-      <div class="k">About</div>
-      <h1>Local {{PRIMARY_SERVICE}}, <span>{{ABOUT_H1_ACCENT}}</span></h1>
-      <p>{{ABOUT_LEAD}}</p>
-
-      <div class="grid">
-        <section class="card">
-          <h2>{{ABOUT_HEADLINE}}</h2>
-          <p>{{ABOUT_STORY_LONG}}</p>
-          <p style="margin-top:1rem;color:#555"><strong>Owner:</strong> {{OWNER_NAME}} ? {{YEARS_EXPERIENCE}}</p>
-        </section>
-        <section class="card">
-          <h2>Values</h2>
-          <p>{{VALUES_INTRO}}</p>
-          <div class="list">
-            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_1}}</span></div>
-            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_2}}</span></div>
-            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_3}}</span></div>
-            <div class="item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><span>{{VALUE_4}}</span></div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </main>
-  <script src="./main.js" defer></script>
-</body>
-</html>
-
 
 ================================================================================
 FILE: articles.html
@@ -916,19 +1228,57 @@ TYPE: tier
   <meta name="description" content="{{BLOG_META_DESCRIPTION}}" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10;--p:var(--brand-primary);--d:var(--brand-dark);--l:var(--brand-light);--a:var(--brand-accent)}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
-    main{padding:120px 1.5rem 4rem;background:#fff}
-    .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main{padding:124px 1.5rem 4rem;background:#fff}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
@@ -941,20 +1291,24 @@ TYPE: tier
       transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
     }
     .post:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(0,0,0,.08);border-color:rgba(0,0,0,.12)}
+    .post.post--planned{cursor:default}
+    .post.post--planned:hover{transform:none;box-shadow:none;border-color:rgba(0,0,0,.06)}
+    .post-note{margin-top:.85rem;font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#888}
     .tag{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--p)}
     .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem}
     .post h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;line-height:1.15;margin-bottom:.55rem}
     .post .excerpt{margin:0;color:#555;line-height:1.8;max-width:92ch}
     .meta{color:#666;font-size:.9rem;font-weight:800}
-    .cta{margin-top:1rem;display:inline-flex;align-items:center;gap:.55rem;color:var(--p);font-weight:900}
-    @media(max-width:640px){nav ul{display:none}}
   </style>
 </head>
 <body>
-  <header>
+  <header id="sticky-header">
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
-      <ul>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
         <li><a href="about.html">About</a></li>
@@ -962,8 +1316,25 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
   </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
 
   <main>
     <div class="container">
@@ -972,35 +1343,35 @@ TYPE: tier
       <p>{{BLOG_INTRO}}</p>
 
       <div class="posts">
-        <a class="post" href="{{ARTICLE_1_URL}}">
+        <article class="post post--planned" aria-labelledby="article-plan-1">
           <div class="top">
             <div class="tag">{{ARTICLE_1_CATEGORY|Guide}}</div>
             <div class="meta">{{ARTICLE_1_DATE}}</div>
           </div>
-          <h2>{{ARTICLE_1_TITLE}}</h2>
+          <h2 id="article-plan-1">{{ARTICLE_1_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_1_EXCERPT}}</p>
-          <div class="cta">Read article <span aria-hidden="true">?</span></div>
-        </a>
+          <p class="post-note">Planned topic — add a page under <code>articles/</code> and link it here when ready.</p>
+        </article>
 
-        <a class="post" href="{{ARTICLE_2_URL}}">
+        <article class="post post--planned" aria-labelledby="article-plan-2">
           <div class="top">
             <div class="tag">{{ARTICLE_2_CATEGORY|Guide}}</div>
             <div class="meta">{{ARTICLE_2_DATE}}</div>
           </div>
-          <h2>{{ARTICLE_2_TITLE}}</h2>
+          <h2 id="article-plan-2">{{ARTICLE_2_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_2_EXCERPT}}</p>
-          <div class="cta">Read article <span aria-hidden="true">?</span></div>
-        </a>
+          <p class="post-note">Planned topic — add a page under <code>articles/</code> and link it here when ready.</p>
+        </article>
 
-        <a class="post" href="{{ARTICLE_3_URL}}">
+        <article class="post post--planned" aria-labelledby="article-plan-3">
           <div class="top">
             <div class="tag">{{ARTICLE_3_CATEGORY|Guide}}</div>
             <div class="meta">{{ARTICLE_3_DATE}}</div>
           </div>
-          <h2>{{ARTICLE_3_TITLE}}</h2>
+          <h2 id="article-plan-3">{{ARTICLE_3_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_3_EXCERPT}}</p>
-          <div class="cta">Read article <span aria-hidden="true">?</span></div>
-        </a>
+          <p class="post-note">Planned topic — add a page under <code>articles/</code> and link it here when ready.</p>
+        </article>
       </div>
     </div>
   </main>
@@ -1008,129 +1379,6 @@ TYPE: tier
 </body>
 </html>
 
-
-
-================================================================================
-FILE: article-post-1.html
-SOURCE: templates/enhanced/article-post-1.html
-TYPE: tier
-================================================================================
-
-<!DOCTYPE html>
-<!--
-  Build: copy to ARTICLE_POST_SLUG_FILENAME (e.g. articles/roof-maintenance-houston-tx.html), then replace tokens.
-  Public URL: ARTICLE_1_URL (extensionless, root-relative). From articles/ use ../ for site assets.
--->
-<html lang="{{HTML_LANG|en}}">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="../styles.css" />
-  <title>{{ARTICLE_POST_PAGE_TITLE}}</title>
-  <meta name="description" content="{{ARTICLE_POST_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
-  <link rel="canonical" href="{{SITE_URL}}{{ARTICLE_1_URL}}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="{{ARTICLE_POST_PAGE_TITLE}}" />
-  <meta property="og:description" content="{{ARTICLE_POST_META_DESCRIPTION}}" />
-  <meta property="og:url" content="{{SITE_URL}}{{ARTICLE_1_URL}}" />
-  <meta property="og:image" content="{{ARTICLE_POST_OG_IMAGE_URL}}" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{ARTICLE_POST_PAGE_TITLE}}" />
-  <meta name="twitter:description" content="{{ARTICLE_POST_META_DESCRIPTION}}" />
-  <meta name="twitter:image" content="{{ARTICLE_POST_OG_IMAGE_URL}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root{--container-w:1100px;--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
-    main{padding:120px 1.5rem 4rem;background:#fff}
-    .container{max-width:var(--container-w);margin:0 auto;width:100%}
-    .article-back{margin:0 0 1.25rem;font-size:.95rem;font-weight:700}
-    .article-back a{color:var(--p);text-decoration:none}
-    .article-back a:hover{text-decoration:underline}
-    .article-meta-line{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:1rem}
-    .article-cat{color:var(--p)}
-    .article-meta-sep{font-weight:600;color:#aaa}
-    .article-h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4.2vw,3rem);line-height:1.08;margin-bottom:.75rem}
-    .article-h1 span{color:var(--p)}
-    .article-dek{margin-top:.5rem;color:#4A4A4A;line-height:1.75;max-width:720px;font-size:1.05rem}
-    .article-tldr-wrap{margin-top:1.75rem;padding:1.35rem 1.4rem;border-radius:16px;background:var(--l);border:1px solid rgba(0,0,0,.08)}
-    .article-tldr-wrap :where(h2,h3){font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:.65rem;color:var(--d)}
-    .article-tldr-wrap ul{margin:.5rem 0 0 1.1rem;color:#444;line-height:1.75}
-    .article-body{margin-top:2rem}
-    .article-prose{color:#333;line-height:1.8;font-size:1.02rem;max-width:720px}
-    .article-prose > * + *{margin-top:1rem}
-    .article-prose h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,2.5vw,1.65rem);margin:2rem 0 .75rem;color:var(--d)}
-    .article-prose h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.12rem;margin:1.5rem 0 .5rem;color:var(--d)}
-    .article-prose p{margin:.85rem 0}
-    .article-prose ul,.article-prose ol{margin:.85rem 0 .85rem 1.25rem}
-    .article-prose li{margin:.35rem 0}
-    .article-prose a{color:var(--p);font-weight:700}
-    .cta-band{margin-top:2.75rem;padding:1.75rem 1.5rem;border-radius:16px;background:linear-gradient(135deg,rgba(255,87,51,.08),#fff);border:1px solid rgba(0,0,0,.08);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
-    .cta-band h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.25rem,2.5vw,1.6rem);margin-bottom:.35rem;color:var(--d)}
-    .cta-band .sub{margin:0;max-width:520px;color:#555;line-height:1.65;font-size:.98rem}
-    .cta-band .btn-row{display:flex;gap:.75rem;flex-wrap:wrap}
-    .btn-outline{display:inline-flex;align-items:center;background:transparent;border:2px solid rgba(0,0,0,.14);color:var(--d);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;padding:.65rem 1.1rem;border-radius:10px;text-decoration:none}
-    .btn-outline:hover{border-color:var(--p);color:var(--p)}
-    @media(max-width:640px){nav ul{display:none}}
-  </style>
-  <script type="application/ld+json">
-{{ARTICLE_POST_SCHEMA_JSON}}
-  </script>
-</head>
-<body>
-  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
-  <header>
-    <a class="logo" href="../index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-      <ul>
-        <li><a href="../gallery.html">Gallery</a></li>
-        <li><a href="../testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
-        <li><a href="../about.html">About</a></li>
-        <li><a href="../articles.html">Articles</a></li>
-        <li><a href="../service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
-      </ul>
-    </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
-  </header>
-
-  <main id="main">
-    <div class="container">
-      <p class="article-back"><a href="../articles.html">← Articles</a></p>
-      <p class="article-meta-line"><span class="article-cat">{{ARTICLE_POST_CATEGORY}}</span><span class="article-meta-sep"> · </span><time>{{ARTICLE_POST_DATE}}</time><span class="article-meta-sep"> · </span>{{ARTICLE_POST_AUTHOR_LINE}}</p>
-      <h1 class="article-h1">{{ARTICLE_POST_H1_LINE_1}}<br /><span>{{ARTICLE_POST_H1_ACCENT}}</span></h1>
-      <p class="article-dek">{{ARTICLE_POST_DEK}}</p>
-      <div class="article-tldr-wrap">
-        {{ARTICLE_POST_TLDR_HTML}}
-      </div>
-      <div class="article-body article-prose">
-        {{ARTICLE_POST_BODY_HTML}}
-      </div>
-      <div class="cta-band">
-        <div>
-          <h2>{{FINAL_CTA_HEADLINE}}</h2>
-          <p class="sub">{{FINAL_CTA_SUB}}</p>
-        </div>
-        <div class="btn-row">
-          <a class="btn" href="../contact.html">{{FINAL_CTA_PRIMARY_LABEL}}</a>
-          <a class="btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
-        </div>
-      </div>
-    </div>
-  </main>
-  <script src="../main.js" defer></script>
-</body>
-</html>
 
 ================================================================================
 FILE: contact.html
@@ -1194,7 +1442,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
   </header>
 
   <main>
@@ -1207,7 +1455,7 @@ TYPE: tier
         <section class="card">
           <h2>Call</h2>
           <p>{{CONTACT_CALL_COPY}}</p>
-          <a class="big" href="tel:{{PHONE_NUMBER}}">{{PHONE_NUMBER}}</a>
+          <a class="big" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a>
           <p style="margin-top:1rem;color:#666"><strong>Email:</strong> {{EMAIL}}<br><strong>Address:</strong> {{ADDRESS_ONE_LINE}}</p>
         </section>
         <section class="card">
@@ -1367,7 +1615,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
   </header>
 
   <main>
@@ -1445,7 +1693,7 @@ TYPE: tier
       <div class="cta-bar">
         <p>{{SERVICE_1_CTA_COPY}}</p>
         <div class="cta-row">
-          <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="cta1" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
           <a class="cta2" href="contact.html">Request a quote</a>
         </div>
       </div>
@@ -1545,7 +1793,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
   </header>
 
   <main>
@@ -1623,7 +1871,7 @@ TYPE: tier
       <div class="cta-bar">
         <p>{{SERVICE_2_CTA_COPY}}</p>
         <div class="cta-row">
-          <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="cta1" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
           <a class="cta2" href="contact.html">Request a quote</a>
         </div>
       </div>
@@ -1723,7 +1971,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
   </header>
 
   <main>
@@ -1801,7 +2049,7 @@ TYPE: tier
       <div class="cta-bar">
         <p>{{SERVICE_3_CTA_COPY}}</p>
         <div class="cta-row">
-          <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="cta1" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
           <a class="cta2" href="contact.html">Request a quote</a>
         </div>
       </div>
@@ -1826,46 +2074,104 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>Privacy Policy | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{PRIVACY_META_DESCRIPTION}}" />
-  <link rel="canonical" href="{{SITE_URL}}/privacy-policy.html" />
+  <link rel="canonical" href="{{SITE_URL}}/privacy-policy" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{--container-w:820px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10;--p:var(--brand-primary);--d:var(--brand-dark);--l:var(--brand-light);--a:var(--brand-accent)}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
-    main{padding:120px 1.5rem 4rem;background:#fff}
-    .container{max-width:820px;margin:0 auto}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main{padding:124px 1.5rem 4rem;background:#fff}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
     h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
     p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
     ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
     footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
-    footer a{color:var(--p);font-weight:700;text-decoration:none}
-    @media(max-width:640px){nav ul{display:none}}
+    footer a{color:var(--brand-primary);font-weight:700;text-decoration:none}
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header>
+  <header id="sticky-header">
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
     <nav aria-label="Primary">
-      <ul>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="articles.html">Articles</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
   </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
 
   <main id="main">
     <div class="container">
@@ -1885,10 +2191,10 @@ TYPE: tier
       <p>{{PRIVACY_USE}}</p>
 
       <h2>Contact</h2>
-      <p>Questions about this policy: <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> ? {{PHONE_NUMBER}}</p>
+      <p>Questions about this policy: <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
 
       <footer>
-        <p><a href="terms.html">Terms of Use</a> ? <a href="index.html">Home</a></p>
+        <p><a href="terms.html">Terms of Use</a> · <a href="index.html">Home</a></p>
       </footer>
     </div>
   </main>
@@ -1911,46 +2217,104 @@ TYPE: tier
   <link rel="stylesheet" href="./styles.css" />
   <title>Terms of Use | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{TERMS_META_DESCRIPTION}}" />
-  <link rel="canonical" href="{{SITE_URL}}/terms.html" />
+  <link rel="canonical" href="{{SITE_URL}}/terms" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{--container-w:820px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10;--p:var(--brand-primary);--d:var(--brand-dark);--l:var(--brand-light);--a:var(--brand-accent)}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
-    main{padding:120px 1.5rem 4rem;background:#fff}
-    .container{max-width:820px;margin:0 auto}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main{padding:124px 1.5rem 4rem;background:#fff}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.6rem);line-height:1.05;margin-bottom:1rem}
     h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;margin-top:2rem;margin-bottom:.5rem}
     p{margin-top:.75rem;color:#4A4A4A;line-height:1.75}
     ul{margin-top:.75rem;padding-left:1.25rem;color:#4A4A4A;line-height:1.75}
     footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.08);font-size:.88rem;color:#666}
-    footer a{color:var(--p);font-weight:700;text-decoration:none}
-    @media(max-width:640px){nav ul{display:none}}
+    footer a{color:var(--brand-primary);font-weight:700;text-decoration:none}
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header>
+  <header id="sticky-header">
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
     <nav aria-label="Primary">
-      <ul>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="articles.html">Articles</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
   </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
 
   <main id="main">
     <div class="container">
@@ -1968,10 +2332,10 @@ TYPE: tier
       <p>{{TERMS_LIABILITY}}</p>
 
       <h2>Contact</h2>
-      <p>{{BUSINESS_NAME}} ? <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> ? {{PHONE_NUMBER}}</p>
+      <p>{{BUSINESS_NAME}} · <a href="mailto:{{EMAIL}}">{{EMAIL}}</a> · {{PHONE_NUMBER}}</p>
 
       <footer>
-        <p><a href="privacy-policy.html">Privacy Policy</a> ? <a href="index.html">Home</a></p>
+        <p><a href="privacy-policy.html">Privacy Policy</a> · <a href="index.html">Home</a></p>
       </footer>
     </div>
   </main>
@@ -2047,7 +2411,7 @@ TYPE: tier
   <p>{{OFFLINE_MESSAGE}}</p>
   <div>
     <a href="index.html">Try again</a>
-    <a href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
   </div>
   <script src="./main.js" defer></script>
 </body>
@@ -2124,7 +2488,7 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <a class="btn" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
   </header>
 
   <main>
@@ -2157,7 +2521,7 @@ TYPE: tier
         <h2 id="gallery-primary-heading"><span>{{PRIMARY_SERVICE}}</span> in {{CITY}}</h2>
         <p>{{SERVICES_INTRO|Clear scopes, photo documentation, and crews who keep the site clean from tear-off to final walkthrough.}}</p>
         <div class="gallery-cta-row">
-          <a class="gallery-cta-primary" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
+          <a class="gallery-cta-primary" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
           <a class="gallery-cta-secondary" href="contact.html">Get a free estimate →</a>
         </div>
       </section>
@@ -2186,10 +2550,10 @@ TYPE: tier
   <meta name="description" content="{{TESTIMONIALS_META_DESCRIPTION|Read real homeowner feedback for {{BUSINESS_NAME}} in {{CITY}}, {{STATE}}.}}" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10}
+    :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:#fff;color:var(--ink);overflow-x:hidden}
-    .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
 
     #sticky-header{
       position:fixed;top:0;left:0;right:0;z-index:100;
@@ -2243,25 +2607,38 @@ TYPE: tier
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--brand-primary)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
-    .wall{margin-top:2.25rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.15rem}
-    .card{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:1.35rem}
-    blockquote{color:#333;line-height:1.75;font-style:italic}
-    .by{margin-top:1rem;font-weight:900}
+    .wall{margin-top:2.25rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.25rem}
+    .card{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:1.35rem 1.4rem 1.45rem}
+    blockquote{color:#333;line-height:1.78;font-size:1.01rem;font-style:normal;letter-spacing:.01em}
+    .by{margin-top:1.1rem;font-weight:900;font-size:.92rem}
     .by span{color:#777;font-weight:700;margin-left:.35rem}
-    .carousel{margin-top:1.75rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden}
-    .track{display:flex;transition:transform .45s ease}
-    .slide{min-width:100%;aspect-ratio:16/9;background:#111}
-    .carousel.carousel--reviews .slide{min-width:100%;aspect-ratio:auto;background:transparent;padding:0 .5rem;box-sizing:border-box;display:flex;align-items:stretch}
-    .gr-card{width:100%;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:1.35rem 1.4rem;background:var(--brand-light);box-shadow:0 6px 22px rgba(0,0,0,.05)}
-    .gr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.55rem;flex-wrap:wrap}
-    .gr-mark{font-weight:900;font-size:.74rem;color:#444}
-    .gr-stars{color:#F4B400;letter-spacing:.05em;font-size:1.02rem}
-    .gr-meta{font-size:.82rem;color:#666;font-weight:600;margin-bottom:.5rem}
-    .gr-body{margin:0;color:#333;line-height:1.65;font-size:1.02rem}
-    .cnav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:var(--brand-light)}
-    .cbtn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:10px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
-    .cbtn:hover{border-color:var(--brand-primary)}
-    .cmeta{font-size:.85rem;color:#666;font-weight:700}
+    .tts-services{
+      margin-top:clamp(2.5rem,5vw,3.75rem);
+      padding:clamp(1.75rem,4vw,2.5rem) clamp(1.25rem,3vw,2rem);
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.08);
+      background:linear-gradient(145deg,var(--brand-light) 0%,#fff 55%);
+      box-shadow:0 12px 36px rgba(0,0,0,.06);
+    }
+    .tts-services-k{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--brand-primary);margin:0 0 .65rem}
+    .tts-services-h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,2.8vw,1.95rem);line-height:1.15;color:var(--ink);margin:0 0 .75rem}
+    .tts-services-h2 span{color:var(--brand-primary)}
+    .tts-services-lead{margin:0;color:#4a5568;line-height:1.72;font-size:1.02rem;max-width:52rem}
+    .tts-services-lead strong{color:var(--ink);font-weight:700}
+    .tts-services-links{margin:1.25rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.6rem 1.25rem}
+    .tts-services-links a{
+      font-weight:800;font-size:.88rem;text-transform:uppercase;letter-spacing:.06em;color:var(--brand-primary);
+      text-decoration:none;border-bottom:2px solid rgba(0,0,0,.12);padding-bottom:2px
+    }
+    .tts-services-links a:hover{border-bottom-color:var(--brand-primary)}
+    .tts-services-btn-wrap{margin-top:1.35rem}
+    .tts-services-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.02rem;
+      padding:.88rem 1.45rem;border-radius:12px;background:var(--brand-primary);color:#fff;text-decoration:none;
+      box-shadow:0 4px 18px rgba(0,0,0,.12);transition:transform .15s ease,filter .15s ease
+    }
+    .tts-services-btn:hover{transform:translateY(-2px);filter:brightness(.98)}
   </style>
 </head>
 <body>
@@ -2282,7 +2659,7 @@ TYPE: tier
     </div>
     <div class="header-ctas">
       <a class="btn-outline" href="contact.html">Get Estimate</a>
-      <a class="btn-call-now" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
       <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
       </button>
@@ -2296,7 +2673,7 @@ TYPE: tier
     <a href="about.html">About</a>
     <a href="articles.html">Articles</a>
     <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
-    <a href="tel:{{PHONE_NUMBER}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
   </nav>
 
   <main>
@@ -2307,140 +2684,47 @@ TYPE: tier
 
       <section class="wall">
         <article class="card">
-          <blockquote>“{{TESTIMONIAL_1_TEXT}}”</blockquote>
+          <blockquote>“{{TESTIMONIALS_WALL_1_TEXT}}”</blockquote>
           <div class="by">{{TESTIMONIAL_1_NAME}} <span>· {{TESTIMONIAL_1_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>“{{TESTIMONIAL_2_TEXT}}”</blockquote>
+          <blockquote>“{{TESTIMONIALS_WALL_2_TEXT}}”</blockquote>
           <div class="by">{{TESTIMONIAL_2_NAME}} <span>· {{TESTIMONIAL_2_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>“{{TESTIMONIAL_3_TEXT}}”</blockquote>
+          <blockquote>“{{TESTIMONIALS_WALL_3_TEXT}}”</blockquote>
           <div class="by">{{TESTIMONIAL_3_NAME}} <span>· {{TESTIMONIAL_3_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>“{{TESTIMONIAL_4_TEXT}}”</blockquote>
+          <blockquote>“{{TESTIMONIALS_WALL_4_TEXT}}”</blockquote>
           <div class="by">{{TESTIMONIAL_4_NAME}} <span>· {{TESTIMONIAL_4_CITY}}</span></div>
         </article>
         <article class="card">
-          <blockquote>“{{TESTIMONIAL_5_TEXT}}”</blockquote>
+          <blockquote>“{{TESTIMONIALS_WALL_5_TEXT}}”</blockquote>
           <div class="by">{{TESTIMONIAL_5_NAME}} <span>· {{TESTIMONIAL_5_CITY}}</span></div>
         </article>
-        <article class="card">
-          <blockquote>“{{TESTIMONIAL_6_TEXT}}”</blockquote>
-          <div class="by">{{TESTIMONIAL_6_NAME}} <span>· {{TESTIMONIAL_6_CITY}}</span></div>
-        </article>
-        <article class="card">
-          <blockquote>“{{TESTIMONIAL_7_TEXT}}”</blockquote>
-          <div class="by">{{TESTIMONIAL_7_NAME}} <span>· {{TESTIMONIAL_7_CITY}}</span></div>
-        </article>
-        <article class="card">
-          <blockquote>“{{TESTIMONIAL_8_TEXT}}”</blockquote>
-          <div class="by">{{TESTIMONIAL_8_NAME}} <span>· {{TESTIMONIAL_8_CITY}}</span></div>
-        </article>
       </section>
 
-      <div class="k" style="margin-top:3rem">Google reviews</div>
-      <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.45rem,3.2vw,2rem);line-height:1.1;margin-top:.35rem">Recent feedback on <span style="color:var(--brand-primary)">Google</span></h2>
-      <p style="margin-top:.75rem">{{GOOGLE_REVIEWS_SECTION_INTRO|A few recent reviews from homeowners we've helped—repairs, replacements, and storm inspections.}}</p>
-      <p style="margin-top:.65rem"><a href="{{GOOGLE_BUSINESS_PROFILE_URL}}" style="color:var(--brand-primary);font-weight:900;text-decoration:none" target="_blank" rel="noopener noreferrer">Open Google Business Profile →</a></p>
-
-      <section class="carousel carousel--reviews" data-carousel aria-label="Google reviews carousel">
-        <div class="track" data-track>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_1_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_1_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_1_AUTHOR}} · {{GOOGLE_REVIEW_1_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_1_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_2_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_2_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_2_AUTHOR}} · {{GOOGLE_REVIEW_2_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_2_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_3_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_3_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_3_AUTHOR}} · {{GOOGLE_REVIEW_3_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_3_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_4_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_4_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_4_AUTHOR}} · {{GOOGLE_REVIEW_4_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_4_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_5_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_5_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_5_AUTHOR}} · {{GOOGLE_REVIEW_5_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_5_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_6_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_6_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_6_AUTHOR}} · {{GOOGLE_REVIEW_6_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_6_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_7_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_7_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_7_AUTHOR}} · {{GOOGLE_REVIEW_7_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_7_TEXT}}”</p>
-            </article>
-          </div>
-          <div class="slide">
-            <article class="gr-card">
-              <div class="gr-top">
-                <span class="gr-mark">Google review</span>
-                <span class="gr-stars" aria-label="{{GOOGLE_REVIEW_8_RATING|5}} out of 5 stars">{{GOOGLE_REVIEW_8_STARS_DISPLAY|★★★★★}}</span>
-              </div>
-              <div class="gr-meta">{{GOOGLE_REVIEW_8_AUTHOR}} · {{GOOGLE_REVIEW_8_RELATIVE_TIME}}</div>
-              <p class="gr-body">“{{GOOGLE_REVIEW_8_TEXT}}”</p>
-            </article>
-          </div>
-        </div>
-        <div class="cnav">
-          <button type="button" class="cbtn" data-prev>Prev</button>
-          <div class="cmeta"><span data-index>1</span> / <span data-total>8</span></div>
-          <button type="button" class="cbtn" data-next>Next</button>
+      <section class="tts-services" aria-labelledby="tts-services-h2">
+        <p class="tts-services-k">{{TESTIMONIALS_SERVICES_CTA_KICKER|Services}}</p>
+        <h2 id="tts-services-h2" class="tts-services-h2">{{TESTIMONIALS_SERVICES_CTA_HEADLINE|Explore the services behind these homeowner stories}}</h2>
+        <p class="tts-services-lead">{{TESTIMONIALS_SERVICES_CTA_BODY|Reviews capture the experience—our services page breaks down scopes, materials, and what to expect for {{PRIMARY_SERVICE}} work across {{CITY}}. Follow the links for full write-ups, FAQs, and next steps.}}</p>
+        <ul class="tts-services-links">
+          <li><a href="service-1.html">{{SERVICE_1_NAME}}</a></li>
+          <li><a href="service-2.html">{{SERVICE_2_NAME}}</a></li>
+          <li><a href="service-3.html">{{SERVICE_3_NAME}}</a></li>
+        </ul>
+        <div class="tts-services-btn-wrap">
+          <a class="tts-services-btn" href="services.html">{{TESTIMONIALS_SERVICES_CTA_BUTTON|Browse all services and options}}</a>
         </div>
       </section>
+
     </div>
   </main>
 
   <script src="./main.js" defer></script>
 </body>
 </html>
-
 
 ================================================================================
 FILE: service-area.html
@@ -2460,37 +2744,111 @@ TYPE: tier
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
-    :root{--container-w:1100px;--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10;--p:var(--brand-primary);--d:var(--brand-dark);--l:var(--brand-light);--a:var(--brand-accent)}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    header{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.5rem 1.1rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800}
-    main{padding:120px 1.5rem 4rem;background:#fff}
-    .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+    @media(max-width:860px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+    }
+    main{padding:124px 1.5rem 4.5rem;background:#fff}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
     .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
     h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
     h1 span{color:var(--p)}
     p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
+    .sa-prose{margin-top:1.05rem;color:#3d454f;line-height:1.78;font-size:1.02rem;max-width:52rem}
+    .sa-prose + .sa-prose{margin-top:1.15rem}
     .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem;min-height:1.5rem}
     .chip{background:#fff;border:1px solid rgba(0,0,0,.1);padding:.35rem .9rem;border-radius:20px;font-size:.85rem;font-weight:800}
     .map{margin-top:2.25rem;border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);background:#e8eaed}
     #service-area-map{height:420px;width:100%;z-index:1}
     .leaflet-container{font-family:'Inter',system-ui,sans-serif}
-    .map-legend{font-size:.85rem;color:#555;margin-top:.65rem;max-width:820px;line-height:1.5}
-    @media(max-width:640px){nav ul{display:none}}
+    .sa-cross{margin-top:clamp(2.25rem,4vw,3rem);padding-top:clamp(1.85rem,3.5vw,2.6rem);border-top:1px solid rgba(0,0,0,.08)}
+    .sa-cross-h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,2.7vw,1.9rem);line-height:1.12;color:var(--ink);margin:0 0 .55rem}
+    .sa-cross-h2 span{color:var(--p)}
+    .sa-cross-intro{margin:0 0 1.35rem;color:#4a5568;line-height:1.72;max-width:52rem;font-size:1.02rem}
+    .sa-xgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.15rem}
+    @media(max-width:900px){.sa-xgrid{grid-template-columns:1fr}}
+    .sa-xcard{background:var(--l);border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:1.25rem 1.2rem 1.35rem;display:flex;flex-direction:column;min-height:100%}
+    .sa-xcard h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.08rem;margin:0 0 .55rem;line-height:1.28}
+    .sa-xcard h3 a{color:var(--ink);text-decoration:none}
+    .sa-xcard h3 a:hover{color:var(--p)}
+    .sa-xcard p{margin:0;flex:1;color:#555;font-size:.96rem;line-height:1.7}
+    .sa-xcard-lm{display:inline-block;margin-top:1rem;font-weight:800;font-size:.88rem;color:var(--p);text-decoration:none}
+    .sa-xcard-lm:hover{text-decoration:underline}
+    .sa-hub{
+      margin-top:clamp(2.25rem,4vw,3.25rem);
+      padding:clamp(1.65rem,3.5vw,2.35rem) clamp(1.2rem,2.5vw,1.75rem);
+      border-radius:16px;border:1px solid rgba(0,0,0,.08);
+      background:linear-gradient(145deg,var(--l) 0%,#fff 55%);
+      box-shadow:0 10px 28px rgba(0,0,0,.06);
+    }
+    .sa-hub-k{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--p);margin:0 0 .6rem}
+    .sa-hub-h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.35rem,2.5vw,1.75rem);line-height:1.15;color:var(--ink);margin:0 0 .65rem}
+    .sa-hub-lead{margin:0;color:#4a5568;line-height:1.72;font-size:1.02rem;max-width:52rem}
+    .sa-hub-actions{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+    .sa-hub-btn{
+      display:inline-flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.02rem;
+      padding:.85rem 1.35rem;border-radius:12px;background:var(--p);color:#fff;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.12)
+    }
+    .sa-hub-btn:hover{filter:brightness(.98)}
+    .sa-hub-outline{
+      display:inline-flex;align-items:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;
+      padding:.82rem 1.2rem;border-radius:12px;border:2px solid rgba(0,0,0,.14);color:var(--ink);text-decoration:none;background:#fff
+    }
+    .sa-hub-outline:hover{border-color:var(--p);color:var(--p)}
   </style>
 </head>
 <body>
-  <header>
+  <header id="sticky-header">
     <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav>
-      <ul>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
@@ -2499,14 +2857,33 @@ TYPE: tier
         <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
       </ul>
     </nav>
-    <a class="btn" href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
+      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
   </header>
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="about.html">About</a>
+    <a href="articles.html">Articles</a>
+    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
+  </nav>
 
   <main>
     <div class="container">
       <div class="k">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</div>
       <h1>Serving <span>{{SERVICE_AREA_SHORT}}</span></h1>
       <p>{{SERVICE_AREA_INTRO}}</p>
+      <p class="sa-prose">{{SERVICE_AREA_SEO_PARAGRAPH_1|From the city core to the suburbs we mark on the map, homeowners call us for primary trade work they can schedule with confidence. Each pin reflects a community where we answer emergency calls, book inspections, and return for documented repairs—not one-off estimates that never follow through.}}</p>
+      <p class="sa-prose">{{SERVICE_AREA_SEO_PARAGRAPH_2|Whether you need a targeted fix after storm damage or a full replacement with upgraded materials, crews familiar with local codes and weather patterns reduce callbacks. Use the map above to confirm we run trucks in your neighborhood, then follow the service links below for scopes, FAQs, and timelines.}}</p>
 
       <div class="chips" id="service-area-chips" role="list" aria-label="Communities served"></div>
       <script type="application/json" id="svc-cities-json">{{SERVICE_CITIES}}</script>
@@ -2517,8 +2894,39 @@ TYPE: tier
       <div class="map" id="area-map-wrap">
         <div id="service-area-map" role="img" aria-label="Map centered on {{BUSINESS_NAME}} with markers for cities served"></div>
       </div>
-      <p class="map-legend">{{SERVICE_AREA_MAP_LEGEND|Orange pins show areas we routinely serve. Map uses OpenStreetMap—no Google Maps API key required.}}</p>
       <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
+
+      <section class="sa-cross" aria-labelledby="sa-cross-h2">
+        <h2 id="sa-cross-h2" class="sa-cross-h2">{{SERVICE_AREA_CROSS_H2|Service coverage tied to the work we perform}}</h2>
+        <p class="sa-cross-intro">{{SERVICE_AREA_CROSS_INTRO|Match your town with the programs we run most often in your metro area. Each page lists FAQs, process steps, and photo-ready examples so you know what we recommend before we arrive.}}</p>
+        <div class="sa-xgrid">
+          <article class="sa-xcard">
+            <h3><a href="service-1.html">{{SERVICE_1_NAME}}</a></h3>
+            <p>{{SERVICE_AREA_CROSS_CARD_1_BODY|Homeowners in our mapped service towns choose this flagship program when wind, hail, or age shows up on inspections—especially where attic ventilation and decking matter. We document findings, explain repair vs replacement, and schedule crews who already know local suppliers.}}</p>
+            <a class="sa-xcard-lm" href="service-1.html">View {{SERVICE_1_NAME}} details</a>
+          </article>
+          <article class="sa-xcard">
+            <h3><a href="service-2.html">{{SERVICE_2_NAME}}</a></h3>
+            <p>{{SERVICE_AREA_CROSS_CARD_2_BODY|If gutters, flashing, or wall transitions are failing, we scope this line of work with photos you can share with insurance or HOAs. Expect clear pricing bands, realistic timelines, and crews who protect landscaping while we work.}}</p>
+            <a class="sa-xcard-lm" href="service-2.html">View {{SERVICE_2_NAME}} details</a>
+          </article>
+          <article class="sa-xcard">
+            <h3><a href="service-3.html">{{SERVICE_3_NAME}}</a></h3>
+            <p>{{SERVICE_AREA_CROSS_CARD_3_BODY|For long-term performance in local heat and storm cycles, this upgrade path ties materials to code-ready installs. We align underlayment, ridge details, and manufacturer specs so work survives the next inspection cycle.}}</p>
+            <a class="sa-xcard-lm" href="service-3.html">View {{SERVICE_3_NAME}} details</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="sa-hub" aria-labelledby="sa-hub-h2">
+        <p class="sa-hub-k">{{SERVICE_AREA_HUB_CTA_KICKER|All services}}</p>
+        <h2 id="sa-hub-h2" class="sa-hub-h2">{{SERVICE_AREA_HUB_CTA_HEADLINE|Compare every option in one place}}</h2>
+        <p class="sa-hub-lead">{{SERVICE_AREA_HUB_CTA_BODY|The full services hub stacks priority work, add-ons, and neighborhood-specific notes so you can plan upgrades without guessing. Start there if you are weighing multiple scopes or want a single call to coordinate the next steps.}}</p>
+        <div class="sa-hub-actions">
+          <a class="sa-hub-btn" href="services.html">{{SERVICE_AREA_HUB_CTA_BUTTON|Open the full services hub}}</a>
+          <a class="sa-hub-outline" href="contact.html">{{SERVICE_AREA_HUB_CTA_SECONDARY|Request a local estimate}}</a>
+        </div>
+      </section>
 
       <script type="application/json" id="area-markers-json">{{SERVICE_AREA_MAP_MARKERS_JSON}}</script>
       <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -2616,7 +3024,6 @@ TYPE: tier
   <script src="./main.js" defer></script>
 </body>
 </html>
-
 
 ================================================================================
 FILE: styles.css
@@ -2894,11 +3301,6 @@ TYPE: tier
     <loc>{{SITE_URL}}/service-area</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>{{SITE_URL}}{{ARTICLE_1_URL}}</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.65</priority>
   </url>
   <url>
     <loc>{{SITE_URL}}/service-1</loc>

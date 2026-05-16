@@ -5,53 +5,272 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./styles.css" />
-  <title>{{BUSINESS_NAME}} | {{PRIMARY_SERVICE}} in {{CITY}}</title>
+  <title>{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}</title>
   <meta name="description" content="{{META_DESCRIPTION_FROM_IMAGES}}" />
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180" />
+  <link rel="apple-touch-icon" href="./favicon.svg" />
   <link rel="manifest" href="./site.webmanifest" />
   <meta property="og:image" content="{{SITE_URL}}/og-image.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--p:{{BRAND_PRIMARY|#FF5733}};--d:{{BRAND_DARK|#1A1A1B}};--l:{{BRAND_LIGHT|#F7F7F7}};--a:{{BRAND_ACCENT|#FF5733}}}
+    :root{
+      --container-w:1100px;
+      --header-nav-w:900px;
+      --brand-primary:{{BRAND_PRIMARY|#FF5733}};
+      --brand-dark:{{BRAND_DARK|#1A1A1B}};
+      --brand-light:{{BRAND_LIGHT|#F7F7F7}};
+      --brand-accent:{{BRAND_ACCENT|#FF5733}};
+      --ink:#0E0E10;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.06);
+    }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,sans-serif;background:var(--l);color:#111;overflow-x:hidden}
-    .container{max-width:1100px;margin:0 auto}
-    header{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--d);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.35)}
-    header a{color:#fff;text-decoration:none}
-    .logo{font-family:Syne,sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-.01em}
-    .logo span{color:var(--a)}
-    nav ul{display:flex;gap:1.25rem;list-style:none}
-    nav a{color:rgba(255,255,255,.75);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
-    nav a:hover{color:var(--a)}
-    .btn{background:var(--p);padding:.55rem 1.15rem;border-radius:4px;font-family:Syne,sans-serif;font-weight:800}
+    body{font-family:'Inter',sans-serif;background:var(--brand-light);color:var(--brand-dark);overflow-x:hidden}
+    .container{max-width:var(--container-w);margin:0 auto;width:100%}
 
-    .hero{min-height:92vh;padding:96px 1.5rem 4rem;display:flex;align-items:center;background:
-      linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(26,26,26,.55) 60%,transparent 100%),
-      url('{{HERO_IMAGE_URL}}') center/cover no-repeat;}
-    .badge{display:inline-flex;align-items:center;gap:.55rem;background:var(--a);color:var(--d);font-weight:900;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.35rem .8rem;border-radius:2px;margin-bottom:1.25rem}
-    .hero h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(3rem,8vw,5.8rem);line-height:1;color:#fff;margin-bottom:1rem}
-    .hero h1 span{color:var(--a)}
-    .sub{color:rgba(255,255,255,.82);font-size:1.1rem;line-height:1.7;max-width:640px;margin-bottom:2rem}
-    .ctas{display:flex;gap:1rem;flex-wrap:wrap}
-    .cta1{background:var(--p);color:#fff;font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;padding:.85rem 1.9rem;border-radius:4px;text-decoration:none}
-    .cta2{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;padding:.85rem 1.9rem;border-radius:4px;text-decoration:none}
-    .cta2:hover{border-color:var(--a);color:var(--a)}
+    /* Header */
+    #sticky-header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0 clamp(1.25rem,3.2vw,2.75rem);
+      height:80px;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #sticky-header .logo{
+      position:relative;z-index:2;flex-shrink:0;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+    }
+    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .header-nav-layer{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
+    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;transition:color .2s;white-space:nowrap}
+    .nav-links a:hover{color:var(--brand-primary)}
 
-    .section{padding:5rem 1.5rem;background:#fff}
-    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h2{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.05}
-    h2 span{color:var(--p)}
-    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:2.25rem}
-    .card{background:var(--l);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:1.6rem}
-    .card h3{font-family:Syne,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
-    .card p{margin:0;color:#666}
-    .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--p);font-weight:900;text-transform:uppercase;letter-spacing:.1em}
+    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
+    .btn-call-now{
+      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;
+      transition:transform .15s,filter .2s;white-space:nowrap
+    }
+    .btn-call-now:hover{transform:translateY(-1px);filter:brightness(.95)}
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:transparent;border:1px solid rgba(0,0,0,.16);
+      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
+    }
+    .btn-outline:hover{border-color:rgba(0,0,0,.26);color:var(--brand-primary)}
 
-    
+    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
+    #menu-toggle svg{stroke:currentColor}
+    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    #mobile-menu.open{display:flex}
+
+    /* Hero */
+    #hero{
+      min-height:92vh;
+      background:
+        radial-gradient(60% 60% at 15% 30%, rgba(0,0,0,.65) 0%, rgba(0,0,0,.0) 70%),
+        linear-gradient(135deg,rgba(18,18,19,.92) 0%,rgba(18,18,19,.60) 55%,rgba(18,18,19,.15) 100%),
+        url('{{HERO_IMAGE_URL}}') center/cover no-repeat;
+      display:flex;align-items:center;
+      padding:132px 1.5rem 4rem;
+    }
+    .hero-inner{max-width:760px}
+    .hero-kicker{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.1rem}
+    .hk{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:.35rem .75rem;font-weight:900;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+    .hk strong{color:var(--brand-accent)}
+    #hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.85rem,6.8vw,5.15rem);line-height:1.04;color:#fff;margin-bottom:.9rem}
+    #hero h1 span{color:var(--brand-accent)}
+    .sub{font-size:1.12rem;color:rgba(255,255,255,.86);max-width:640px;margin-bottom:1.55rem;line-height:1.7}
+    .cta{display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+    .btn-primary{
+      background:var(--brand-primary);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.12rem;
+      padding:.95rem 1.35rem;border-radius:12px;text-decoration:none;transition:transform .15s,filter .2s;
+      display:inline-flex;align-items:center;gap:.6rem
+    }
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(.95)}
+    .btn-secondary{
+      display:inline-flex;align-items:center;gap:.6rem;
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.02rem;padding:.95rem 1.2rem;border-radius:12px;text-decoration:none;
+      background:transparent;color:var(--brand-dark);border:2px solid rgba(0,0,0,.14);
+      transition:border-color .2s,color .2s,background .2s,transform .15s;
+    }
+    .btn-secondary:hover{border-color:var(--brand-primary);color:var(--brand-primary);transform:translateY(-2px)}
+    #hero .btn-secondary,
+    .hero .btn-secondary,
+    section.section[style*="brand-dark"] .btn-secondary,
+    .section.section--dark-cta .btn-secondary{
+      background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.42);
+      box-shadow:0 1px 0 rgba(255,255,255,.1) inset;
+    }
+    #hero .btn-secondary:hover,
+    .hero .btn-secondary:hover,
+    section.section[style*="brand-dark"] .btn-secondary:hover{
+      border-color:rgba(255,255,255,.35);color:var(--brand-accent);background:rgba(255,255,255,.09);transform:none;
+    }
+    .section.section--dark-cta .btn-secondary:hover{
+      border-color:rgba(255,255,255,.65);color:#fff;background:rgba(255,255,255,.2);transform:none;
+    }
+    .hero-proof{margin-top:1.35rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .proof{
+      background:rgba(0,0,0,.38);
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:16px;
+      padding:1.05rem 1.05rem .95rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      overflow:hidden;
+      min-height:148px;
+      min-width:0;
+      container-type:inline-size;
+      container-name:hero-proof;
+    }
+    .proof .p-top{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;min-width:0;width:100%}
+    .proof .p-title{
+      color:rgba(255,255,255,.86);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-size:clamp(0.56rem,0.85vw + 0.42rem,0.72rem);
+      max-width:100%;
+      line-height:1.25;
+      overflow-wrap:anywhere;
+    }
+    .proof .p-title{font-size:clamp(0.56rem,0.22rem + 2.6cqi,0.72rem)}
+    .proof .p-val{
+      color:#fff;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      font-weight:800;
+      font-size:clamp(0.74rem,0.95vw + 0.55rem,1.35rem);
+      line-height:1.18;
+      letter-spacing:-.015em;
+      max-width:100%;
+      min-width:0;
+      width:100%;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      text-wrap:balance;
+    }
+    .proof .p-val{font-size:clamp(0.74rem,0.32rem + 4.6cqi,1.35rem)}
+    .proof .p-sub{
+      margin-top:.45rem;
+      color:rgba(255,255,255,.74);
+      line-height:1.55;
+      font-size:clamp(0.78rem,0.55vw + 0.68rem,0.95rem);
+      max-width:100%;
+      overflow-wrap:anywhere;
+    }
+    .proof .p-sub{font-size:clamp(0.78rem,0.18rem + 2.4cqi,0.95rem)}
+    @media(max-width:860px){.hero-proof{grid-template-columns:1fr}}
+
+    .section{padding:5.25rem 1.5rem}
+    .label{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-primary);margin-bottom:.5rem}
+    .title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.06;margin-bottom:1rem}
+    .title span{color:var(--brand-primary)}
+    .body{color:#4A4A4A;font-size:1.05rem;line-height:1.7;max-width:760px}
+    /* Softer section heading/copy on white bands (avoid heavy brand-dark) */
+    .svc-section-title{color:#4a5d6e}
+    .svc-section-lead{color:#6b7785}
+
+    /* Home-service sections */
+    .trust-bar{background:#0f0f10;color:#fff;padding:1.25rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+    .trust-row{max-width:var(--container-w);margin:0 auto;display:flex;gap:1.15rem;flex-wrap:wrap;justify-content:center}
+    .trust-item{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.5rem .85rem;font-weight:900;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.86)}
+    .trust-item b{color:var(--brand-accent)}
+
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.15rem;margin-top:2rem;align-items:stretch}
+    .svc{
+      background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:1.35rem;
+      display:flex;flex-direction:column;min-height:100%;
+    }
+    /* Light-on-light cards: keep typography off near-black brand-dark */
+    .svc h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.35rem;color:#4a5d6e}
+    .svc p{color:#6b7785;line-height:1.7;flex:1}
+
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.15rem;margin-top:2rem}
+    .step{background:var(--brand-light);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:1.35rem}
+    .num{width:40px;height:40px;border-radius:14px;background:var(--brand-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;margin-bottom:.9rem}
+    .step h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem}
+    .step p{margin-top:.55rem;color:#555;line-height:1.75}
+
+    .split{display:grid;grid-template-columns:1.05fr .95fr;gap:1.35rem;align-items:start}
+    .panel{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:1.5rem}
+    .panel h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.45rem}
+    /* Dark CTA card (service area split): must not use near-black borders / ink buttons */
+    .panel--dark-cta{
+      background:linear-gradient(165deg,#2f3640 0%,var(--brand-dark) 52%);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 18px 44px rgba(0,0,0,.28);
+    }
+    .panel--dark-cta h3{color:#fff}
+    .panel.panel--dark-cta a.btn-outline:link,
+    .panel.panel--dark-cta a.btn-outline:visited{
+      color:#fff;
+      -webkit-text-fill-color:#fff;
+      border:1px solid rgba(255,255,255,.55);
+      background:rgba(255,255,255,.12);
+    }
+    .panel.panel--dark-cta a.btn-outline:hover,
+    .panel.panel--dark-cta a.btn-outline:focus-visible{
+      color:#fff;
+      -webkit-text-fill-color:#fff;
+      border-color:rgba(255,255,255,.88);
+      background:rgba(255,255,255,.22);
+      outline:none;
+    }
+    .list{margin-top:.9rem;display:flex;flex-direction:column;gap:.6rem}
+    .li{display:flex;gap:.6rem;align-items:flex-start;color:#444;line-height:1.6}
+    .li svg{color:var(--brand-primary);flex-shrink:0;margin-top:3px}
+    @media(max-width:920px){.split{grid-template-columns:1fr}}
+
+    .faq{margin-top:2rem;display:grid;gap:.75rem}
+    details{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:1rem 1.15rem}
+    summary{cursor:pointer;font-weight:900;letter-spacing:.02em}
+    details p{margin-top:.75rem;color:#555;line-height:1.75}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2.25rem}
+    .card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;padding:1.5rem}
+    .card h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.4rem}
+    .card p{color:#666;line-height:1.7}
+    .card-meta{margin-top:.75rem;font-size:.72rem;color:var(--brand-primary);font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+
+    footer{background:#0f0f10;color:rgba(255,255,255,.65);padding:3.5rem 1.5rem 2rem}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:var(--container-w);margin:0 auto}
+    .footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;color:#fff;margin-bottom:.75rem}
+    .footer-logo span{color:var(--brand-accent)}
+    .footer-desc{font-size:.9rem;line-height:1.65;max-width:340px}
+    .footer-col h4{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.15em;color:#fff;margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .footer-col ul li a{color:rgba(255,255,255,.55);font-size:.9rem;text-decoration:none;transition:color .2s}
+    .footer-col ul li a:hover{color:var(--brand-accent)}
+    .footer-bottom{max-width:var(--container-w);margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.8rem}
+    @media(max-width:640px){
+      #sticky-header .header-nav-layer{display:none}
+      .nav-links{display:none}
+      #menu-toggle{display:block}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+    }
+
+    /* Full-width dark CTA band: never rely on BRAND_ACCENT alone for small type (may be navy on navy from intake) */
+    .section.section--dark-cta .label{color:rgba(255,255,255,.88)}
+    .section.section--dark-cta .title{color:#fff}
+    .section.section--dark-cta .title span{color:var(--brand-primary)}
   </style>
 
-  <!-- Optional structured data (LocalBusiness + Services + Reviews) -->
+  <!-- Optional structured data (LocalBusiness) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -61,67 +280,314 @@
     "url":"{{SITE_URL}}",
     "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"},
     "areaServed": {{AREA_SERVED_JSON}},
-    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"},
-    "review": {{REVIEWS_JSON_LD}}
+    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
   }
   </script>
 </head>
 <body>
-  <header>
-    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-    <nav id="site-nav" aria-label="Primary">
-      <ul>
+  <header id="sticky-header">
+    <a href="index.html" class="logo">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <div class="header-nav-layer">
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="articles.html">Articles</a></li>
-        <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a></li>
+        <li class="nav-dd">
+          <button type="button" class="nav-dd-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="nav-dd-sa-panel">{{SERVICE_AREA_PAGE_LABEL|Service area}} <span class="nav-dd-caret" aria-hidden="true">▾</span></button>
+          <ul class="nav-dd-panel" id="nav-dd-sa-panel" role="menu">
+            <li role="none"><a role="menuitem" href="service-area.html">Coverage map &amp; list</a></li>
+            <li role="none"><a role="menuitem" href="location-1.html">{{LOCATION_1_MENU_LABEL|Metro north}}</a></li>
+            <li role="none"><a role="menuitem" href="location-2.html">{{LOCATION_2_MENU_LABEL|Central corridor}}</a></li>
+            <li role="none"><a role="menuitem" href="location-3.html">{{LOCATION_3_MENU_LABEL|South county}}</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
-    <div class="header-actions">
+    </div>
+    <div class="header-ctas">
+      <a class="btn-outline" href="contact.html">Get Estimate</a>
+      <a href="tel:{{PHONE_NUMBER_E164}}" class="btn-call-now">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
+        {{PHONE_NUMBER}}
+      </a>
       <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
       </button>
-      <a class="btn header-call" href="tel:{{PHONE_NUMBER}}">Call Now</a>
     </div>
   </header>
-  <nav id="mobile-menu" aria-label="Mobile navigation">
+  <nav id="mobile-menu">
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="gallery.html">Gallery</a>
-    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
+    <a href="testimonials.html">Testimonials</a>
     <a href="about.html">About</a>
     <a href="articles.html">Articles</a>
-    <a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</a>
-    <a href="tel:{{PHONE_NUMBER}}">Call Now</a>
+    <div class="mobile-nav-dd" role="group" aria-label="Service area links">
+      <span class="mobile-nav-dd-label">{{SERVICE_AREA_PAGE_LABEL|Service area}}</span>
+      <a href="service-area.html">Coverage map &amp; list</a>
+      <a href="location-1.html">{{LOCATION_1_MENU_LABEL|Metro north}}</a>
+      <a href="location-2.html">{{LOCATION_2_MENU_LABEL|Central corridor}}</a>
+      <a href="location-3.html">{{LOCATION_3_MENU_LABEL|South county}}</a>
+    </div>
+    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-accent)!important;">{{PHONE_NUMBER}}</a>
   </nav>
 
-  <section class="hero">
-    <div class="container">
-      <div class="badge">Licensed · Insured · Local</div>
-      <h1>{{PRIMARY_SERVICE}} in {{CITY}}<br/><span>Clear communication.</span></h1>
+  <section id="hero">
+    <div class="container hero-inner">
+      <div class="hero-kicker">
+        <div class="hk">Local pros in <strong>{{CITY}}, {{STATE}}</strong></div>
+        <div class="hk">{{LICENSE_TYPE}}</div>
+        <div class="hk">Rated {{REVIEW_RATING}}★ ({{REVIEW_COUNT}})</div>
+      </div>
+      <h1>{{PRIMARY_SERVICE}} you can<br/><span>count on</span>.</h1>
       <p class="sub">{{HERO_SUBHEADLINE}}</p>
-      <div class="ctas">
-        <a class="cta1" href="tel:{{PHONE_NUMBER}}">Call {{PHONE_NUMBER}}</a>
-        <a class="cta2" href="contact.html">Request a Quote</a>
+      <div class="cta">
+        <a class="btn-primary" href="tel:{{PHONE_NUMBER_E164}}">
+          Call {{PHONE_NUMBER}}
+        </a>
+        <a class="btn-secondary" href="contact.html">Get a free estimate</a>
+      </div>
+
+      <div class="hero-proof">
+        <div class="proof">
+          <div class="p-top"><div class="p-title">Fast response</div><div class="p-val">Same-week</div></div>
+          <div class="p-sub">Estimates and inspections with clear next steps.</div>
+        </div>
+        <div class="proof">
+          <div class="p-top"><div class="p-title">Photo updates</div><div class="p-val">Documented</div></div>
+          <div class="p-sub">We show what we found and what we fixed.</div>
+        </div>
+        <div class="proof">
+          <div class="p-top"><div class="p-title">Warranty</div><div class="p-val">{{WARRANTY_SHORT}}</div></div>
+          <div class="p-sub">Workmanship backed by a real guarantee.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <div class="trust-row">
+      <div class="trust-item"><b>Licensed</b> &amp; insured</div>
+      <div class="trust-item"><b>Financing</b> available</div>
+      <div class="trust-item"><b>Emergency</b> service</div>
+      <div class="trust-item"><b>Upfront</b> pricing</div>
+      <div class="trust-item"><b>Local</b> crew</div>
+    </div>
+  </div>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <div class="label">Services</div>
+      <h2 class="title svc-section-title">The services that drive the most calls<br/><span>in {{CITY}}</span></h2>
+      <p class="body svc-section-lead">A few of the most common reasons homeowners call us—clear scope, clear next step.</p>
+
+      <div class="svc-grid">
+        <article class="svc">
+          <h3>{{SERVICE_1_NAME}}</h3>
+          <p>{{SERVICE_1_DESC}}</p>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_2_NAME}}</h3>
+          <p>{{SERVICE_2_DESC}}</p>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_3_NAME}}</h3>
+          <p>{{SERVICE_3_DESC}}</p>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_4_NAME}}</h3>
+          <p>{{SERVICE_4_DESC}}</p>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_5_NAME}}</h3>
+          <p>{{SERVICE_5_DESC}}</p>
+        </article>
+        <article class="svc">
+          <h3>{{SERVICE_6_NAME}}</h3>
+          <p>{{SERVICE_6_DESC}}</p>
+        </article>
+      </div>
+
+      <div style="margin-top:1.75rem">
+        <a class="btn-primary" href="services.html">See all services →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--brand-light)">
+    <div class="container">
+      <div class="label">How it works</div>
+      <h2 class="title">A simple process with<br/><span>no surprises</span></h2>
+      <p class="body">Homeowners want clarity. Here’s how we take you from “problem” to “done” fast.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Call or request an estimate</h3>
+          <p>Tell us what’s going on. We’ll confirm availability and schedule a time that works.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Inspection + clear plan</h3>
+          <p>We inspect, take photos, and explain options. You get straightforward pricing and timelines.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Complete the job</h3>
+          <p>Clean crews, quality materials, and a final walkthrough. We stand behind our work.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="k">What you offer</div>
-      <h2>Top services homeowners call for<br/><span>all in one place</span></h2>
-      <p>Clear descriptions so you can choose the right next step—call, schedule an estimate, or send photos for quick triage.</p>
-      <div class="grid">
-        <div class="card"><h3>{{PRIMARY_KEYWORD_1}}</h3><p>{{KEYWORD_INTENT_1}}</p><div class="card-meta">Common request</div></div>
-        <div class="card"><h3>{{PRIMARY_KEYWORD_2}}</h3><p>{{KEYWORD_INTENT_2}}</p><div class="card-meta">Common request</div></div>
-        <div class="card"><h3>{{PRIMARY_KEYWORD_3}}</h3><p>{{KEYWORD_INTENT_3}}</p><div class="card-meta">Recent work</div></div>
-        <div class="card"><h3>{{PRIMARY_KEYWORD_4}}</h3><p>{{KEYWORD_INTENT_4}}</p><div class="card-meta">Helpful guides</div></div>
+      <div class="label">Our work</div>
+      <h2 class="title">Real projects in and around<br/><span>{{CITY}}</span></h2>
+      <p class="body">A short carousel of recent projects—before/after shots and the details homeowners care about.</p>
+
+      <div class="carousel" data-carousel>
+        <div class="c-track" data-track>
+          <div class="c-item"><img src="{{GALLERY_1_URL}}" alt="{{GALLERY_1_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_2_URL}}" alt="{{GALLERY_2_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_3_URL}}" alt="{{GALLERY_3_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_4_URL}}" alt="{{GALLERY_4_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_5_URL}}" alt="{{GALLERY_5_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_6_URL}}" alt="{{GALLERY_6_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_7_URL}}" alt="{{GALLERY_7_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_8_URL}}" alt="{{GALLERY_8_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_9_URL}}" alt="{{GALLERY_9_ALT}}"></div>
+          <div class="c-item"><img src="{{GALLERY_10_URL}}" alt="{{GALLERY_10_ALT}}"></div>
+        </div>
+        <div class="c-nav">
+          <button type="button" class="c-btn" data-prev>Prev</button>
+          <div class="c-meta"><span data-index>1</span> / <span data-total>10</span></div>
+          <button type="button" class="c-btn" data-next>Next</button>
+        </div>
       </div>
-      <p style="margin-top:1.25rem;color:#666">Additional services: {{PRIMARY_KEYWORD_5}}, {{PRIMARY_KEYWORD_6}}, {{PRIMARY_KEYWORD_7}}, {{PRIMARY_KEYWORD_8}}, {{PRIMARY_KEYWORD_9}}, {{PRIMARY_KEYWORD_10}}.</p>
     </div>
   </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <div class="label">Service area</div>
+      <h2 class="title">Serving {{CITY}} and nearby<br/><span>cities</span></h2>
+      <p class="body">If you’re near {{CITY}}, there’s a good chance we can help. We serve: {{SERVICE_CITIES_ONE_LINE}}.</p>
+
+      <div class="split" style="margin-top:2rem">
+        <div class="panel">
+          <h3>What you can expect</h3>
+          <div class="list">
+            <div class="li">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+              <span><strong>Upfront pricing</strong> and a clear scope before work begins</span>
+            </div>
+            <div class="li">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+              <span><strong>Fast scheduling</strong> for urgent issues when possible</span>
+            </div>
+            <div class="li">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+              <span><strong>Clean job sites</strong> and a final walkthrough</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel--dark-cta">
+          <h3>Get a free estimate</h3>
+          <p style="color:rgba(255,255,255,.78);margin-top:.55rem;line-height:1.75">Call now or request an estimate online. We’ll confirm details and next steps.</p>
+          <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.65rem">
+            <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a>
+            <a class="btn-outline" href="contact.html">Request estimate →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--brand-light)">
+    <div class="container">
+      <div class="label">Testimonials</div>
+      <h2 class="title">Trusted by homeowners in<br/><span>{{CITY}}</span></h2>
+      <p class="body">Here’s what customers say after the job is done. Read more on the Testimonials page.</p>
+      <div class="grid">
+        <div class="card"><h3>{{TESTIMONIAL_1_NAME}}</h3><p>“{{TESTIMONIAL_1_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_1_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_2_NAME}}</h3><p>“{{TESTIMONIAL_2_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_2_CITY}}</div></div>
+        <div class="card"><h3>{{TESTIMONIAL_3_NAME}}</h3><p>“{{TESTIMONIAL_3_TEXT}}”</p><div class="card-meta">{{TESTIMONIAL_3_CITY}}</div></div>
+      </div>
+      <div style="margin-top:1.75rem">
+        <a class="btn-primary" href="testimonials.html">Read more testimonials →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <div class="label">FAQ</div>
+      <h2 class="title">Quick answers before you<br/><span>call</span></h2>
+      <p class="body">These are the most common questions we get from customers in {{CITY}}.</p>
+      <div class="faq">
+        <details>
+          <summary>Do you offer emergency service?</summary>
+          <p>{{EMERGENCY_FAQ_ANSWER}}</p>
+        </details>
+        <details>
+          <summary>How fast can you come out?</summary>
+          <p>{{SCHEDULING_FAQ_ANSWER}}</p>
+        </details>
+        <details>
+          <summary>Do you provide free estimates?</summary>
+          <p>{{ESTIMATE_FAQ_ANSWER}}</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark-cta" style="background:var(--brand-dark);color:#fff">
+    <div class="container">
+      <div class="label">Get started</div>
+      <h2 class="title">Talk to a local pro<br/><span>today</span></h2>
+      <p class="body" style="color:rgba(255,255,255,.78)">{{CTA_INTRO}}</p>
+      <div style="margin-top:1.5rem;display:flex;gap:.85rem;flex-wrap:wrap">
+        <a class="btn-primary" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
+        <a class="btn-secondary" href="contact.html">Request an estimate</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
+        <p class="footer-desc">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="service-area.html">{{SERVICE_AREA_PAGE_LABEL|Service area}}</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{YEAR_CURRENT}} {{BUSINESS_NAME}}. All rights reserved.</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+    </div>
+  </footer>
+
   <script src="./main.js" defer></script>
 </body>
 </html>

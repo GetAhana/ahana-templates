@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./styles.css" />
-  <title>{{SERVICE_1_SEO_TITLE}}</title>
-  <meta name="description" content="{{SERVICE_1_META_DESCRIPTION}}" />
+    <title>{{LOCATION_1_SEO_TITLE}}</title>
+  <meta name="description" content="{{LOCATION_1_META_DESCRIPTION}}" />
+
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10;--p:var(--brand-primary);--d:var(--brand-dark);--l:var(--brand-light);--a:var(--brand-accent)}
@@ -131,14 +132,24 @@
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Service",
-    "name":"{{SERVICE_1_NAME}}",
-    "serviceType":"{{SERVICE_1_NAME}}",
-    "description":"{{SERVICE_1_SCHEMA_DESCRIPTION}}",
-    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}","url":"{{SITE_URL}}"},
-    "areaServed":{{AREA_SERVED_JSON}}
+    "@type":"WebPage",
+    "name":"{{LOCATION_1_SEO_TITLE}}",
+    "description":"{{LOCATION_1_META_DESCRIPTION}}",
+    "url":"{{SITE_URL}}/location-1"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"{{LOCATION_1_FAQ_Q1|Do you offer same-week estimates in this area?}}","acceptedAnswer":{"@type":"Answer","text":"{{LOCATION_1_FAQ_A1|Yes—when capacity allows we prioritize local emergency and storm-related calls and schedule estimates quickly.}}"}},
+      {"@type":"Question","name":"{{LOCATION_1_FAQ_Q2|Which services do you route to crews closest to this submarket?}}","acceptedAnswer":{"@type":"Answer","text":"{{LOCATION_1_FAQ_A2|We align dispatch with the services listed on this page so homeowners get crews familiar with local codes, weather, and materials.}}"}}
+    ]
+  }
+  </script>
+
+
 </head>
 <body>
   <header id="sticky-header">
@@ -189,102 +200,73 @@
     <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
   </nav>
 
-  <main>
+  
+<main>
     <div class="container">
-      <div class="k">{{SERVICE_1_NAME}}</div>
-      <h1>{{SERVICE_1_H1}}</h1>
-      <div class="hook">{{SERVICE_1_INTRO}}</div>
+      <div class="k">Local service SEO · {{LOCATION_1_MENU_LABEL|Submarket}}</div>
+      <h1>{{LOCATION_1_H1|Exterior restoration &amp; roofing in North Metro, Colorado}}</h1>
+      <div class="hook">{{LOCATION_1_LEAD|Homeowners here often search by city plus the exact exterior problem—hail, wind-driven leaks, aging siding, or emergency tarping. This page matches that intent with service-first messaging tied to neighborhoods you actually dispatch to.}}</div>
+      <p>{{LOCATION_1_SUPPORT_PARA|Tell us the seasons, permitting quirks, and competitor noise you deal with in this pocket of your market; we fold those details into headings, internal links, and FAQs.}}</p>
 
-      <h2>{{SERVICE_1_SPECS_HEADLINE}}</h2>
-      <div class="specs">{{SERVICE_1_SPECS_HTML}}</div>
-      <div class="service-proof-callout" role="note" aria-label="At a glance">
-        <span class="proof-mark" aria-hidden="true"></span>
-        <p class="proof">{{SERVICE_1_PROOF_LINE}}</p>
-      </div>
-
-      <details class="acc-block">
-        <summary>How we handle {{SERVICE_1_NAME}}</summary>
-        <div class="acc-inner">
-          <p>{{SERVICE_1_PROCESS_INTRO}}</p>
-          <ul class="detail-list">
-            <li><strong>{{SERVICE_1_STEP_1_TITLE}}</strong> — {{SERVICE_1_STEP_1_BODY}}</li>
-            <li><strong>{{SERVICE_1_STEP_2_TITLE}}</strong> — {{SERVICE_1_STEP_2_BODY}}</li>
-            <li><strong>{{SERVICE_1_STEP_3_TITLE}}</strong> — {{SERVICE_1_STEP_3_BODY}}</li>
-          </ul>
+      <h2>Core services homeowners search for <span>in this area</span></h2>
+      <p class="tight">{{LOCATION_1_SERVICES_INTRO|Align this block with high-intent queries (e.g. storm + city). Each card should reflect a real offer your crews deliver in this submarket.}}</p>
+      <div class="loc-grid">
+        <div class="loc-card">
+          <h3>{{LOCATION_1_SVC_A_TITLE|Storm &amp; hail response}}</h3>
+          <p>{{LOCATION_1_SVC_A_BODY|Documentation-first inspections, insurance-friendly estimates, and crews who know how local weather patterns show up on roofs here.}}</p>
         </div>
-      </details>
-
-      <details class="acc-block">
-        <summary>When to call us</summary>
-        <div class="acc-inner">
-          <p>{{SERVICE_1_SIGNS_INTRO}}</p>
-          <ul class="detail-list">
-            <li>{{SERVICE_1_SIGN_1}}</li>
-            <li>{{SERVICE_1_SIGN_2}}</li>
-            <li>{{SERVICE_1_SIGN_3}}</li>
-            <li>{{SERVICE_1_SIGN_4}}</li>
-            <li>{{SERVICE_1_SIGN_5}}</li>
-          </ul>
+        <div class="loc-card">
+          <h3>{{LOCATION_1_SVC_B_TITLE|Full roof replacement}}</h3>
+          <p>{{LOCATION_1_SVC_B_BODY|Material options suited to wind exposure, venting, and HOA or municipal requirements common in this corridor.}}</p>
         </div>
-      </details>
-
-      <h2>Before &amp; after <span>({{SERVICE_1_NAME}})</span></h2>
-      <p class="tight">{{SERVICE_1_GALLERY_INTRO}}</p>
-      <div class="ba">
-        <figure class="shot">
-          <img src="{{SERVICE_1_BEFORE_IMG_URL}}" alt="{{SERVICE_1_BEFORE_IMG_ALT}}" />
-          <figcaption>Before</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="{{SERVICE_1_AFTER_IMG_URL}}" alt="{{SERVICE_1_AFTER_IMG_ALT}}" />
-          <figcaption>After</figcaption>
-        </figure>
+        <div class="loc-card">
+          <h3>{{LOCATION_1_SVC_C_TITLE|Exteriors &amp; water management}}</h3>
+          <p>{{LOCATION_1_SVC_C_BODY|Siding, gutters, flashing, and envelope details that stop repeat callbacks—written as local proof, not buzzwords.}}</p>
+        </div>
       </div>
 
-      <h2>What homeowners <span>say</span></h2>
-      <p class="tight">{{SERVICE_1_TESTIMONIALS_INTRO}}</p>
-      <div class="wall">
-        <article class="card">
-          <blockquote>“{{SERVICE_1_TESTIMONIAL_1_TEXT}}”</blockquote>
-          <div class="by">{{SERVICE_1_TESTIMONIAL_1_NAME}} <span>· {{SERVICE_1_TESTIMONIAL_1_CITY}}</span></div>
-        </article>
-        <article class="card">
-          <blockquote>“{{SERVICE_1_TESTIMONIAL_2_TEXT}}”</blockquote>
-          <div class="by">{{SERVICE_1_TESTIMONIAL_2_NAME}} <span>· {{SERVICE_1_TESTIMONIAL_2_CITY}}</span></div>
-        </article>
-      </div>
+      <h2>Neighborhoods &amp; <span>dispatch reality</span></h2>
+      <p class="tight">{{LOCATION_1_NEIGHBORHOODS|Name the subdivisions or zip clusters you want to show up for. Search engines reward specificity; visitors reward honesty about where you’re fastest.}}</p>
+      <ul class="detail-list">
+        <li>{{LOCATION_1_BULLET_1|Same-week emergency tarping when storms track across this submarket.}}</li>
+        <li>{{LOCATION_1_BULLET_2|Code-aware replacements for older housing stock common in established neighborhoods.}}</li>
+        <li>{{LOCATION_1_BULLET_3|Photo-heavy estimates so homeowners understand scope before work starts.}}</li>
+      </ul>
 
-      <h2>FAQ — <span>{{SERVICE_1_NAME}}</span></h2>
+      <h2>Questions <span>we answer on the phone</span></h2>
       <details class="faq-it">
-        <summary>{{SERVICE_1_FAQ_Q1}}</summary>
-        <p>{{SERVICE_1_FAQ_A1}}</p>
+        <summary>{{LOCATION_1_FAQ_Q1|Do you offer same-week estimates in this area?}}</summary>
+        <p>{{LOCATION_1_FAQ_A1|Yes—when capacity allows we prioritize local emergency and storm-related calls and schedule estimates quickly.}}</p>
       </details>
       <details class="faq-it">
-        <summary>{{SERVICE_1_FAQ_Q2}}</summary>
-        <p>{{SERVICE_1_FAQ_A2}}</p>
-      </details>
-      <details class="faq-it">
-        <summary>{{SERVICE_1_FAQ_Q3}}</summary>
-        <p>{{SERVICE_1_FAQ_A3}}</p>
+        <summary>{{LOCATION_1_FAQ_Q2|Which services do you route to crews closest to this submarket?}}</summary>
+        <p>{{LOCATION_1_FAQ_A2|We align dispatch with the services listed on this page so homeowners get crews familiar with local codes, weather, and materials.}}</p>
       </details>
 
-      <h2>Related <span>services</span></h2>
-      <p class="tight">{{SERVICE_1_RELATED_INTRO}}</p>
-            <div class="related">
-        <a href="service-2.html">{{SERVICE_2_NAME}}</a>
-        <a href="service-3.html">{{SERVICE_3_NAME}}</a>
-        <a href="service-4.html">{{SERVICE_4_NAME}}</a>
-        <a href="service-5.html">{{SERVICE_5_NAME}}</a>
-        <a href="service-6.html">{{SERVICE_6_NAME}}</a>
+      <div class="loc-cross" aria-label="Related pages">
+        <a href="service-area.html">Full service area</a>
+        <a href="location-2.html">{{LOCATION_2_MENU_LABEL|Area 2}}</a>
+        <a href="location-3.html">{{LOCATION_3_MENU_LABEL|Area 3}}</a>
         <a href="services.html">All services</a>
+        <a href="contact.html">Request a quote</a>
+      </div>
+
+      <div class="loc-map">
+        <iframe
+          title="{{BUSINESS_NAME}} — {{LOCATION_1_MENU_LABEL}} map"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&amp;q={{LOCATION_1_MAP_QUERY|Denver,CO}}&amp;zoom=11">
+        </iframe>
       </div>
     </div>
   </main>
 
-  <div class="sticky-cta" role="region" aria-label="Quick contact">
+<div class="sticky-cta" role="region" aria-label="Quick contact">
     <a class="st-secondary" href="contact.html">Get free estimate</a>
     <a class="st-primary" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
   </div>
   <script src="./main.js" defer></script>
+
 </body>
 </html>

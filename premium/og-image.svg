@@ -7,5 +7,5 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <text x="600" y="300" text-anchor="middle" fill="#ffffff" font-family="system-ui,Segoe UI,sans-serif" font-size="64" font-weight="800">{{BUSINESS_NAME}}</text>
-  <text x="600" y="380" text-anchor="middle" fill="#ff5733" font-family="system-ui,Segoe UI,sans-serif" font-size="28" font-weight="700">{{PRIMARY_SERVICE}} · {{CITY}}</text>
+  <text x="600" y="380" text-anchor="middle" fill="#ff5733" font-family="system-ui,Segoe UI,sans-serif" font-size="28" font-weight="700">{{PRIMARY_KEYWORD_1}} · {{CITY}}</text>
 </svg>
