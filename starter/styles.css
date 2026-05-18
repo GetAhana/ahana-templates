@@ -33,8 +33,18 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,25
 .inner>.logo{grid-column:1;justify-self:end}
 .inner>nav{grid-column:2;justify-self:center}
 .inner>.cta{grid-column:3;justify-self:start}
-.logo{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
-.logo span{color:var(--a)}
+.logo{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);text-decoration:none;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:0.55rem}
+header .logo__img{display:block;height:40px;width:auto;max-width:min(200px,42vw);object-fit:contain}
+header .logo__wordmark{font-family:inherit;font-weight:inherit;font-size:inherit;letter-spacing:inherit;color:inherit}
+.logo .logo__accent{color:var(--a)}
+body.header-brand--text header .logo__img{display:none !important}
+body.header-brand--text header .logo__wordmark--beside{display:none !important}
+body.header-brand--image header .logo__img{display:block}
+body.header-brand--image header .logo__wordmark{display:none !important}
+body.header-brand--image-text header .logo__img{display:block}
+body.header-brand--image-text header .logo__wordmark--fallback{display:none !important}
+body.header-brand--image-text header .logo__dot{display:none !important}
+body.header-brand--image-text header .logo__wordmark--beside{display:inline;white-space:nowrap}
 nav ul{display:flex;gap:1.8rem;list-style:none;align-items:center;justify-content:center}
 nav a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
 nav a:hover{color:var(--p)}

@@ -28,9 +28,20 @@
     }
     #sticky-header .logo{
       position:relative;z-index:2;flex-shrink:0;
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none;
+      display:inline-flex;align-items:center;gap:0.55rem
     }
-    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .logo .logo__accent{color:var(--brand-accent)}
+    #sticky-header .logo__img{display:block;height:40px;width:auto;max-width:min(200px,42vw);object-fit:contain}
+    #sticky-header .logo__wordmark{font-family:inherit;font-weight:inherit;font-size:inherit;letter-spacing:inherit;color:inherit}
+    .header-brand--text #sticky-header .logo__img{display:none !important}
+    .header-brand--text #sticky-header .logo__wordmark--beside{display:none !important}
+    .header-brand--image #sticky-header .logo__img{display:block}
+    .header-brand--image #sticky-header .logo__wordmark{display:none !important}
+    .header-brand--image-text #sticky-header .logo__img{display:block}
+    .header-brand--image-text #sticky-header .logo__wordmark--fallback{display:none !important}
+    .header-brand--image-text #sticky-header .logo__dot{display:none !important}
+    .header-brand--image-text #sticky-header .logo__wordmark--beside{display:inline;white-space:nowrap}
     #sticky-header .header-nav-layer{
       position:absolute;left:0;right:0;top:0;bottom:0;
       display:flex;align-items:center;justify-content:center;
@@ -72,9 +83,9 @@
     .leaflet-container{font-family:'Inter',system-ui,sans-serif}
   </style>
 </head>
-<body>
+<body class="{{HEADER_BRAND_CLASS|header-brand--text}}">
   <header id="sticky-header">
-    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <a class="logo" href="index.html">{{HEADER_LOGO_IMG}}<span class="logo__wordmark logo__wordmark--fallback">{{BUSINESS_NAME_SHORT}}<span class="logo__accent logo__dot">.</span></span><span class="logo__wordmark logo__wordmark--beside">{{BUSINESS_NAME_SHORT}}</span></a>
     <div class="header-nav-layer">
     <nav aria-label="Primary">
       <ul class="nav-links">
@@ -129,6 +140,8 @@
 
       <div class="chips" id="service-area-chips" role="list" aria-label="Communities served"></div>
       <script type="application/json" id="svc-cities-json">{{SERVICE_CITIES}}</script>
+      <span id="ahana-svc-cities-one-line" hidden aria-hidden="true">{{SERVICE_CITIES_ONE_LINE}}</span>
+      <span id="ahana-city-fallback" hidden aria-hidden="true">{{CITY}}</span>
       <noscript>
         <p class="chips" style="margin-top:1.75rem"><strong>Areas:</strong> {{SERVICE_CITIES_ONE_LINE}}</p>
       </noscript>
@@ -156,7 +169,7 @@
       </section>
 
       <div class="map" id="area-map-wrap">
-        <div id="service-area-map" role="img" aria-label="Map centered on {{BUSINESS_NAME}} with markers for cities served"></div>
+        <div id="service-area-map" role="img" aria-label="Map centered on {{BUSINESS_NAME}} showing combined service coverage area"></div>
       </div>
       <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
 
@@ -182,12 +195,22 @@
             } catch (e) {}
           }
           if (chipHost && chipHost.childElementCount === 0) {
-            var fb = document.createElement('p');
-            fb.className = 'chips';
-            fb.style.marginTop = '1.75rem';
-            fb.style.fontWeight = '700';
-            fb.textContent = '{{SERVICE_CITIES_ONE_LINE}}';
-            chipHost.parentNode.insertBefore(fb, chipHost.nextSibling);
+            var oneLineEl = document.getElementById('ahana-svc-cities-one-line');
+            var cityEl = document.getElementById('ahana-city-fallback');
+            var oneLine = oneLineEl ? oneLineEl.textContent.replace(/\s+/g, ' ').trim() : '';
+            var cityFb = cityEl ? cityEl.textContent.replace(/\s+/g, ' ').trim() : '';
+            var tokenBroken = function (s) {
+              return !s || s.indexOf('{{') !== -1;
+            };
+            var text = !tokenBroken(oneLine) ? oneLine : (!tokenBroken(cityFb) ? cityFb : '');
+            if (text) {
+              var fb = document.createElement('p');
+              fb.className = 'chips';
+              fb.style.marginTop = '1.75rem';
+              fb.style.fontWeight = '700';
+              fb.textContent = text;
+              chipHost.parentNode.insertBefore(fb, chipHost.nextSibling);
+            }
           }
 
           if (typeof L === 'undefined' || !document.getElementById('service-area-map')) return;
@@ -207,7 +230,155 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           }).addTo(map);
 
-          var markers = [];
+          var REGION_STYLE = {
+            color: '#c2410c',
+            weight: 2,
+            fillColor: '#f97316',
+            fillOpacity: 0.38
+          };
+
+          function dedupeLatLng(pts) {
+            var out = [];
+            var eps = 0.00012;
+            for (var i = 0; i < pts.length; i++) {
+              var dup = false;
+              for (var j = 0; j < out.length; j++) {
+                if (Math.abs(out[j][0] - pts[i][0]) < eps && Math.abs(out[j][1] - pts[i][1]) < eps) {
+                  dup = true;
+                  break;
+                }
+              }
+              if (!dup) out.push(pts[i]);
+            }
+            return out;
+          }
+
+          function haversineM(a, b) {
+            var R = 6371000;
+            var p1 = (a[0] * Math.PI) / 180;
+            var p2 = (b[0] * Math.PI) / 180;
+            var dp = ((b[0] - a[0]) * Math.PI) / 180;
+            var dl = ((b[1] - a[1]) * Math.PI) / 180;
+            var x = Math.sin(dp / 2) * Math.sin(dp / 2) + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) * Math.sin(dl / 2);
+            return 2 * R * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+          }
+
+          function convexHullLngLat(pointsLngLat) {
+            if (pointsLngLat.length < 3) return pointsLngLat.slice();
+            var pts = pointsLngLat.slice().sort(function (a, b) {
+              return a[0] - b[0] || a[1] - b[1];
+            });
+            function cross(o, a, b) {
+              return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+            }
+            var lower = [];
+            for (var i = 0; i < pts.length; i++) {
+              while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], pts[i]) <= 0) lower.pop();
+              lower.push(pts[i]);
+            }
+            var upper = [];
+            for (var j = pts.length - 1; j >= 0; j--) {
+              while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], pts[j]) <= 0) upper.pop();
+              upper.push(pts[j]);
+            }
+            upper.pop();
+            lower.pop();
+            return lower.concat(upper);
+          }
+
+          function inflateRing(latLngRing, factor) {
+            var clat = 0;
+            var clng = 0;
+            var n = latLngRing.length;
+            for (var ir = 0; ir < n; ir++) {
+              clat += latLngRing[ir][0];
+              clng += latLngRing[ir][1];
+            }
+            clat /= n;
+            clng /= n;
+            var inflated = [];
+            for (var ir2 = 0; ir2 < n; ir2++) {
+              inflated.push([clat + (latLngRing[ir2][0] - clat) * factor, clng + (latLngRing[ir2][1] - clng) * factor]);
+            }
+            return inflated;
+          }
+
+          function circleFromDiameter(a, b, pad) {
+            var mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+            var d = haversineM(a, b);
+            var r = Math.max((d / 2) * pad, 6500);
+            return L.circle(mid, Object.assign({}, REGION_STYLE, { radius: r }));
+          }
+
+          function circleCoveringPoints(pts, pad) {
+            if (pts.length === 1) return L.circle(pts[0], Object.assign({}, REGION_STYLE, { radius: 22000 }));
+            var bestD = -1;
+            var bestA = pts[0];
+            var bestB = pts[1];
+            for (var ia = 0; ia < pts.length; ia++) {
+              for (var jb = ia + 1; jb < pts.length; jb++) {
+                var dist = haversineM(pts[ia], pts[jb]);
+                if (dist > bestD) {
+                  bestD = dist;
+                  bestA = pts[ia];
+                  bestB = pts[jb];
+                }
+              }
+            }
+            return circleFromDiameter(bestA, bestB, pad);
+          }
+
+          function buildUnifiedRegion(map, centerLat, centerLng, markerRecords, bizName) {
+            var pts = [];
+            for (var im = 0; im < markerRecords.length; im++) {
+              pts.push([markerRecords[im].la, markerRecords[im].ln]);
+            }
+            pts.push([centerLat, centerLng]);
+            pts = dedupeLatLng(pts);
+
+            var labels = [];
+            var seenLab = {};
+            for (var il = 0; il < markerRecords.length; il++) {
+              var slab = markerRecords[il].label;
+              if (slab && !seenLab[slab]) {
+                seenLab[slab] = true;
+                labels.push(slab);
+              }
+            }
+
+            var layer;
+            if (pts.length === 1) {
+              layer = L.circle(pts[0], Object.assign({}, REGION_STYLE, { radius: 22000 }));
+            } else if (pts.length === 2) {
+              layer = circleFromDiameter(pts[0], pts[1], 1.38);
+            } else {
+              var hullLngLat = convexHullLngLat(
+                pts.map(function (p) {
+                  return [p[1], p[0]];
+                })
+              );
+              if (hullLngLat.length < 3) {
+                layer = circleCoveringPoints(pts, 1.38);
+              } else {
+                var ring = hullLngLat.map(function (p) {
+                  return [p[1], p[0]];
+                });
+                ring = inflateRing(ring, 1.12);
+                layer = L.polygon(ring, REGION_STYLE);
+              }
+            }
+
+            layer.addTo(map);
+
+            var popupParts = [];
+            if (labels.length) popupParts.push('<strong>Communities we serve</strong><br>' + labels.join(', '));
+            if (bizName) popupParts.push('<strong>Base</strong><br>' + bizName);
+            if (popupParts.length) layer.bindPopup(popupParts.join('<br><br>'));
+
+            map.fitBounds(layer.getBounds().pad(0.18));
+          }
+
+          var markerRecords = [];
           var rawMarkers = document.getElementById('area-markers-json');
           if (rawMarkers && rawMarkers.textContent.trim()) {
             try {
@@ -218,36 +389,23 @@
                   var la = Number(m.lat);
                   var ln = Number(m.lng);
                   if (!isFinite(la) || !isFinite(ln)) return;
-                  var label = m.label != null ? String(m.label) : '';
-                  var mk = L.circleMarker([la, ln], {
-                    radius: 10,
-                    color: '#c2410c',
-                    weight: 2,
-                    fillColor: '#f97316',
-                    fillOpacity: 0.55
-                  }).addTo(map);
-                  if (label) mk.bindPopup(label);
-                  markers.push(mk);
+                  var label = m.label != null ? String(m.label).trim() : '';
+                  markerRecords.push({ la: la, ln: ln, label: label });
                 });
               }
             } catch (e2) {}
           }
 
-          if (markers.length) {
-            var fg = L.featureGroup(markers);
-            map.fitBounds(fg.getBounds().pad(0.18));
+          var bizEl = document.getElementById('biz-name-for-map');
+          var bizName = bizEl && bizEl.textContent ? bizEl.textContent.trim() : '';
+
+          if (markerRecords.length) {
+            buildUnifiedRegion(map, lat, lng, markerRecords, bizName);
           } else {
-            var bizEl = document.getElementById('biz-name-for-map');
-            var bizName = bizEl && bizEl.textContent ? bizEl.textContent.trim() : 'Our location';
-            L.circleMarker([lat, lng], {
-              radius: 11,
-              color: '#c2410c',
-              weight: 2,
-              fillColor: '#f97316',
-              fillOpacity: 0.65
-            })
-              .addTo(map)
-              .bindPopup(bizName);
+            var bizLabel = bizName || 'Our location';
+            var solo = L.circle([lat, lng], Object.assign({}, REGION_STYLE, { radius: 18000 }));
+            solo.addTo(map).bindPopup(bizLabel);
+            map.fitBounds(solo.getBounds().pad(0.18));
           }
         })();
       </script>

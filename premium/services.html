@@ -27,9 +27,20 @@
     }
     #sticky-header .logo{
       position:relative;z-index:2;flex-shrink:0;
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none;
+      display:inline-flex;align-items:center;gap:0.55rem
     }
-    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .logo .logo__accent{color:var(--brand-accent)}
+    #sticky-header .logo__img{display:block;height:40px;width:auto;max-width:min(200px,42vw);object-fit:contain}
+    #sticky-header .logo__wordmark{font-family:inherit;font-weight:inherit;font-size:inherit;letter-spacing:inherit;color:inherit}
+    .header-brand--text #sticky-header .logo__img{display:none !important}
+    .header-brand--text #sticky-header .logo__wordmark--beside{display:none !important}
+    .header-brand--image #sticky-header .logo__img{display:block}
+    .header-brand--image #sticky-header .logo__wordmark{display:none !important}
+    .header-brand--image-text #sticky-header .logo__img{display:block}
+    .header-brand--image-text #sticky-header .logo__wordmark--fallback{display:none !important}
+    .header-brand--image-text #sticky-header .logo__dot{display:none !important}
+    .header-brand--image-text #sticky-header .logo__wordmark--beside{display:inline;white-space:nowrap}
     #sticky-header .header-nav-layer{
       position:absolute;left:0;right:0;top:0;bottom:0;
       display:flex;align-items:center;justify-content:center;
@@ -118,9 +129,9 @@
   }
   </script>
 </head>
-<body>
+<body class="{{HEADER_BRAND_CLASS|header-brand--text}}">
   <header id="sticky-header">
-    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <a class="logo" href="index.html">{{HEADER_LOGO_IMG}}<span class="logo__wordmark logo__wordmark--fallback">{{BUSINESS_NAME_SHORT}}<span class="logo__accent logo__dot">.</span></span><span class="logo__wordmark logo__wordmark--beside">{{BUSINESS_NAME_SHORT}}</span></a>
     <div class="header-nav-layer">
     <nav aria-label="Primary">
       <ul class="nav-links">
@@ -270,6 +281,7 @@
       <div>
         <div class="footer-logo">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
         <p style="max-width:340px;line-height:1.65">{{FOOTER_TAGLINE}}</p>
+        <p style="margin-top:.65rem;font-size:.85rem;line-height:1.6;color:rgba(255,255,255,.55)">{{BUSINESS_HOURS}}</p>
       </div>
       <div class="footer-col">
         <h4>Pages</h4>

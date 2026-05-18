@@ -24,14 +24,14 @@
     "name":"{{BUSINESS_NAME}}",
     "telephone":"{{PHONE_NUMBER_E164}}",
     "url":"{{SITE_URL}}/about",
-    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}
+    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}{{JSON_LD_LOGO_ENTRY}}
   }
   </script>
 </head>
-<body>
+<body class="{{HEADER_BRAND_CLASS|header-brand--text}}">
   <header>
     <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+      <a class="logo" href="/">{{HEADER_LOGO_IMG}}<span class="logo__wordmark logo__wordmark--fallback">{{BUSINESS_NAME_SHORT}}<span class="logo__accent logo__dot">.</span></span><span class="logo__wordmark logo__wordmark--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
         <ul>
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
@@ -125,6 +125,7 @@
       <div>
         <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
         <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
+        <p style="margin-top:.55rem;line-height:1.65;font-size:.88rem;color:rgba(255,255,255,.55)">{{BUSINESS_HOURS}}</p>
       </div>
       <div>
         <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>

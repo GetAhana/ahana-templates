@@ -27,9 +27,20 @@
     }
     #sticky-header .logo{
       position:relative;z-index:2;flex-shrink:0;
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none
+      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none;
+      display:inline-flex;align-items:center;gap:0.55rem
     }
-    #sticky-header .logo span{color:var(--brand-accent)}
+    #sticky-header .logo .logo__accent{color:var(--brand-accent)}
+    #sticky-header .logo__img{display:block;height:40px;width:auto;max-width:min(200px,42vw);object-fit:contain}
+    #sticky-header .logo__wordmark{font-family:inherit;font-weight:inherit;font-size:inherit;letter-spacing:inherit;color:inherit}
+    .header-brand--text #sticky-header .logo__img{display:none !important}
+    .header-brand--text #sticky-header .logo__wordmark--beside{display:none !important}
+    .header-brand--image #sticky-header .logo__img{display:block}
+    .header-brand--image #sticky-header .logo__wordmark{display:none !important}
+    .header-brand--image-text #sticky-header .logo__img{display:block}
+    .header-brand--image-text #sticky-header .logo__wordmark--fallback{display:none !important}
+    .header-brand--image-text #sticky-header .logo__dot{display:none !important}
+    .header-brand--image-text #sticky-header .logo__wordmark--beside{display:inline;white-space:nowrap}
     #sticky-header .header-nav-layer{
       position:absolute;left:0;right:0;top:0;bottom:0;
       display:flex;align-items:center;justify-content:center;
@@ -72,9 +83,7 @@
       transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
     }
     .post:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(0,0,0,.08);border-color:rgba(0,0,0,.12)}
-    .post.post--planned{cursor:default}
-    .post.post--planned:hover{transform:none;box-shadow:none;border-color:rgba(0,0,0,.06)}
-    .post-note{margin-top:.85rem;font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#888}
+    .ahana-articles-empty{margin-top:1.5rem;color:#666;line-height:1.75;max-width:760px;font-size:1rem}
     .tag{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--p)}
     .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem}
     .post h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;line-height:1.15;margin-bottom:.55rem}
@@ -82,9 +91,9 @@
     .meta{color:#666;font-size:.9rem;font-weight:800}
   </style>
 </head>
-<body>
+<body class="{{HEADER_BRAND_CLASS|header-brand--text}}">
   <header id="sticky-header">
-    <a class="logo" href="index.html">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
+    <a class="logo" href="index.html">{{HEADER_LOGO_IMG}}<span class="logo__wordmark logo__wordmark--fallback">{{BUSINESS_NAME_SHORT}}<span class="logo__accent logo__dot">.</span></span><span class="logo__wordmark logo__wordmark--beside">{{BUSINESS_NAME_SHORT}}</span></a>
     <div class="header-nav-layer">
     <nav aria-label="Primary">
       <ul class="nav-links">
@@ -123,37 +132,35 @@
       <h1>{{PRIMARY_SERVICE}} Advice for <span>{{CITY}}</span> Homeowners</h1>
       <p>{{BLOG_INTRO}}</p>
 
-      <div class="posts">
-        <article class="post post--planned" aria-labelledby="article-plan-1">
+      <div class="posts" id="ahana-articles-posts">
+        <a class="post js-ahana-article-card" href="#" data-article-url="{{ARTICLE_1_URL}}" aria-labelledby="article-1">
           <div class="top">
-            <div class="tag">{{ARTICLE_1_CATEGORY|Guide}}</div>
+            <div class="tag">{{ARTICLE_1_CATEGORY}}</div>
             <div class="meta">{{ARTICLE_1_DATE}}</div>
           </div>
-          <h2 id="article-plan-1">{{ARTICLE_1_TITLE}}</h2>
+          <h2 id="article-1">{{ARTICLE_1_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_1_EXCERPT}}</p>
-          <p class="post-note">Planned topic — add a page under <code>articles/</code> and link it here when ready.</p>
-        </article>
+        </a>
 
-        <article class="post post--planned" aria-labelledby="article-plan-2">
+        <a class="post js-ahana-article-card" href="#" data-article-url="{{ARTICLE_2_URL}}" aria-labelledby="article-2">
           <div class="top">
-            <div class="tag">{{ARTICLE_2_CATEGORY|Guide}}</div>
+            <div class="tag">{{ARTICLE_2_CATEGORY}}</div>
             <div class="meta">{{ARTICLE_2_DATE}}</div>
           </div>
-          <h2 id="article-plan-2">{{ARTICLE_2_TITLE}}</h2>
+          <h2 id="article-2">{{ARTICLE_2_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_2_EXCERPT}}</p>
-          <p class="post-note">Planned topic — add a page under <code>articles/</code> and link it here when ready.</p>
-        </article>
+        </a>
 
-        <article class="post post--planned" aria-labelledby="article-plan-3">
+        <a class="post js-ahana-article-card" href="#" data-article-url="{{ARTICLE_3_URL}}" aria-labelledby="article-3">
           <div class="top">
-            <div class="tag">{{ARTICLE_3_CATEGORY|Guide}}</div>
+            <div class="tag">{{ARTICLE_3_CATEGORY}}</div>
             <div class="meta">{{ARTICLE_3_DATE}}</div>
           </div>
-          <h2 id="article-plan-3">{{ARTICLE_3_TITLE}}</h2>
+          <h2 id="article-3">{{ARTICLE_3_TITLE}}</h2>
           <p class="excerpt">{{ARTICLE_3_EXCERPT}}</p>
-          <p class="post-note">Planned topic — add a page under <code>articles/</code> and link it here when ready.</p>
-        </article>
+        </a>
       </div>
+      <p id="ahana-articles-empty" class="ahana-articles-empty" role="status" hidden>We're preparing helpful articles for homeowners in {{CITY}}. Check back soon.</p>
     </div>
   </main>
   <script src="./main.js" defer></script>

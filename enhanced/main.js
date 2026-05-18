@@ -50,6 +50,51 @@
     });
   }
 
+  function isArticleHubPlaceholder(title, excerpt) {
+    var t = (title || '').toLowerCase();
+    var x = (excerpt || '').toLowerCase();
+    if (t.indexOf('planned topic') !== -1) return true;
+    if (t.indexOf('add a page under articles') !== -1) return true;
+    if (x.indexOf('planned topic') !== -1) return true;
+    if (x.indexOf('add a page under articles') !== -1) return true;
+    return false;
+  }
+
+  function initArticlesHub() {
+    var grid = document.getElementById('ahana-articles-posts');
+    var emptyEl = document.getElementById('ahana-articles-empty');
+    if (!grid) return;
+    var cards = grid.querySelectorAll('.js-ahana-article-card');
+    var visible = 0;
+    cards.forEach(function (card) {
+      var url = (card.getAttribute('data-article-url') || '').trim();
+      var titleEl = card.querySelector('h2');
+      var title = titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : '';
+      var excerptEl = card.querySelector('.excerpt');
+      var excerpt = excerptEl ? excerptEl.textContent.replace(/\s+/g, ' ').trim() : '';
+      var urlBad =
+        !url ||
+        url === '#' ||
+        url.indexOf('{{') !== -1 ||
+        /^javascript:/i.test(url);
+      var titleBad = !title || title.indexOf('{{') !== -1;
+      if (urlBad || titleBad || isArticleHubPlaceholder(title, excerpt)) {
+        card.setAttribute('hidden', '');
+        return;
+      }
+      visible++;
+      card.setAttribute('href', url);
+    });
+    if (emptyEl) {
+      emptyEl.hidden = visible !== 0;
+    }
+    if (visible === 0) {
+      grid.setAttribute('hidden', '');
+    } else {
+      grid.removeAttribute('hidden');
+    }
+  }
+
   function initActiveNav() {
     var path = window.location.pathname.split('/').pop() || 'index.html';
     var sticky = document.getElementById('sticky-header');
@@ -69,6 +114,7 @@
   initMobileMenu();
   initSmoothScroll();
   initTelTracking();
+  initArticlesHub();
   initActiveNav();
 
   document.querySelectorAll('[data-carousel]').forEach(function (root) {
