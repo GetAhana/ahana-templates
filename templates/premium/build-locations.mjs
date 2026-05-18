@@ -119,13 +119,12 @@ ${others}
       </div>
 
       <div class="loc-map">
-        <iframe
-          title="{{BUSINESS_NAME}} — {{${L}MENU_LABEL}} map"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&amp;q={{${L}MAP_QUERY|Denver,CO}}&amp;zoom=11">
-        </iframe>
+        <div id="service-area-map" role="img" aria-label="Map showing service coverage for {{${L}MENU_LABEL}}" data-lat="{{MAP_CENTER_LAT}}" data-lng="{{MAP_CENTER_LNG}}" data-zoom="{{MAP_ZOOM|10}}"></div>
       </div>
+      <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
+      <script type="application/json" id="area-markers-json">{{SERVICE_AREA_MAP_MARKERS_JSON}}</script>
+      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+      <script src="./ahana-service-area-map.js" defer></script>
     </div>
   </main>`;
 }

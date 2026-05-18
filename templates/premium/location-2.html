@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="./styles.css" />
     <title>{{LOCATION_2_SEO_TITLE}}</title>
   <meta name="description" content="{{LOCATION_2_META_DESCRIPTION}}" />
@@ -263,13 +264,12 @@
       </div>
 
       <div class="loc-map">
-        <iframe
-          title="{{BUSINESS_NAME}} — {{LOCATION_2_MENU_LABEL}} map"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&amp;q={{LOCATION_2_MAP_QUERY|Denver,CO}}&amp;zoom=11">
-        </iframe>
+        <div id="service-area-map" role="img" aria-label="Map showing service coverage for {{LOCATION_2_MENU_LABEL}}" data-lat="{{MAP_CENTER_LAT}}" data-lng="{{MAP_CENTER_LNG}}" data-zoom="{{MAP_ZOOM|10}}"></div>
       </div>
+      <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
+      <script type="application/json" id="area-markers-json">{{SERVICE_AREA_MAP_MARKERS_JSON}}</script>
+      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+      <script src="./ahana-service-area-map.js" defer></script>
     </div>
   </main>
 
