@@ -3,13 +3,13 @@
   Build: copy this file to ARTICLE_POST_SLUG_FILENAME (e.g. articles/roof-maintenance-houston-tx.html), then replace tokens.
   Public URL is ARTICLE_1_URL (extensionless, root-relative, e.g. /articles/roof-maintenance-houston-tx). CSS/icons use ../ from articles/.
 -->
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ARTICLE_POST_PAGE_TITLE}}</title>
   <meta name="description" content="{{ARTICLE_POST_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}{{ARTICLE_1_URL}}" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{{ARTICLE_POST_PAGE_TITLE}}" />
@@ -22,85 +22,108 @@
   <meta name="twitter:image" content="{{ARTICLE_POST_OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
 {{ARTICLE_POST_SCHEMA_JSON}}
   </script>
 </head>
-<body class="{{HEADER_BRAND_CLASS|header-brand--text}}">
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
   <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{HEADER_LOGO_IMG}}<span class="logo__wordmark logo__wordmark--fallback">{{BUSINESS_NAME_SHORT}}<span class="logo__accent logo__dot">.</span></span><span class="logo__wordmark logo__wordmark--beside">{{BUSINESS_NAME_SHORT}}</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero article-shell">
+      <div class="container">
+        <p class="article-back"><a href="/articles">← {{NAV_LABEL_ARTICLES}}</a></p>
+        <p class="article-meta-line"><span class="article-cat">{{ARTICLE_POST_CATEGORY}}</span><span class="article-meta-sep"> · </span><time datetime="">{{ARTICLE_POST_DATE}}</time><span class="article-meta-sep"> · </span>{{ARTICLE_POST_AUTHOR_LINE}}</p>
+        <h1 class="article-h1">{{ARTICLE_POST_H1_LINE_1}} <span class="accent">{{ARTICLE_POST_H1_ACCENT}}</span></h1>
+        <p class="section-sub article-dek">{{ARTICLE_POST_DEK}}</p>
+        <div class="article-tldr-wrap">{{ARTICLE_POST_TLDR_HTML}}</div>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <div class="article-body article-prose">{{ARTICLE_POST_BODY_HTML}}</div>
+        <div class="cta-band" style="margin-top:2.75rem" data-reveal>
+          <div>
+            <h2>{{FINAL_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{FINAL_CTA_SUB}}</p>
+          </div>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{FINAL_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
           <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="depth-page">
-    <div class="container article-shell">
-      <p class="article-back"><a href="/articles">← {{NAV_LABEL_ARTICLES}}</a></p>
-      <p class="article-meta-line"><span class="article-cat">{{ARTICLE_POST_CATEGORY}}</span><span class="article-meta-sep"> · </span><time datetime="">{{ARTICLE_POST_DATE}}</time><span class="article-meta-sep"> · </span>{{ARTICLE_POST_AUTHOR_LINE}}</p>
-      <h1 class="article-h1">{{ARTICLE_POST_H1_LINE_1}}<br><span>{{ARTICLE_POST_H1_ACCENT}}</span></h1>
-      <p class="sub article-dek">{{ARTICLE_POST_DEK}}</p>
-      <div class="article-tldr-wrap">
-        {{ARTICLE_POST_TLDR_HTML}}
-      </div>
-      <div class="article-body article-prose">
-        {{ARTICLE_POST_BODY_HTML}}
-      </div>
-      <div class="cta-band" style="margin-top:2.75rem">
-        <div>
-          <h2 style="font-size:clamp(1.35rem,2.8vw,1.75rem);margin-bottom:.35rem">{{FINAL_CTA_HEADLINE}}</h2>
-          <p class="sub" style="margin:0;max-width:520px">{{FINAL_CTA_SUB}}</p>
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <a class="btn btn-primary" href="/contact">{{FINAL_CTA_PRIMARY_LABEL}}</a>
-          <a class="btn btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="../main.js" defer></script>
 </body>
 </html>

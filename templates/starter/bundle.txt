@@ -10,7 +10,8 @@ TYPE: shared
     "This is a reference list of supported placeholders (tokens) used across templates.",
     "Your generator can replace {{TOKEN}} occurrences with values from intake/computed fields.",
     "FAVICON_INITIALS: computed from BUSINESS_NAME — first letter of the first word plus first letter of the second word (uppercase). If only one word, use its first two letters (uppercase). Used in favicon.svg.",
-    "BUILD_DATE: ISO 8601 date (YYYY-MM-DD) for humans.txt Last update; set at bundle or deploy time."
+    "BUILD_DATE: ISO 8601 date (YYYY-MM-DD) for humans.txt Last update; set at bundle or deploy time.",
+    "PHONE_NUMBER: US/Canada display format (XXX) XXX-XXXX in visible copy and link text. PHONE_NUMBER_E164 (+1…) is for tel: hrefs and JSON-LD telephone only (see HTML templates)."
   ],
   "tokens": {
     "BUSINESS_NAME": "Acme Plumbing Co",
@@ -48,7 +49,6 @@ TYPE: shared
   }
 }
 
-
 ================================================================================
 FILE: index.html
 SOURCE: templates/starter/index.html
@@ -56,13 +56,13 @@ TYPE: tier
 ================================================================================
 
 <!DOCTYPE html>
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{HOME_PAGE_TITLE}}</title>
   <meta name="description" content="{{HOME_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{HOME_PAGE_TITLE}}" />
@@ -76,10 +76,9 @@ TYPE: tier
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="{{HERO_IMAGE_URL}}" fetchpriority="high" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -96,7 +95,7 @@ TYPE: tier
       "addressRegion": "{{STATE}}",
       "postalCode": "{{ZIP}}"
     },
-    "areaServed": {{AREA_SERVED_JSON}}
+    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}}
   }
   </script>
   <script type="application/ld+json">
@@ -109,109 +108,104 @@ TYPE: tier
   }
   </script>
 </head>
-<body>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
   <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
-          <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
-        </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
       </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </header>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
 
   <main id="main">
-    <section class="hero">
-      <div class="container hero-inner">
-        <div class="kicker">
-          <div class="hk">{{HERO_KICKER_CHIP_1_HTML}}</div>
-          <div class="hk">{{HERO_KICKER_CHIP_2_HTML}}</div>
-          <div class="hk">{{HERO_KICKER_CHIP_3_HTML}}</div>
-        </div>
-        <h1>{{HERO_H1_LINE_1}}<br><span>{{HERO_H1_ACCENT}}</span></h1>
-        <p class="hero-sub">{{HERO_SUBHEADLINE}}</p>
-        <div class="cta">
-          <a class="btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{HERO_PRIMARY_CTA_LABEL}}</a>
-          <a class="btn-secondary" href="/contact">{{HERO_SECONDARY_CTA_LABEL}}</a>
-        </div>
 
-        <div class="hero-proof">
-          <div class="proof">
-            <div class="p-top">
-              <div class="p-title">{{HERO_PROOF_1_TITLE}}</div>
-              <div class="p-val">{{HERO_PROOF_1_VALUE}}</div>
-            </div>
-            <div class="p-sub">{{HERO_PROOF_1_SUB}}</div>
-          </div>
-          <div class="proof">
-            <div class="p-top">
-              <div class="p-title">{{HERO_PROOF_2_TITLE}}</div>
-              <div class="p-val">{{HERO_PROOF_2_VALUE}}</div>
-            </div>
-            <div class="p-sub">{{HERO_PROOF_2_SUB}}</div>
-          </div>
-          <div class="proof">
-            <div class="p-top">
-              <div class="p-title">{{HERO_PROOF_3_TITLE}}</div>
-              <div class="p-val">{{HERO_PROOF_3_VALUE}}</div>
-            </div>
-            <div class="p-sub">{{HERO_PROOF_3_SUB}}</div>
-          </div>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">{{HERO_KICKER_CHIP_1_HTML}}</div>
+        <h1 class="hero-h1">{{HERO_H1_LINE_1}} <span class="accent">{{HERO_H1_ACCENT}}</span></h1>
+        <p class="hero-sub">{{HERO_SUBHEADLINE}}</p>
+        <div class="hero-cta-group">
+          <a class="btn btn-primary btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{HERO_PRIMARY_CTA_LABEL}}</a>
+          <a class="btn btn-outline btn-lg" href="/contact">{{HERO_SECONDARY_CTA_LABEL}}</a>
+        </div>
+      </div>
+      <div class="hero-image-side" aria-hidden="true">
+        <div class="hero-img-clip">
+          <img src="{{HERO_IMAGE_URL}}" alt="" loading="eager" fetchpriority="high" width="900" height="1200" />
         </div>
       </div>
     </section>
 
-    <div class="depth-marquee" aria-label="{{HOME_MARQUEE_ARIA_LABEL}}">
-      <span>{{HOME_MARQUEE_ITEM_1}}</span>
-      <span>{{HOME_MARQUEE_ITEM_2}}</span>
-      <span>{{HOME_MARQUEE_ITEM_3}}</span>
-      <span>{{HOME_MARQUEE_ITEM_4}}</span>
-      <span>{{HOME_MARQUEE_ITEM_5}}</span>
-      <span>{{HOME_MARQUEE_ITEM_6}}</span>
+    <div class="stats-strip">
+      <div class="stats-inner" data-reveal-stagger>
+        <div class="stat-cell" data-stagger-item>
+          <div class="stat-val">{{HERO_PROOF_1_VALUE}}</div>
+          <div class="stat-label">{{HERO_PROOF_1_TITLE}}</div>
+          <p class="stat-note">{{HERO_PROOF_1_SUB}}</p>
+        </div>
+        <div class="stat-cell" data-stagger-item>
+          <div class="stat-val">{{HERO_PROOF_2_VALUE}}</div>
+          <div class="stat-label">{{HERO_PROOF_2_TITLE}}</div>
+          <p class="stat-note">{{HERO_PROOF_2_SUB}}</p>
+        </div>
+        <div class="stat-cell" data-stagger-item>
+          <div class="stat-val">{{HERO_PROOF_3_VALUE}}</div>
+          <div class="stat-label">{{HERO_PROOF_3_TITLE}}</div>
+          <p class="stat-note">{{HERO_PROOF_3_SUB}}</p>
+        </div>
+      </div>
     </div>
 
-    <section class="section alt">
+    <section class="section">
       <div class="container">
-        <div class="k">{{HOME_PROBLEM_SECTION_KICKER}}</div>
-        <h2>{{HOME_PROBLEM_H2_LINE_1}}<br><span>{{HOME_PROBLEM_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{HOME_PROBLEM_INTRO}}</p>
-        <div class="depth-quad">
-          <div class="depth-tile">
-            <div class="depth-n">01</div>
-            <span class="depth-chip">{{HOME_PROBLEM_TILE_1_CHIP}}</span>
+        <span class="eyebrow">{{HOME_PROBLEM_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_PROBLEM_H2_LINE_1}} <span class="accent">{{HOME_PROBLEM_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal data-reveal-delay="0.1">{{HOME_PROBLEM_INTRO}}</p>
+        <div class="problem-grid" data-reveal-stagger>
+          <div class="problem-cell" data-stagger-item>
+            <div class="problem-tag">{{HOME_PROBLEM_TILE_1_CHIP}}</div>
             <h3>{{HOME_PROBLEM_TILE_1_TITLE}}</h3>
             <p>{{HOME_PROBLEM_TILE_1_BODY}}</p>
           </div>
-          <div class="depth-tile alt">
-            <div class="depth-n">02</div>
-            <span class="depth-chip">{{HOME_PROBLEM_TILE_2_CHIP}}</span>
+          <div class="problem-cell alt" data-stagger-item>
+            <div class="problem-tag">{{HOME_PROBLEM_TILE_2_CHIP}}</div>
             <h3>{{HOME_PROBLEM_TILE_2_TITLE}}</h3>
             <p>{{HOME_PROBLEM_TILE_2_BODY}}</p>
           </div>
-          <div class="depth-tile alt">
-            <div class="depth-n">03</div>
-            <span class="depth-chip">{{HOME_PROBLEM_TILE_3_CHIP}}</span>
+          <div class="problem-cell dark-accent" data-stagger-item>
+            <div class="problem-tag">{{HOME_PROBLEM_TILE_3_CHIP}}</div>
             <h3>{{HOME_PROBLEM_TILE_3_TITLE}}</h3>
             <p>{{HOME_PROBLEM_TILE_3_BODY}}</p>
           </div>
-          <div class="depth-tile">
-            <div class="depth-n">04</div>
-            <span class="depth-chip">{{HOME_PROBLEM_TILE_4_CHIP}}</span>
+          <div class="problem-cell" data-stagger-item>
+            <div class="problem-tag">{{HOME_PROBLEM_TILE_4_CHIP}}</div>
             <h3>{{HOME_PROBLEM_TILE_4_TITLE}}</h3>
             <p>{{HOME_PROBLEM_TILE_4_BODY}}</p>
           </div>
@@ -219,104 +213,137 @@ TYPE: tier
       </div>
     </section>
 
-    <section class="section">
+    <section class="section-warm">
       <div class="container">
-        <div class="k">{{HOME_STANDARD_SECTION_KICKER}}</div>
-        <h2>{{HOME_STANDARD_H2_LINE_1}}<br><span>{{HOME_STANDARD_H2_ACCENT}}</span></h2>
-        <div class="depth-mission">
-          <div>
-            <p class="sub" style="margin-top:0">{{HOME_STANDARD_MISSION_P1}}</p>
-            <p class="sub" style="margin-top:1rem">{{HOME_STANDARD_MISSION_P2}}</p>
-            <p class="sub" style="margin-top:1rem">{{HOME_STANDARD_MISSION_P3}}</p>
+        <span class="eyebrow">{{HOME_STANDARD_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_STANDARD_H2_LINE_1}} <span class="accent">{{HOME_STANDARD_H2_ACCENT}}</span></h2>
+        <div class="editorial-split" data-reveal>
+          <div class="editorial-body">
+            <p>{{HOME_STANDARD_MISSION_P1}}</p>
+            <p>{{HOME_STANDARD_MISSION_P2}}</p>
+            <p>{{HOME_STANDARD_MISSION_P3}}</p>
           </div>
-          <aside class="depth-aside">
-            <p class="depth-quote">{{HOME_STANDARD_PULL_QUOTE}}</p>
-            <p class="depth-attr"><strong>{{HOME_STANDARD_PULL_QUOTE_NAME}}</strong> · {{HOME_STANDARD_PULL_QUOTE_BYLINE}}</p>
+          <aside>
+            <div class="quote-card">
+              <p class="quote-text">{{HOME_STANDARD_PULL_QUOTE}}</p>
+              <p class="quote-attr">{{HOME_STANDARD_PULL_QUOTE_NAME}} &nbsp;·&nbsp; {{HOME_STANDARD_PULL_QUOTE_BYLINE}}</p>
+            </div>
           </aside>
         </div>
-        <div class="values-6">
-          <div class="depth-val"><span class="depth-vn">01</span><h3>{{HOME_VALUE_TILE_1_TITLE}}</h3><p>{{HOME_VALUE_TILE_1_BODY}}</p></div>
-          <div class="depth-val"><span class="depth-vn">02</span><h3>{{HOME_VALUE_TILE_2_TITLE}}</h3><p>{{HOME_VALUE_TILE_2_BODY}}</p></div>
-          <div class="depth-val"><span class="depth-vn">03</span><h3>{{HOME_VALUE_TILE_3_TITLE}}</h3><p>{{HOME_VALUE_TILE_3_BODY}}</p></div>
-          <div class="depth-val"><span class="depth-vn">04</span><h3>{{HOME_VALUE_TILE_4_TITLE}}</h3><p>{{HOME_VALUE_TILE_4_BODY}}</p></div>
-          <div class="depth-val"><span class="depth-vn">05</span><h3>{{HOME_VALUE_TILE_5_TITLE}}</h3><p>{{HOME_VALUE_TILE_5_BODY}}</p></div>
-          <div class="depth-val"><span class="depth-vn">06</span><h3>{{HOME_VALUE_TILE_6_TITLE}}</h3><p>{{HOME_VALUE_TILE_6_BODY}}</p></div>
+        <div style="margin-top:4.5rem" data-reveal-heading>
+          <h2>Six things that shape<br>every visit</h2>
+        </div>
+        <div class="values-grid" data-reveal-stagger style="margin-top:2rem">
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">01</span><h3>{{HOME_VALUE_TILE_1_TITLE}}</h3><p>{{HOME_VALUE_TILE_1_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">02</span><h3>{{HOME_VALUE_TILE_2_TITLE}}</h3><p>{{HOME_VALUE_TILE_2_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">03</span><h3>{{HOME_VALUE_TILE_3_TITLE}}</h3><p>{{HOME_VALUE_TILE_3_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">04</span><h3>{{HOME_VALUE_TILE_4_TITLE}}</h3><p>{{HOME_VALUE_TILE_4_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">05</span><h3>{{HOME_VALUE_TILE_5_TITLE}}</h3><p>{{HOME_VALUE_TILE_5_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">06</span><h3>{{HOME_VALUE_TILE_6_TITLE}}</h3><p>{{HOME_VALUE_TILE_6_BODY}}</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section">
       <div class="container">
-        <div class="k">{{HOME_SERVICES_SECTION_KICKER}}</div>
-        <h2>{{HOME_SERVICES_H2_LINE_1}}<br><span>{{HOME_SERVICES_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{HOME_SERVICES_INTRO}}</p>
-        <div class="grid service-cards">
-          <div class="card"><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_DESC}}</p><div class="tag">{{SERVICE_1_TAG}}</div></div>
-          <div class="card"><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_DESC}}</p><div class="tag">{{SERVICE_2_TAG}}</div></div>
-          <div class="card"><h3>{{SERVICE_3_NAME}}</h3><p>{{SERVICE_3_DESC}}</p><div class="tag">{{SERVICE_3_TAG}}</div></div>
+        <span class="eyebrow">{{HOME_SERVICES_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_SERVICES_H2_LINE_1}}<br><span class="accent">{{HOME_SERVICES_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{HOME_SERVICES_INTRO}}</p>
+        <div class="services-bento" data-reveal-stagger>
+          <div class="svc-tile featured" data-stagger-item>
+            <span class="svc-num" aria-hidden="true">01</span>
+            <h3>{{SERVICE_1_NAME}}</h3>
+            <p>{{SERVICE_1_DESC}}</p>
+            <span class="svc-tag">{{SERVICE_1_TAG}}</span>
+          </div>
+          <div class="svc-tile alt" data-stagger-item>
+            <h3>{{SERVICE_2_NAME}}</h3>
+            <p>{{SERVICE_2_DESC}}</p>
+            <span class="svc-tag">{{SERVICE_2_TAG}}</span>
+          </div>
+          <div class="svc-tile" data-stagger-item>
+            <h3>{{SERVICE_3_NAME}}</h3>
+            <p>{{SERVICE_3_DESC}}</p>
+            <span class="svc-tag">{{SERVICE_3_TAG}}</span>
+          </div>
         </div>
-        <div style="margin-top:1.75rem">
+        <div style="margin-top:2.25rem" data-reveal>
           <a class="btn btn-outline" href="/services">{{HOME_SERVICES_CTA_LABEL}}</a>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section-warm">
       <div class="container">
-        <div class="k">{{HOME_PROCESS_SECTION_KICKER}}</div>
-        <h2>{{HOME_PROCESS_H2_LINE_1}}<br><span>{{HOME_PROCESS_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{HOME_PROCESS_INTRO}}</p>
-        <div class="grid">
-          <div class="card"><h3>{{PROCESS_STEP_1_TITLE}}</h3><p>{{PROCESS_STEP_1_BODY}}</p><div class="tag">{{PROCESS_STEP_1_TAG}}</div></div>
-          <div class="card"><h3>{{PROCESS_STEP_2_TITLE}}</h3><p>{{PROCESS_STEP_2_BODY}}</p><div class="tag">{{PROCESS_STEP_2_TAG}}</div></div>
-          <div class="card"><h3>{{PROCESS_STEP_3_TITLE}}</h3><p>{{PROCESS_STEP_3_BODY}}</p><div class="tag">{{PROCESS_STEP_3_TAG}}</div></div>
+        <span class="eyebrow">{{HOME_PROCESS_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_PROCESS_H2_LINE_1}} <span class="accent">{{HOME_PROCESS_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{HOME_PROCESS_INTRO}}</p>
+        <div class="process-list" data-reveal-stagger>
+          <div class="process-connector" aria-hidden="true"></div>
+          <div class="pl-step" data-stagger-item>
+            <div class="pl-num-wrap"><span>1</span></div>
+            <h3>{{PROCESS_STEP_1_TITLE}}</h3>
+            <p>{{PROCESS_STEP_1_BODY}}</p>
+            <div class="pl-tag">{{PROCESS_STEP_1_TAG}}</div>
+          </div>
+          <div class="pl-step" data-stagger-item>
+            <div class="pl-num-wrap"><span>2</span></div>
+            <h3>{{PROCESS_STEP_2_TITLE}}</h3>
+            <p>{{PROCESS_STEP_2_BODY}}</p>
+            <div class="pl-tag">{{PROCESS_STEP_2_TAG}}</div>
+          </div>
+          <div class="pl-step" data-stagger-item>
+            <div class="pl-num-wrap"><span>3</span></div>
+            <h3>{{PROCESS_STEP_3_TITLE}}</h3>
+            <p>{{PROCESS_STEP_3_BODY}}</p>
+            <div class="pl-tag">{{PROCESS_STEP_3_TAG}}</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" style="background:#fff">
+    <section class="section">
       <div class="container">
-        <div class="k">{{HOME_ARTICLES_SECTION_KICKER}}</div>
-        <h2>{{HOME_ARTICLES_H2_LINE_1}}<br><span>{{HOME_ARTICLES_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{ARTICLES_INTRO}}</p>
-        <div class="post-list" style="margin-top:2rem">
-          <a class="post-link" href="{{ARTICLE_1_URL}}">
+        <span class="eyebrow">{{HOME_ARTICLES_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_ARTICLES_H2_LINE_1}} <span class="accent">{{HOME_ARTICLES_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{ARTICLES_INTRO}}</p>
+        <div class="post-list" data-reveal-stagger>
+          <a class="post-link" href="{{ARTICLE_1_URL}}" data-stagger-item>
             <div class="post-top">
               <div class="post-eyebrow">{{ARTICLE_1_CATEGORY}}</div>
               <div class="post-date">{{ARTICLE_1_DATE}}</div>
             </div>
             <div class="post-title">{{ARTICLE_1_TITLE}}</div>
-            <div class="post-excerpt">{{ARTICLE_1_EXCERPT}}</div>
+            <p class="post-excerpt">{{ARTICLE_1_EXCERPT}}</p>
             <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
           </a>
-          <a class="post-link" href="{{ARTICLE_2_URL}}">
+          <div class="post-link" role="article" data-stagger-item>
             <div class="post-top">
               <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
               <div class="post-date">{{ARTICLE_2_DATE}}</div>
             </div>
             <div class="post-title">{{ARTICLE_2_TITLE}}</div>
-            <div class="post-excerpt">{{ARTICLE_2_EXCERPT}}</div>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-          </a>
+            <p class="post-excerpt">{{ARTICLE_2_EXCERPT}}</p>
+          </div>
         </div>
-        <div style="margin-top:1.75rem;display:flex;gap:.85rem;flex-wrap:wrap">
+        <div style="margin-top:2rem;display:flex;gap:.75rem;flex-wrap:wrap" data-reveal>
           <a class="btn btn-primary" href="/articles">{{HOME_ARTICLES_PRIMARY_CTA_LABEL}}</a>
-          <a class="btn btn-outline" href="/contact">{{HOME_ARTICLES_SECONDARY_CTA_LABEL}}</a>
+          <a class="btn btn-ghost" href="/contact">{{HOME_ARTICLES_SECONDARY_CTA_LABEL}}</a>
         </div>
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section-warm">
       <div class="container">
-        <div class="k">{{HOME_SERVICE_AREA_SECTION_KICKER}}</div>
-        <h2>{{HOME_SERVICE_AREA_H2_LINE_1}}<br><span>{{HOME_SERVICE_AREA_H2_ACCENT}}</span></h2>
-        <div class="split">
-          <div>
-            <p class="sub" style="margin-top:.85rem">{{HOME_SERVICE_AREA_BODY_1}}</p>
-            <p class="sub" style="margin-top:.85rem">{{HOME_SERVICE_AREA_BODY_2_HTML}}</p>
+        <span class="eyebrow">{{HOME_SERVICE_AREA_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_SERVICE_AREA_H2_LINE_1}} <span class="accent">{{HOME_SERVICE_AREA_H2_ACCENT}}</span></h2>
+        <div class="area-split {{HOME_SERVICE_AREA_SPLIT_CLASS}}" data-reveal>
+          <div class="area-text">
+            <p>{{HOME_SERVICE_AREA_BODY_1}}</p>
+            <p>{{HOME_SERVICE_AREA_BODY_2_HTML}}</p>
           </div>
-          <div class="photo" aria-label="{{HOME_SERVICE_AREA_IMAGE_ARIA_LABEL}}">
-            <img src="{{HOME_SERVICE_AREA_IMAGE_URL}}" alt="{{HOME_SERVICE_AREA_IMAGE_ALT}}" width="{{HOME_SERVICE_AREA_IMAGE_WIDTH}}" height="{{HOME_SERVICE_AREA_IMAGE_HEIGHT}}" loading="lazy" decoding="async" fetchpriority="low" />
+          <div class="area-photo" aria-label="{{HOME_SERVICE_AREA_IMAGE_ARIA_LABEL}}">
+            <img src="{{HOME_SERVICE_AREA_IMAGE_URL}}" alt="{{HOME_SERVICE_AREA_IMAGE_ALT}}" width="{{HOME_SERVICE_AREA_IMAGE_WIDTH}}" height="{{HOME_SERVICE_AREA_IMAGE_HEIGHT}}" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -324,44 +351,71 @@ TYPE: tier
 
     <section class="section">
       <div class="container">
-        <div class="k">{{HOME_TESTIMONIALS_SECTION_KICKER}}</div>
-        <h2>{{HOME_TESTIMONIALS_H2_LINE_1}}<br><span>{{HOME_TESTIMONIALS_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{HOME_TESTIMONIALS_INTRO}}</p>
-        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-          <div class="card"><h3>{{TESTIMONIAL_1_NAME}}</h3><p>{{TESTIMONIAL_1_TEXT}}</p><div class="tag">{{TESTIMONIAL_1_CITY}}</div></div>
-          <div class="card"><h3>{{TESTIMONIAL_2_NAME}}</h3><p>{{TESTIMONIAL_2_TEXT}}</p><div class="tag">{{TESTIMONIAL_2_CITY}}</div></div>
-        </div>
-        <div style="margin-top:1.75rem;display:flex;gap:.85rem;flex-wrap:wrap">
-          <a class="btn btn-primary" href="/contact">{{HOME_TESTIMONIALS_PRIMARY_CTA_LABEL}}</a>
-          <a class="btn btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{HOME_TESTIMONIALS_SECONDARY_CTA_LABEL}}</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt">
-      <div class="container">
-        <div class="k">{{HOME_FAQ_SECTION_KICKER}}</div>
-        <h2>{{HOME_FAQ_H2_LINE_1}}<br><span>{{HOME_FAQ_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{HOME_FAQ_INTRO}}</p>
-        <div class="faq-block">
-          <details><summary>{{HOME_FAQ_1_QUESTION}}</summary><div class="faq-a">{{HOME_FAQ_1_ANSWER}}</div></details>
-          <details><summary>{{HOME_FAQ_2_QUESTION}}</summary><div class="faq-a">{{HOME_FAQ_2_ANSWER}}</div></details>
-          <details><summary>{{HOME_FAQ_3_QUESTION}}</summary><div class="faq-a">{{HOME_FAQ_3_ANSWER}}</div></details>
-          <details><summary>{{HOME_FAQ_4_QUESTION}}</summary><div class="faq-a">{{HOME_FAQ_4_ANSWER}}</div></details>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="cta-band">
-          <div>
-            <h2 style="font-size:clamp(1.5rem,3vw,2rem);margin-bottom:.35rem">{{FINAL_CTA_HEADLINE}}</h2>
-            <p class="sub" style="margin:0;max-width:520px">{{FINAL_CTA_SUB}}</p>
+        <span class="eyebrow">{{HOME_TESTIMONIALS_SECTION_KICKER}}</span>
+        <div class="testimonial-block">
+          <p class="t-main-quote" data-reveal-heading>{{TESTIMONIAL_1_TEXT}}</p>
+          <p class="t-attr" data-reveal><strong>{{TESTIMONIAL_1_NAME}}</strong> <span>·</span> <span>{{TESTIMONIAL_1_CITY}}</span></p>
+          <div class="t-secondary" data-reveal-stagger>
+            <div data-stagger-item>
+              <p class="t2-text">{{TESTIMONIAL_2_TEXT}}</p>
+              <p class="t2-attr">{{TESTIMONIAL_2_NAME}} &nbsp;·&nbsp; {{TESTIMONIAL_2_CITY}}</p>
+            </div>
           </div>
-          <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-            <a class="btn btn-primary" href="/contact">{{FINAL_CTA_PRIMARY_LABEL}}</a>
-            <a class="btn btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
+        </div>
+        <div class="cta-block" data-reveal>
+          <div>
+            <h2>{{FINAL_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{FINAL_CTA_SUB}}</p>
+          </div>
+          <div class="cta-block-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{FINAL_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <span class="eyebrow">{{HOME_FAQ_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{HOME_FAQ_H2_LINE_1}} <span class="accent">{{HOME_FAQ_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{HOME_FAQ_INTRO}}</p>
+        <div class="faq-block" data-reveal>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{HOME_FAQ_1_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{HOME_FAQ_1_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{HOME_FAQ_2_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{HOME_FAQ_2_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{HOME_FAQ_3_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{HOME_FAQ_3_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{HOME_FAQ_4_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{HOME_FAQ_4_ANSWER}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -369,26 +423,37 @@ TYPE: tier
   </main>
 
   <footer>
-    <div class="fgrid">
+    <div class="footer-grid">
       <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+          <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+          <li>{{BUSINESS_HOURS}}</li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -400,22 +465,26 @@ TYPE: tier
 ================================================================================
 
 <!DOCTYPE html>
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{SERVICES_PAGE_TITLE}}</title>
   <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}/services" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICES_PAGE_TITLE}}" />
   <meta property="og:description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta property="og:url" content="{{SITE_URL}}/services" />
   <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{SERVICES_PAGE_TITLE}}" />
+  <meta name="twitter:description" content="{{SERVICES_META_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
@@ -436,127 +505,217 @@ TYPE: tier
   }
   </script>
 </head>
-<body>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
+  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">{{SERVICES_SECTION_KICKER}}</span>
+        <h1>{{SERVICES_H1_LINE_1}} <span class="accent">{{SERVICES_H1_ACCENT}}</span></h1>
+        <p class="section-sub">{{SERVICES_INTRO}}</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">{{SERVICES_GRID_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{SERVICES_GRID_H2_LINE_1}} <span class="accent">{{SERVICES_GRID_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{SERVICES_GRID_INTRO}}</p>
+        <div class="svc-list" data-reveal-stagger>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">01</span>
+            <div><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_1_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">02</span>
+            <div><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_2_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">03</span>
+            <div><h3>{{SERVICE_3_NAME}}</h3><p>{{SERVICE_3_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_3_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">04</span>
+            <div><h3>{{SERVICE_4_NAME}}</h3><p>{{SERVICE_4_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_4_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">05</span>
+            <div><h3>{{SERVICE_5_NAME}}</h3><p>{{SERVICE_5_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_5_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">06</span>
+            <div><h3>{{SERVICE_6_NAME}}</h3><p>{{SERVICE_6_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_6_TAG}}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <span class="eyebrow">{{SERVICES_PROBLEM_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{SERVICES_PROBLEM_H2_LINE_1}} <span class="accent">{{SERVICES_PROBLEM_H2_ACCENT}}</span></h2>
+        <div class="depth-quad" data-reveal-stagger>
+          <div class="depth-tile" data-stagger-item><div class="depth-n" aria-hidden="true">01</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_1_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_1_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_1_BODY}}</p></div>
+          <div class="depth-tile alt" data-stagger-item><div class="depth-n" aria-hidden="true">02</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_2_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_2_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_2_BODY}}</p></div>
+          <div class="depth-tile alt" data-stagger-item><div class="depth-n" aria-hidden="true">03</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_3_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_3_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_3_BODY}}</p></div>
+          <div class="depth-tile" data-stagger-item><div class="depth-n" aria-hidden="true">04</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_4_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_4_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_4_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">{{SERVICES_VISIT_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{SERVICES_VISIT_H2_LINE_1}} <span class="accent">{{SERVICES_VISIT_H2_ACCENT}}</span></h2>
+        <div class="process-6" data-reveal-stagger>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_1_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_1_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_1_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_2_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_2_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_2_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_3_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_3_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_3_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_4_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_4_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_4_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>Step 5</em><h3>{{PROCESS_STEP_1_TITLE}}</h3><p>{{PROCESS_STEP_1_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>Step 6</em><h3>{{PROCESS_STEP_2_TITLE}}</h3><p>{{PROCESS_STEP_2_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <span class="eyebrow">{{SERVICES_WHY_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{SERVICES_WHY_H2_LINE_1}} <span class="accent">{{SERVICES_WHY_H2_ACCENT}}</span></h2>
+        <div class="why-grid" data-reveal-stagger>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_1_TITLE}}</h3><p>{{WHY_CHOOSE_1_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_1_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_2_TITLE}}</h3><p>{{WHY_CHOOSE_2_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_2_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_3_TITLE}}</h3><p>{{WHY_CHOOSE_3_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_3_TAG}}</div></div>
+        </div>
+        <p style="margin-top:2.25rem" data-reveal>
+          <a href="/about" class="area-link">{{SERVICES_WHY_STORY_LINK_LABEL}}</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">{{SERVICES_FAQ_SECTION_KICKER}}</span>
+        <div class="faq-block" data-reveal>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{SERVICES_FAQ_1_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{SERVICES_FAQ_1_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{SERVICES_FAQ_2_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{SERVICES_FAQ_2_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{SERVICES_FAQ_3_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{SERVICES_FAQ_3_ANSWER}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-bottom:7rem">
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <div>
+            <h2>{{SERVICES_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{SERVICES_CTA_SUB}}</p>
+          </div>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{SERVICES_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{SERVICES_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
           <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="depth-page">
-    <div class="container">
-      <div class="k">{{SERVICES_SECTION_KICKER}}</div>
-      <h1>{{SERVICES_H1_LINE_1}}<br><span>{{SERVICES_H1_ACCENT}}</span></h1>
-      <p class="sub" style="margin-top:.85rem">{{SERVICES_INTRO}}</p>
-
-      <div class="depth-h">
-        <div class="k">{{SERVICES_GRID_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{SERVICES_GRID_H2_LINE_1}}<br><span>{{SERVICES_GRID_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{SERVICES_GRID_INTRO}}</p>
-      </div>
-      <div class="grid service-cards" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-        <div class="card"><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_LONG}}</p><div class="tag">{{SERVICE_1_TAG}}</div></div>
-        <div class="card"><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_LONG}}</p><div class="tag">{{SERVICE_2_TAG}}</div></div>
-        <div class="card"><h3>{{SERVICE_3_NAME}}</h3><p>{{SERVICE_3_LONG}}</p><div class="tag">{{SERVICE_3_TAG}}</div></div>
-        <div class="card"><h3>{{SERVICE_4_NAME}}</h3><p>{{SERVICE_4_LONG}}</p><div class="tag">{{SERVICE_4_TAG}}</div></div>
-        <div class="card"><h3>{{SERVICE_5_NAME}}</h3><p>{{SERVICE_5_LONG}}</p><div class="tag">{{SERVICE_5_TAG}}</div></div>
-        <div class="card"><h3>{{SERVICE_6_NAME}}</h3><p>{{SERVICE_6_LONG}}</p><div class="tag">{{SERVICE_6_TAG}}</div></div>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{SERVICES_PROBLEM_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{SERVICES_PROBLEM_H2_LINE_1}}<br><span>{{SERVICES_PROBLEM_H2_ACCENT}}</span></h2>
-      </div>
-      <div class="depth-quad">
-        <div class="depth-tile"><div class="depth-n">01</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_1_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_1_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_1_BODY}}</p></div>
-        <div class="depth-tile alt"><div class="depth-n">02</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_2_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_2_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_2_BODY}}</p></div>
-        <div class="depth-tile alt"><div class="depth-n">03</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_3_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_3_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_3_BODY}}</p></div>
-        <div class="depth-tile"><div class="depth-n">04</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_4_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_4_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_4_BODY}}</p></div>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{SERVICES_VISIT_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{SERVICES_VISIT_H2_LINE_1}}<br><span>{{SERVICES_VISIT_H2_ACCENT}}</span></h2>
-      </div>
-      <div class="depth-steps">
-        <div class="depth-step"><em>{{SERVICES_VISIT_STEP_1_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{SERVICES_VISIT_STEP_1_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{SERVICES_VISIT_STEP_1_BODY}}</p></div>
-        <div class="depth-step"><em>{{SERVICES_VISIT_STEP_2_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{SERVICES_VISIT_STEP_2_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{SERVICES_VISIT_STEP_2_BODY}}</p></div>
-        <div class="depth-step"><em>{{SERVICES_VISIT_STEP_3_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{SERVICES_VISIT_STEP_3_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{SERVICES_VISIT_STEP_3_BODY}}</p></div>
-        <div class="depth-step"><em>{{SERVICES_VISIT_STEP_4_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{SERVICES_VISIT_STEP_4_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{SERVICES_VISIT_STEP_4_BODY}}</p></div>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{SERVICES_WHY_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{SERVICES_WHY_H2_LINE_1}}<br><span>{{SERVICES_WHY_H2_ACCENT}}</span></h2>
-        <div class="grid" style="margin-top:1.5rem">
-          <div class="card"><h3>{{WHY_CHOOSE_1_TITLE}}</h3><p>{{WHY_CHOOSE_1_BODY}}</p><div class="tag">{{WHY_CHOOSE_1_TAG}}</div></div>
-          <div class="card"><h3>{{WHY_CHOOSE_2_TITLE}}</h3><p>{{WHY_CHOOSE_2_BODY}}</p><div class="tag">{{WHY_CHOOSE_2_TAG}}</div></div>
-          <div class="card"><h3>{{WHY_CHOOSE_3_TITLE}}</h3><p>{{WHY_CHOOSE_3_BODY}}</p><div class="tag">{{WHY_CHOOSE_3_TAG}}</div></div>
-        </div>
-        <p class="sub" style="margin-top:1.25rem"><a href="/about" style="color:var(--p);font-weight:800;text-decoration:none">{{SERVICES_WHY_STORY_LINK_LABEL}}</a></p>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{SERVICES_FAQ_SECTION_KICKER}}</div>
-        <div class="faq-block">
-          <details><summary>{{SERVICES_FAQ_1_QUESTION}}</summary><div class="faq-a">{{SERVICES_FAQ_1_ANSWER}}</div></details>
-          <details><summary>{{SERVICES_FAQ_2_QUESTION}}</summary><div class="faq-a">{{SERVICES_FAQ_2_ANSWER}}</div></details>
-          <details><summary>{{SERVICES_FAQ_3_QUESTION}}</summary><div class="faq-a">{{SERVICES_FAQ_3_ANSWER}}</div></details>
-        </div>
-      </div>
-
-      <div class="cta-band" style="margin-top:2.5rem">
-        <div>
-          <h2 style="font-size:clamp(1.45rem,2.8vw,1.85rem);margin-bottom:.35rem">{{SERVICES_CTA_HEADLINE}}</h2>
-          <p class="sub" style="margin:0;max-width:520px">{{SERVICES_CTA_SUB}}</p>
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <a class="btn btn-primary" href="/contact">{{SERVICES_CTA_PRIMARY_LABEL}}</a>
-          <a class="btn btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{SERVICES_CTA_SECONDARY_LABEL}}</a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -568,22 +727,26 @@ TYPE: tier
 ================================================================================
 
 <!DOCTYPE html>
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ABOUT_PAGE_TITLE}}</title>
   <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}/about" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ABOUT_PAGE_TITLE}}" />
   <meta property="og:description" content="{{ABOUT_META_DESCRIPTION}}" />
   <meta property="og:url" content="{{SITE_URL}}/about" />
   <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ABOUT_PAGE_TITLE}}" />
+  <meta name="twitter:description" content="{{ABOUT_META_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
@@ -593,123 +756,187 @@ TYPE: tier
     "name":"{{BUSINESS_NAME}}",
     "telephone":"{{PHONE_NUMBER_E164}}",
     "url":"{{SITE_URL}}/about",
-    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}
+    "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}{{JSON_LD_LOGO_ENTRY}}
   }
   </script>
 </head>
-<body>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
+  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">{{ABOUT_SECTION_KICKER}}</span>
+        <h1>{{ABOUT_H1_LINE_1}} <span class="accent">{{ABOUT_H1_ACCENT}}</span></h1>
+        <p class="section-sub">{{ABOUT_LEAD}}</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">{{ABOUT_MISSION_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{ABOUT_MISSION_H2_LINE_1}} <span class="accent">{{ABOUT_MISSION_H2_ACCENT}}</span></h2>
+        <div class="editorial-split" data-reveal>
+          <div class="editorial-body">
+            <p>{{ABOUT_MISSION_P1}}</p>
+            <p>{{ABOUT_MISSION_P2}}</p>
+            <p>{{ABOUT_MISSION_P3}}</p>
+          </div>
+          <aside>
+            <div class="quote-card">
+              <p class="quote-text">{{ABOUT_MISSION_PULL_QUOTE}}</p>
+              <p class="quote-attr">{{ABOUT_MISSION_PULL_QUOTE_NAME}} &nbsp;·&nbsp; {{ABOUT_MISSION_PULL_QUOTE_BYLINE}}</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <span class="eyebrow">{{ABOUT_VALUES_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{ABOUT_VALUES_H2_LINE_1}} <span class="accent">{{ABOUT_VALUES_H2_ACCENT}}</span></h2>
+        <div class="values-grid" data-reveal-stagger style="margin-top:2.5rem">
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">01</span><h3>{{ABOUT_VALUE_TILE_1_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_1_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">02</span><h3>{{ABOUT_VALUE_TILE_2_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_2_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">03</span><h3>{{ABOUT_VALUE_TILE_3_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_3_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">04</span><h3>{{ABOUT_VALUE_TILE_4_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_4_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">05</span><h3>{{ABOUT_VALUE_TILE_5_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_5_BODY}}</p></div>
+          <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">06</span><h3>{{ABOUT_VALUE_TILE_6_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_6_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">{{ABOUT_SERVE_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{ABOUT_SERVE_H2_LINE_1}} <span class="accent">{{ABOUT_SERVE_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{ABOUT_SERVE_INTRO}}</p>
+        <div class="grid-auto" data-reveal-stagger>
+          <div class="card" data-stagger-item><h3>{{ABOUT_SERVE_CARD_1_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_1_BODY}}</p><div class="card-tag">{{ABOUT_SERVE_CARD_1_TAG}}</div></div>
+          <div class="card" data-stagger-item><h3>{{ABOUT_SERVE_CARD_2_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_2_BODY}}</p><div class="card-tag">{{ABOUT_SERVE_CARD_2_TAG}}</div></div>
+          <div class="card" data-stagger-item><h3>{{ABOUT_SERVE_CARD_3_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_3_BODY}}</p><div class="card-tag">{{ABOUT_SERVE_CARD_3_TAG}}</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <span class="eyebrow">{{ABOUT_FAQ_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{ABOUT_FAQ_H2_LINE_1}} <span class="accent">{{ABOUT_FAQ_H2_ACCENT}}</span></h2>
+        <div class="faq-block" data-reveal>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{ABOUT_FAQ_1_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{ABOUT_FAQ_1_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{ABOUT_FAQ_2_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{ABOUT_FAQ_2_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{ABOUT_FAQ_3_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{ABOUT_FAQ_3_ANSWER}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <div>
+            <h2>{{ABOUT_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{ABOUT_CTA_SUB}}</p>
+          </div>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{ABOUT_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="/services">{{ABOUT_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
           <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="depth-page">
-    <div class="container">
-      <div class="k">{{ABOUT_SECTION_KICKER}}</div>
-      <h1>{{ABOUT_H1_LINE_1}}<br><span>{{ABOUT_H1_ACCENT}}</span></h1>
-      <p class="sub" style="margin-top:.85rem">{{ABOUT_LEAD}}</p>
-
-      <div class="depth-mission" style="margin-top:2rem">
-        <div>
-          <div class="k">{{ABOUT_MISSION_SECTION_KICKER}}</div>
-          <h2 style="margin-top:.5rem;font-size:clamp(1.75rem,3.5vw,2.65rem)">{{ABOUT_MISSION_H2_LINE_1}}<br><span>{{ABOUT_MISSION_H2_ACCENT}}</span></h2>
-          <p class="sub" style="margin-top:.85rem">{{ABOUT_MISSION_P1}}</p>
-          <p class="sub" style="margin-top:1rem">{{ABOUT_MISSION_P2}}</p>
-          <p class="sub" style="margin-top:1rem">{{ABOUT_MISSION_P3}}</p>
-        </div>
-        <aside class="depth-aside">
-          <p class="depth-quote">{{ABOUT_MISSION_PULL_QUOTE}}</p>
-          <p class="depth-attr"><strong>{{ABOUT_MISSION_PULL_QUOTE_NAME}}</strong> · {{ABOUT_MISSION_PULL_QUOTE_BYLINE}}</p>
-        </aside>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{ABOUT_VALUES_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{ABOUT_VALUES_H2_LINE_1}}<br><span>{{ABOUT_VALUES_H2_ACCENT}}</span></h2>
-      </div>
-      <div class="values-6">
-        <div class="depth-val"><span class="depth-vn">01</span><h3>{{ABOUT_VALUE_TILE_1_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_1_BODY}}</p></div>
-        <div class="depth-val"><span class="depth-vn">02</span><h3>{{ABOUT_VALUE_TILE_2_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_2_BODY}}</p></div>
-        <div class="depth-val"><span class="depth-vn">03</span><h3>{{ABOUT_VALUE_TILE_3_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_3_BODY}}</p></div>
-        <div class="depth-val"><span class="depth-vn">04</span><h3>{{ABOUT_VALUE_TILE_4_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_4_BODY}}</p></div>
-        <div class="depth-val"><span class="depth-vn">05</span><h3>{{ABOUT_VALUE_TILE_5_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_5_BODY}}</p></div>
-        <div class="depth-val"><span class="depth-vn">06</span><h3>{{ABOUT_VALUE_TILE_6_TITLE}}</h3><p>{{ABOUT_VALUE_TILE_6_BODY}}</p></div>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{ABOUT_SERVE_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{ABOUT_SERVE_H2_LINE_1}}<br><span>{{ABOUT_SERVE_H2_ACCENT}}</span></h2>
-        <p class="sub" style="margin-top:.85rem">{{ABOUT_SERVE_INTRO}}</p>
-        <div class="grid" style="margin-top:1.5rem">
-          <div class="card"><h3>{{ABOUT_SERVE_CARD_1_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_1_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_1_TAG}}</div></div>
-          <div class="card"><h3>{{ABOUT_SERVE_CARD_2_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_2_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_2_TAG}}</div></div>
-          <div class="card"><h3>{{ABOUT_SERVE_CARD_3_TITLE}}</h3><p>{{ABOUT_SERVE_CARD_3_BODY}}</p><div class="tag">{{ABOUT_SERVE_CARD_3_TAG}}</div></div>
-        </div>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{ABOUT_FAQ_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{ABOUT_FAQ_H2_LINE_1}}<br><span>{{ABOUT_FAQ_H2_ACCENT}}</span></h2>
-        <div class="faq-block">
-          <details><summary>{{ABOUT_FAQ_1_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_1_ANSWER}}</div></details>
-          <details><summary>{{ABOUT_FAQ_2_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_2_ANSWER}}</div></details>
-          <details><summary>{{ABOUT_FAQ_3_QUESTION}}</summary><div class="faq-a">{{ABOUT_FAQ_3_ANSWER}}</div></details>
-        </div>
-      </div>
-
-      <div class="cta-band" style="margin-top:2.5rem">
-        <div>
-          <h2 style="font-size:clamp(1.45rem,2.8vw,1.85rem);margin-bottom:.35rem">{{ABOUT_CTA_HEADLINE}}</h2>
-          <p class="sub" style="margin:0;max-width:520px">{{ABOUT_CTA_SUB}}</p>
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <a class="btn btn-primary" href="/contact">{{ABOUT_CTA_PRIMARY_LABEL}}</a>
-          <a class="btn btn-outline" href="/services">{{ABOUT_CTA_SECONDARY_LABEL}}</a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -721,146 +948,178 @@ TYPE: tier
 ================================================================================
 
 <!DOCTYPE html>
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ARTICLES_PAGE_TITLE}}</title>
   <meta name="description" content="{{ARTICLES_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}/articles" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ARTICLES_PAGE_TITLE}}" />
   <meta property="og:description" content="{{ARTICLES_META_DESCRIPTION}}" />
   <meta property="og:url" content="{{SITE_URL}}/articles" />
   <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ARTICLES_PAGE_TITLE}}" />
+  <meta name="twitter:description" content="{{ARTICLES_META_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"CollectionPage",
-    "name":"{{ARTICLES_PAGE_TITLE}}",
-    "url":"{{SITE_URL}}/articles",
-    "description":"{{ARTICLES_META_DESCRIPTION}}",
-    "hasPart":[
-      {"@type":"WebPage","name":"{{ARTICLE_1_TITLE}}","url":"{{SITE_URL}}{{ARTICLE_1_URL}}"},
-      {"@type":"WebPage","name":"{{ARTICLE_2_TITLE}}","url":"{{SITE_URL}}{{ARTICLE_2_URL}}"},
-      {"@type":"WebPage","name":"{{ARTICLE_3_TITLE}}","url":"{{SITE_URL}}{{ARTICLE_3_URL}}"},
-      {"@type":"WebPage","name":"{{ARTICLE_4_TITLE}}","url":"{{SITE_URL}}{{ARTICLE_4_URL}}"}
-    ]
-  }
-  </script>
 </head>
-<body>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
+  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">{{ARTICLES_SECTION_KICKER}}</span>
+        <h1>{{ARTICLES_H1_LINE_1}} <span class="accent">{{ARTICLES_H1_ACCENT}}</span></h1>
+        <p class="section-sub">{{ARTICLES_INTRO}}</p>
+        <p class="section-sub" style="margin-top:0.75rem">{{ARTICLES_INTRO_SECOND}}</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="post-list" data-reveal-stagger>
+          <a class="post-link" href="{{ARTICLE_1_URL}}" data-stagger-item>
+            <div class="post-top">
+              <div class="post-eyebrow">{{ARTICLE_1_CATEGORY}}</div>
+              <div class="post-date">{{ARTICLE_1_DATE}}</div>
+            </div>
+            <div class="post-title">{{ARTICLE_1_TITLE}}</div>
+            <p class="post-excerpt">{{ARTICLE_1_EXCERPT}}</p>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+          </a>
+          <a class="post-link" href="{{ARTICLE_2_URL}}" data-stagger-item>
+            <div class="post-top">
+              <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
+              <div class="post-date">{{ARTICLE_2_DATE}}</div>
+            </div>
+            <div class="post-title">{{ARTICLE_2_TITLE}}</div>
+            <p class="post-excerpt">{{ARTICLE_2_EXCERPT}}</p>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+          </a>
+          <a class="post-link" href="{{ARTICLE_3_URL}}" data-stagger-item>
+            <div class="post-top">
+              <div class="post-eyebrow">{{ARTICLE_3_CATEGORY}}</div>
+              <div class="post-date">{{ARTICLE_3_DATE}}</div>
+            </div>
+            <div class="post-title">{{ARTICLE_3_TITLE}}</div>
+            <p class="post-excerpt">{{ARTICLE_3_EXCERPT}}</p>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+          </a>
+          <a class="post-link" href="{{ARTICLE_4_URL}}" data-stagger-item>
+            <div class="post-top">
+              <div class="post-eyebrow">{{ARTICLE_4_CATEGORY}}</div>
+              <div class="post-date">{{ARTICLE_4_DATE}}</div>
+            </div>
+            <div class="post-title">{{ARTICLE_4_TITLE}}</div>
+            <p class="post-excerpt">{{ARTICLE_4_EXCERPT}}</p>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <h2 data-reveal-heading>Topics we hear <span class="accent">every single week</span></h2>
+        <div class="topic-grid" data-reveal-stagger>
+          <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_1_TAG}}</div><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_DESC}}</p></div>
+          <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_2_TAG}}</div><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_DESC}}</p></div>
+          <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_3_TAG}}</div><h3>{{SERVICE_3_NAME}}</h3><p>{{SERVICE_3_DESC}}</p></div>
+          <div class="topic-cell" data-stagger-item><div class="topic-label">Guide</div><h3>{{PRIMARY_KEYWORD_1}}</h3><p>{{PRIMARY_SERVICE}} tips for {{CITY}} homeowners.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-block" data-reveal>
+          <div>
+            <h2>{{ARTICLES_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{ARTICLES_CTA_SUB}}</p>
+          </div>
+          <div class="cta-block-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{ARTICLES_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{ARTICLES_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
           <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="depth-page">
-    <div class="container">
-      <div class="k">{{ARTICLES_SECTION_KICKER}}</div>
-      <h1>{{ARTICLES_H1_LINE_1}}<br><span>{{ARTICLES_H1_ACCENT}}</span></h1>
-      <p class="sub" style="margin-top:.85rem">{{ARTICLES_INTRO}}</p>
-      <p class="sub" style="margin-top:1rem">{{ARTICLES_INTRO_SECOND}}</p>
-
-      <div class="post-list" style="margin-top:2.5rem">
-        <a class="post-link" href="{{ARTICLE_1_URL}}">
-          <div class="post-top">
-            <div class="post-eyebrow">{{ARTICLE_1_CATEGORY}}</div>
-            <div class="post-date">{{ARTICLE_1_DATE}}</div>
-          </div>
-          <div class="post-title">{{ARTICLE_1_TITLE}}</div>
-          <div class="post-excerpt">{{ARTICLE_1_EXCERPT}}</div>
-          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-        </a>
-
-        <a class="post-link" href="{{ARTICLE_2_URL}}">
-          <div class="post-top">
-            <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
-            <div class="post-date">{{ARTICLE_2_DATE}}</div>
-          </div>
-          <div class="post-title">{{ARTICLE_2_TITLE}}</div>
-          <div class="post-excerpt">{{ARTICLE_2_EXCERPT}}</div>
-          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-        </a>
-
-        <a class="post-link" href="{{ARTICLE_3_URL}}">
-          <div class="post-top">
-            <div class="post-eyebrow">{{ARTICLE_3_CATEGORY}}</div>
-            <div class="post-date">{{ARTICLE_3_DATE}}</div>
-          </div>
-          <div class="post-title">{{ARTICLE_3_TITLE}}</div>
-          <div class="post-excerpt">{{ARTICLE_3_EXCERPT}}</div>
-          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-        </a>
-
-        <a class="post-link" href="{{ARTICLE_4_URL}}">
-          <div class="post-top">
-            <div class="post-eyebrow">{{ARTICLE_4_CATEGORY}}</div>
-            <div class="post-date">{{ARTICLE_4_DATE}}</div>
-          </div>
-          <div class="post-title">{{ARTICLE_4_TITLE}}</div>
-          <div class="post-excerpt">{{ARTICLE_4_EXCERPT}}</div>
-          <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-        </a>
-      </div>
-      <div class="cta-band" style="margin-top:2.5rem">
-        <div>
-          <h2 style="font-size:clamp(1.5rem,3vw,2rem);margin-bottom:.35rem">{{ARTICLES_CTA_HEADLINE}}</h2>
-          <p class="sub" style="margin:0;max-width:520px">{{ARTICLES_CTA_SUB}}</p>
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <a class="btn btn-primary" href="/contact">{{ARTICLES_CTA_PRIMARY_LABEL}}</a>
-          <a class="btn btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{ARTICLES_CTA_SECONDARY_LABEL}}</a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -876,13 +1135,13 @@ TYPE: tier
   Build: copy this file to ARTICLE_POST_SLUG_FILENAME (e.g. articles/roof-maintenance-houston-tx.html), then replace tokens.
   Public URL is ARTICLE_1_URL (extensionless, root-relative, e.g. /articles/roof-maintenance-houston-tx). CSS/icons use ../ from articles/.
 -->
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ARTICLE_POST_PAGE_TITLE}}</title>
   <meta name="description" content="{{ARTICLE_POST_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}{{ARTICLE_1_URL}}" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{{ARTICLE_POST_PAGE_TITLE}}" />
@@ -895,85 +1154,108 @@ TYPE: tier
   <meta name="twitter:image" content="{{ARTICLE_POST_OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
 {{ARTICLE_POST_SCHEMA_JSON}}
   </script>
 </head>
-<body>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
   <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero article-shell">
+      <div class="container">
+        <p class="article-back"><a href="/articles">← {{NAV_LABEL_ARTICLES}}</a></p>
+        <p class="article-meta-line"><span class="article-cat">{{ARTICLE_POST_CATEGORY}}</span><span class="article-meta-sep"> · </span><time datetime="">{{ARTICLE_POST_DATE}}</time><span class="article-meta-sep"> · </span>{{ARTICLE_POST_AUTHOR_LINE}}</p>
+        <h1 class="article-h1">{{ARTICLE_POST_H1_LINE_1}} <span class="accent">{{ARTICLE_POST_H1_ACCENT}}</span></h1>
+        <p class="section-sub article-dek">{{ARTICLE_POST_DEK}}</p>
+        <div class="article-tldr-wrap">{{ARTICLE_POST_TLDR_HTML}}</div>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <div class="article-body article-prose">{{ARTICLE_POST_BODY_HTML}}</div>
+        <div class="cta-band" style="margin-top:2.75rem" data-reveal>
+          <div>
+            <h2>{{FINAL_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{FINAL_CTA_SUB}}</p>
+          </div>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{FINAL_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
           <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="depth-page">
-    <div class="container article-shell">
-      <p class="article-back"><a href="/articles">← {{NAV_LABEL_ARTICLES}}</a></p>
-      <p class="article-meta-line"><span class="article-cat">{{ARTICLE_POST_CATEGORY}}</span><span class="article-meta-sep"> · </span><time datetime="">{{ARTICLE_POST_DATE}}</time><span class="article-meta-sep"> · </span>{{ARTICLE_POST_AUTHOR_LINE}}</p>
-      <h1 class="article-h1">{{ARTICLE_POST_H1_LINE_1}}<br><span>{{ARTICLE_POST_H1_ACCENT}}</span></h1>
-      <p class="sub article-dek">{{ARTICLE_POST_DEK}}</p>
-      <div class="article-tldr-wrap">
-        {{ARTICLE_POST_TLDR_HTML}}
-      </div>
-      <div class="article-body article-prose">
-        {{ARTICLE_POST_BODY_HTML}}
-      </div>
-      <div class="cta-band" style="margin-top:2.75rem">
-        <div>
-          <h2 style="font-size:clamp(1.35rem,2.8vw,1.75rem);margin-bottom:.35rem">{{FINAL_CTA_HEADLINE}}</h2>
-          <p class="sub" style="margin:0;max-width:520px">{{FINAL_CTA_SUB}}</p>
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <a class="btn btn-primary" href="/contact">{{FINAL_CTA_PRIMARY_LABEL}}</a>
-          <a class="btn btn-outline" href="tel:{{PHONE_NUMBER_E164}}">{{FINAL_CTA_SECONDARY_LABEL}}</a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="../main.js" defer></script>
 </body>
 </html>
@@ -985,22 +1267,26 @@ TYPE: tier
 ================================================================================
 
 <!DOCTYPE html>
-<html lang="{{HTML_LANG|en}}">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{CONTACT_PAGE_TITLE}}</title>
   <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_PRIMARY}}" />
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{CONTACT_PAGE_TITLE}}" />
   <meta property="og:description" content="{{CONTACT_META_DESCRIPTION}}" />
   <meta property="og:url" content="{{SITE_URL}}/contact" />
   <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{CONTACT_PAGE_TITLE}}" />
+  <meta name="twitter:description" content="{{CONTACT_META_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
@@ -1013,148 +1299,202 @@ TYPE: tier
   }
   </script>
 </head>
-<body>
-  <header>
-    <div class="inner container">
-      <a class="logo" href="/">{{BUSINESS_NAME_SHORT}}<span>.</span></a>
-      <nav id="primary-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
-        <ul>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
+  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <li><a class="nav-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+      <li><a class="nav-menu-link" href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
+    </ul>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">{{CONTACT_SECTION_KICKER}}</span>
+        <h1>{{CONTACT_H1_LINE_1}} <span class="accent">{{CONTACT_H1_ACCENT}}</span></h1>
+        <p class="section-sub">{{CONTACT_LEAD}}</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="contact-2col" data-reveal>
+          <div class="contact-card">
+            <h3>{{CONTACT_CALL_CARD_TITLE}}</h3>
+            <p>{{CONTACT_CALL_COPY}}</p>
+            <a class="btn btn-primary btn-lg" href="tel:{{PHONE_NUMBER_E164}}" style="width:100%;justify-content:center;margin-bottom:1.5rem">{{PHONE_NUMBER_DISPLAY}}</a>
+            <div class="contact-meta">
+              <div class="meta-row"><span class="meta-label">Email</span><span class="meta-val"><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></span></div>
+              <div class="meta-row"><span class="meta-label">Hours</span><span class="meta-val">{{BUSINESS_HOURS}}</span></div>
+              <div class="meta-row"><span class="meta-label">Notes</span><span class="meta-val">{{CONTACT_CALL_META_HTML}}</span></div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <h3>{{CONTACT_FORM_CARD_TITLE}}</h3>
+            <p>{{CONTACT_FORM_INTRO}}</p>
+            <form id="contact-form" class="form-grid" action="{{CONTACT_FORM_ACTION}}" method="{{CONTACT_FORM_METHOD}}" novalidate>
+              <div class="form-field">
+                <label class="form-label" for="name">{{CONTACT_FIELD_NAME_LABEL}}</label>
+                <input class="form-input" id="name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="phone">{{CONTACT_FIELD_PHONE_LABEL}}</label>
+                <input class="form-input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="address">{{CONTACT_FIELD_ADDRESS_LABEL}}</label>
+                <input class="form-input" id="address" name="address" type="text" autocomplete="street-address" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="service">{{CONTACT_FIELD_SERVICE_LABEL}}</label>
+                <select class="form-input" id="service" name="service" required>
+                  <option value="" disabled selected>{{CONTACT_SERVICE_SELECT_PLACEHOLDER}}</option>
+                  <option value="service-1">{{CONTACT_SERVICE_OPTION_1}}</option>
+                  <option value="service-2">{{CONTACT_SERVICE_OPTION_2}}</option>
+                  <option value="service-3">{{CONTACT_SERVICE_OPTION_3}}</option>
+                  <option value="other">{{CONTACT_SERVICE_OPTION_OTHER}}</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="timing">{{CONTACT_FIELD_TIMING_LABEL}}</label>
+                <select class="form-input" id="timing" name="timing">
+                  <option>{{CONTACT_TIMING_OPTION_1}}</option>
+                  <option>{{CONTACT_TIMING_OPTION_2}}</option>
+                  <option>{{CONTACT_TIMING_OPTION_3}}</option>
+                  <option>{{CONTACT_TIMING_OPTION_4}}</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="message">{{CONTACT_FIELD_MESSAGE_LABEL}}</label>
+                <textarea class="form-input" id="message" name="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">{{CONTACT_FORM_SUBMIT_LABEL}}</button>
+              <p class="form-note">{{CONTACT_FORM_FOOTNOTE}}</p>
+            </form>
+            <div id="form-success" style="display:none;margin-top:1rem;color:var(--copper);font-weight:600;line-height:1.6">{{CONTACT_FORM_SUCCESS_MESSAGE}}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <span class="eyebrow">{{CONTACT_NEXT_STEPS_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{CONTACT_NEXT_STEPS_H2_LINE_1}} <span class="accent">{{CONTACT_NEXT_STEPS_H2_ACCENT}}</span></h2>
+        <div class="steps-4" data-reveal-stagger>
+          <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_1_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_1_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_1_BODY}}</p></div>
+          <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_2_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_2_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_2_BODY}}</p></div>
+          <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_3_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_3_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_3_BODY}}</p></div>
+          <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_4_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_4_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_4_BODY}}</p></div>
+        </div>
+        <div class="card" style="margin-top:2rem;border-color:var(--copper-line);background:var(--copper-dim)" data-reveal>
+          <h3>{{CONTACT_RESPONSE_CARD_TITLE}}</h3>
+          <p style="margin:.45rem 0 0">{{CONTACT_RESPONSE_TIME}}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">{{CONTACT_FAQ_SECTION_KICKER}}</span>
+        <h2 data-reveal-heading>{{CONTACT_FAQ_H2_LINE_1}} <span class="accent">{{CONTACT_FAQ_H2_ACCENT}}</span></h2>
+        <div class="faq-block" data-reveal>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{CONTACT_FAQ_1_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{CONTACT_FAQ_1_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{CONTACT_FAQ_2_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{CONTACT_FAQ_2_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{CONTACT_FAQ_3_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{CONTACT_FAQ_3_ANSWER}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrap" style="margin-top:3rem" data-reveal>
+          <iframe title="{{MAP_IFRAME_TITLE}}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{{MAP_EMBED_URL}}"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING}}</div>
+        <ul class="footer-links" role="list">
           <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
           <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
           <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
           <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
           <li><a href="/contact">{{NAV_LABEL_CONTACT}}</a></li>
         </ul>
-      </nav>
-      <div class="cta">
-        <button type="button" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <a class="btn btn-outline" href="/contact">{{HEADER_CTA_SECONDARY_LABEL}}</a>
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="depth-page">
-    <div class="container">
-      <div class="k">{{CONTACT_SECTION_KICKER}}</div>
-      <h1>{{CONTACT_H1_LINE_1}}<br><span>{{CONTACT_H1_ACCENT}}</span></h1>
-      <p class="sub" style="margin-top:.85rem">{{CONTACT_LEAD}}</p>
-
-      <div class="grid contact-2col" style="margin-top:2rem">
-        <div class="card">
-          <h2 style="font-family:&quot;Plus Jakarta Sans&quot;,system-ui,sans-serif;font-size:1.35rem;margin-bottom:.5rem">{{CONTACT_CALL_CARD_TITLE}}</h2>
-          <p style="color:#555;line-height:1.75;margin:0 0 1rem">{{CONTACT_CALL_COPY}}</p>
-          <div style="display:flex;flex-direction:column;gap:.65rem">
-            <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
-            <div style="color:#666;line-height:1.75">{{CONTACT_CALL_META_HTML}}</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2 style="font-family:&quot;Plus Jakarta Sans&quot;,system-ui,sans-serif;font-size:1.35rem;margin-bottom:.5rem">{{CONTACT_FORM_CARD_TITLE}}</h2>
-          <p style="color:#555;line-height:1.65;margin:0 0 1rem">{{CONTACT_FORM_INTRO}}</p>
-
-          <form id="contact-form" style="display:grid;gap:.75rem" action="{{CONTACT_FORM_ACTION}}" method="{{CONTACT_FORM_METHOD}}" novalidate>
-            <div>
-              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="name">{{CONTACT_FIELD_NAME_LABEL}}</label>
-              <input id="name" name="name" autocomplete="name" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_NAME_PLACEHOLDER}}" />
-            </div>
-            <div>
-              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="phone">{{CONTACT_FIELD_PHONE_LABEL}}</label>
-              <input id="phone" name="phone" autocomplete="tel" required inputmode="tel" style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_PHONE_PLACEHOLDER}}" />
-            </div>
-            <div>
-              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="address">{{CONTACT_FIELD_ADDRESS_LABEL}}</label>
-              <input id="address" name="address" autocomplete="street-address" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_ADDRESS_PLACEHOLDER}}" />
-            </div>
-            <div>
-              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="service">{{CONTACT_FIELD_SERVICE_LABEL}}</label>
-              <select id="service" name="service" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px;background:#fff">
-                <option value="" disabled selected>{{CONTACT_SERVICE_SELECT_PLACEHOLDER}}</option>
-                <option value="service-1">{{CONTACT_SERVICE_OPTION_1}}</option>
-                <option value="service-2">{{CONTACT_SERVICE_OPTION_2}}</option>
-                <option value="service-3">{{CONTACT_SERVICE_OPTION_3}}</option>
-                <option value="other">{{CONTACT_SERVICE_OPTION_OTHER}}</option>
-              </select>
-            </div>
-            <div>
-              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="timing">{{CONTACT_FIELD_TIMING_LABEL}}</label>
-              <select id="timing" name="timing" style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px;background:#fff">
-                <option>{{CONTACT_TIMING_OPTION_1}}</option>
-                <option>{{CONTACT_TIMING_OPTION_2}}</option>
-                <option>{{CONTACT_TIMING_OPTION_3}}</option>
-                <option>{{CONTACT_TIMING_OPTION_4}}</option>
-              </select>
-            </div>
-            <div>
-              <label style="display:block;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#444;margin-bottom:.35rem" for="message">{{CONTACT_FIELD_MESSAGE_LABEL}}</label>
-              <textarea id="message" name="message" rows="5" required style="width:100%;padding:.78rem 1rem;border:1.5px solid rgba(0,0,0,.14);border-radius:12px" placeholder="{{CONTACT_FIELD_MESSAGE_PLACEHOLDER}}"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" style="justify-content:center">{{CONTACT_FORM_SUBMIT_LABEL}}</button>
-            <div style="color:#666;line-height:1.6;font-size:.9rem">{{CONTACT_FORM_FOOTNOTE}}</div>
-          </form>
-          <div id="form-success" style="display:none;margin-top:1rem;color:#166534;font-weight:800;line-height:1.6">{{CONTACT_FORM_SUCCESS_MESSAGE}}</div>
-        </div>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{CONTACT_NEXT_STEPS_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{CONTACT_NEXT_STEPS_H2_LINE_1}}<br><span>{{CONTACT_NEXT_STEPS_H2_ACCENT}}</span></h2>
-      </div>
-      <div class="depth-steps">
-        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_1_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_1_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_1_BODY}}</p></div>
-        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_2_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_2_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_2_BODY}}</p></div>
-        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_3_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_3_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_3_BODY}}</p></div>
-        <div class="depth-step"><em>{{CONTACT_NEXT_STEP_4_LABEL}}</em><h3 style="font-size:1.05rem;margin-bottom:.35rem;font-family:&quot;Plus Jakarta Sans&quot;,sans-serif">{{CONTACT_NEXT_STEP_4_TITLE}}</h3><p style="margin:0;color:#555;line-height:1.65;font-size:.92rem">{{CONTACT_NEXT_STEP_4_BODY}}</p></div>
-      </div>
-
-      <div class="card" style="margin-top:2rem;background:var(--tint);border-color:rgba(29,78,216,.12)">
-        <h2 style="font-family:&quot;Plus Jakarta Sans&quot;,system-ui,sans-serif;font-size:1.25rem;margin-bottom:.35rem">{{CONTACT_RESPONSE_CARD_TITLE}}</h2>
-        <p style="margin:.5rem 0 0;color:#555;line-height:1.75">{{CONTACT_RESPONSE_TIME}}</p>
-      </div>
-
-      <div class="depth-h">
-        <div class="k">{{CONTACT_FAQ_SECTION_KICKER}}</div>
-        <h2 style="margin-top:.5rem;font-size:clamp(1.65rem,3vw,2.35rem)">{{CONTACT_FAQ_H2_LINE_1}}<br><span>{{CONTACT_FAQ_H2_ACCENT}}</span></h2>
-        <div class="faq-block">
-          <details><summary>{{CONTACT_FAQ_1_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_1_ANSWER}}</div></details>
-          <details><summary>{{CONTACT_FAQ_2_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_2_ANSWER}}</div></details>
-          <details><summary>{{CONTACT_FAQ_3_QUESTION}}</summary><div class="faq-a">{{CONTACT_FAQ_3_ANSWER}}</div></details>
-        </div>
-      </div>
-
-      <div class="map-wrap" style="margin-top:2rem">
-        <iframe title="{{MAP_IFRAME_TITLE}}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{{MAP_EMBED_URL}}"></iframe>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fhead">{{BUSINESS_NAME_SHORT}}<span>.</span></div>
-        <p style="margin-top:.75rem;line-height:1.7;max-width:520px;color:rgba(255,255,255,.65)">{{FOOTER_TAGLINE}}</p>
       </div>
       <div>
-        <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#fff">{{FOOTER_PAGES_HEADING}}</div>
-        <ul class="flinks">
-          <li><a href="/">{{NAV_LABEL_HOME}}</a></li>
-          <li><a href="/services">{{NAV_LABEL_SERVICES}}</a></li>
-          <li><a href="/about">{{NAV_LABEL_ABOUT}}</a></li>
-          <li><a href="/articles">{{NAV_LABEL_ARTICLES}}</a></li>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+          <li>{{BUSINESS_HOURS}}</li>
         </ul>
       </div>
     </div>
-    <div class="fb">
+    <div class="footer-bottom">
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>
@@ -1165,279 +1505,1289 @@ SOURCE: templates/starter/styles.css
 TYPE: tier
 ================================================================================
 
-/* Starter scaffold — layout from `samples/starter`; colors/hero/media via placeholders */
-:root{
-  --p: {{BRAND_PRIMARY|#1D4ED8}};
-  --a: {{BRAND_ACCENT|#2563EB}};
-  --accent-soft: {{BRAND_ACCENT_SOFT|#93C5FD}};
-  --ink: {{BRAND_DARK|#0E0E10}};
-  --muted: #4A4A4A;
-  --line: rgba(0,0,0,.08);
-  --tint: {{BRAND_LIGHT|#F4F7FF}};
-  --container-w: 1100px;
-  --header-nav-w: 900px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111;overflow-x:hidden}
-.skip-link{
-  position:absolute;
-  left:-9999px;
-  top:auto;
-  width:1px;
-  height:1px;
-  overflow:hidden;
-}
-.skip-link:focus{
-  left:1rem !important;top:1rem !important;width:auto !important;height:auto !important;
-  z-index:200;padding:.55rem .85rem;background:#fff;color:var(--ink);border-radius:10px;
-  border:1px solid var(--line);text-decoration:none;font-weight:800;
-}
-.container{max-width:var(--container-w);margin:0 auto}
-header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter: blur(10px);border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.08);height:80px;display:flex;align-items:center;justify-content:center}
-.inner{padding:0 clamp(1.25rem,3.2vw,2.75rem);width:100%;display:grid;grid-template-columns:1fr minmax(0,var(--header-nav-w)) 1fr;align-items:center;gap:1.25rem}
-.inner.container{max-width:none}
-.inner>.logo{grid-column:1;justify-self:end}
-.inner>nav{grid-column:2;justify-self:center}
-.inner>.cta{grid-column:3;justify-self:start}
-.logo{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
-.logo span{color:var(--a)}
-nav ul{display:flex;gap:1.8rem;list-style:none;align-items:center;justify-content:center}
-nav a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
-nav a:hover{color:var(--p)}
-header nav a.nav-current{color:var(--p)}
-.nav-toggle{
-  display:none;
-  flex-direction:column;
-  justify-content:center;
-  gap:5px;
-  width:44px;
-  height:44px;
-  padding:0 10px;
-  border:0;
-  border-radius:10px;
-  background:rgba(0,0,0,.06);
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-.nav-toggle-bar{display:block;height:2px;width:100%;border-radius:2px;background:var(--ink)}
-.nav-toggle:focus-visible{outline:2px solid var(--p);outline-offset:3px}
-header .cta{display:flex;gap:1rem;align-items:center;flex-wrap:nowrap}
-header .btn{display:inline-flex;align-items:center;gap:.5rem;border-radius:10px;text-decoration:none;font-weight:900}
-header .btn-outline{border:1px solid rgba(0,0,0,.16);padding:.62rem 1.05rem;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;border-radius:12px;white-space:nowrap}
-header .btn-primary{background:var(--p);color:#fff;padding:.62rem 1.2rem;font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;border-radius:12px;text-decoration:none}
+/* ============================================================
+   Maple & Stone Plumbing — Premium Redesign
+   Theme: Coal & Terracotta · Plus Jakarta Sans · Dark Mode
+   ============================================================ */
 
-/* Main CTAs — same polish as header; markup uses class="btn btn-primary|btn-outline" */
-main .btn,
-main .btn:visited{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-  font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  font-weight:800;
-  font-size:1.02rem;
-  line-height:1.2;
-  text-decoration:none;
-  border-radius:12px;
-  padding:.9rem 1.35rem;
-  border:2px solid transparent;
-  cursor:pointer;
-  transition:transform .15s ease,filter .2s ease,border-color .2s ease,color .2s ease,background .2s ease,box-shadow .2s ease;
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --bg:           #111009;
+  --bg-2:         #181511;
+  --bg-card:      #1F1C18;
+  --bg-card-2:    #252118;
+  --ink:          #F2EDE6;
+  --muted:        rgba(242,237,230,0.55);
+  --faint:        rgba(242,237,230,0.32);
+  --copper: {{BRAND_ACCENT|#C96942}};
+  --copper-dim: {{BRAND_ACCENT_SOFT|rgba(201,105,66,0.18)}};
+  --copper-line: {{BRAND_ACCENT_LINE|rgba(201,105,66,0.30)}};
+  --line:         rgba(242,237,230,0.07);
+  --line-mid:     rgba(242,237,230,0.12);
+  --w:            1100px;
+  --ease:         cubic-bezier(0.32,0.72,0,1);
+  --ease-spring:  cubic-bezier(0.34,1.56,0.64,1);
 }
-main .btn:focus-visible{outline:2px solid var(--p);outline-offset:3px}
-main .btn.btn-primary,
-main .btn.btn-primary:visited{
-  background:var(--p);
-  color:#fff;
-  border-color:var(--p);
-  box-shadow:0 4px 16px rgba(29,78,216,.28);
-}
-main .btn.btn-primary:hover{color:#fff;transform:translateY(-2px);filter:brightness(.97);box-shadow:0 8px 24px rgba(29,78,216,.38)}
-main .btn.btn-outline,
-main .btn.btn-outline:visited{
-  background:#fff;
-  color:var(--ink);
-  border-color:rgba(0,0,0,.14);
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-main .btn.btn-outline:hover{color:var(--p);border-color:var(--p);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
-.section.alt .btn.btn-outline{background:rgba(255,255,255,.82)}
-main form .btn.btn-primary{width:100%;padding:1rem 1.25rem;font-size:1.05rem}
 
-main{padding:80px 0 56px}
-main.depth-page{padding-top:112px;padding-bottom:56px}
+/* ── Reset ───────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
 
-/* Inner pages: first H1 should match prior H2 rhythm */
-.depth-page h1{
-  font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  font-weight:800;
-  line-height:1.06;
-  font-size:clamp(2.0rem,4.4vw,3.2rem);
+/* ── Utilities ───────────────────────────────────────────── */
+.container { max-width: var(--w); margin: 0 auto; padding: 0 2.5rem; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
-.depth-page h1 span{color:var(--p)}
 
-/* Hero */
-.hero{
-  min-height:88vh;
-  display:flex;
-  align-items:center;
-  padding:52px 1.5rem 4rem;
-  background:
-    radial-gradient(60% 60% at 15% 30%, rgba(0,0,0,.65) 0%, rgba(0,0,0,.0) 70%),
-    linear-gradient(135deg,rgba(18,18,19,.92) 0%,rgba(18,18,19,.60) 55%,rgba(18,18,19,.15) 100%),
-    url('{{HERO_IMAGE_URL}}') center/cover no-repeat;
-  color:#fff;
+/* ── Typography ──────────────────────────────────────────── */
+h1, h2 {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
 }
-.hero-inner{max-width:760px}
-.kicker{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.1rem}
-.hk{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:.35rem .75rem;font-weight:900;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
-.hk strong{color:var(--accent-soft)}
-.hero h1{
-  font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  font-weight:800;
-  font-size:clamp(2.85rem,6.8vw,5.15rem);
-  line-height:1.04;
-  color:#fff;
-  margin-bottom:.9rem;
+h3 {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
-.hero h1 span{color:var(--accent-soft)}
-.hero-sub{font-size:1.12rem;color:rgba(255,255,255,.86);max-width:640px;margin-bottom:1.55rem;line-height:1.7}
-.hero .cta{display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
-.hero .cta .btn-primary{
-  background:var(--p);color:#fff;font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.12rem;
-  padding:.95rem 1.35rem;border-radius:12px;text-decoration:none;transition:transform .15s,filter .2s;
-  display:inline-flex;align-items:center;gap:.6rem
+h1 { font-size: clamp(2.8rem, 5.5vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.8rem); }
+h3 { font-size: 1.05rem; }
+
+h1 .accent, h2 .accent { color: var(--copper); }
+
+.eyebrow {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.67rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 0.85rem;
 }
-.hero .cta .btn-primary:hover{transform:translateY(-2px);filter:brightness(.95)}
-.hero .cta .btn-secondary{
-  background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.18);
-  font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.02rem;
-  padding:.95rem 1.2rem;border-radius:12px;text-decoration:none;transition:border-color .2s,color .2s,background .2s
+.section-sub {
+  color: var(--muted);
+  font-size: 1.03rem;
+  line-height: 1.82;
+  max-width: 620px;
+  margin-top: 1rem;
 }
-.hero .cta .btn-secondary:hover{border-color:rgba(255,255,255,.35);color:var(--accent-soft);background:rgba(255,255,255,.09)}
-.hero-proof{margin-top:1.35rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.proof{background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.22);border-radius:16px;padding:1.05rem 1.05rem .95rem;backdrop-filter: blur(10px);box-shadow: 0 10px 26px rgba(0,0,0,.28);overflow:hidden;min-height:148px}
-.p-top{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem}
-.p-title{color:rgba(255,255,255,.86);font-weight:900;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem}
-.p-val{
-  color:#fff;font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;
-  font-size:clamp(1.05rem,1.7vw,1.35rem);line-height:1.15;letter-spacing:-.01em;
-  white-space:nowrap;max-width:100%;
+
+/* ── Navigation ──────────────────────────────────────────── */
+.site-nav {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  width: calc(100% - 2rem);
+  max-width: 1080px;
 }
-.p-sub{margin-top:.45rem;color:rgba(255,255,255,.74);line-height:1.6;font-size:.95rem;overflow-wrap:anywhere}
-.section{padding:5.25rem 1.5rem}
-.section.alt{background:var(--tint)}
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:1.35rem;align-items:start;margin-top:2rem}
-.photo{
-  width:100%;height:100%;min-height:300px;border-radius:18px;overflow:hidden;
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 18px 45px rgba(0,0,0,.22);
-  background:#111;
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(17,16,9,0.82);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(242,237,230,0.09);
+  border-radius: 100px;
+  padding: 0.5rem 0.6rem 0.5rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32);
 }
-.photo img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
-.hero .photo{border-color:rgba(255,255,255,.14)}
-@media(max-width:900px){.split{grid-template-columns:1fr}.photo{min-height:240px}}
-@media(max-width:860px){.hero-proof{grid-template-columns:1fr}}
-.k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.6rem}
-h1,h2{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;line-height:1.06}
-h1{font-size:clamp(2.4rem,5.8vw,4.2rem)}
-h2{font-size:clamp(2.0rem,4.4vw,3.2rem)}
-h1 span,h2 span{color:var(--p)}
-.sub{margin-top:1rem;color:var(--muted);font-size:1.06rem;line-height:1.75;max-width:820px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.15rem;margin-top:2rem}
-.contact-2col{grid-template-columns:1fr 1fr;gap:1.15rem;align-items:start;margin-top:2rem}
-@media(max-width:900px){.contact-2col{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.35rem}
-.card h3{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:.35rem}
-.card p{color:#555;line-height:1.75}
-.tag{margin-top:.7rem;font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--p)}
-.post-list{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
-.post-link{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:18px;padding:1.35rem 1.35rem 1.2rem}
-.post-link[role="article"]{cursor:default}
-.map-wrap{margin-top:1.5rem;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#e8edf7}
-.map-wrap iframe{width:100%;height:320px;border:0;display:block}
-.post-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-.post-eyebrow{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--p)}
-.post-date{font-size:.9rem;font-weight:800;color:#666}
-.post-title{margin-top:.6rem;font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.55rem;line-height:1.2}
-.post-excerpt{margin-top:.6rem;color:#555;line-height:1.8;max-width:92ch}
-.post-cta{margin-top:1rem;display:inline-flex;align-items:center;gap:.55rem;color:var(--p);font-weight:900;letter-spacing:.02em}
-footer{background:#0f0f10;color:rgba(255,255,255,.7);padding:3.25rem 1.5rem 2rem}
-.fgrid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr;gap:2rem}
-.fhead{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:800;font-size:1.6rem;color:#fff}
-.fhead span{color:var(--accent-soft)}
-.flinks{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-top:.75rem}
-.flinks a{color:rgba(255,255,255,.6);text-decoration:none}
-.flinks a:hover{color:var(--accent-soft)}
-.fb{max-width:1100px;margin:2rem auto 0;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.82rem}
-@media(max-width:760px){
-  .nav-toggle{display:inline-flex}
-  header nav{
-    display:none;
-    position:fixed;
-    top:80px;
-    left:0;
-    right:0;
-    z-index:60;
-    background:rgba(255,255,255,.98);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-    box-shadow:0 12px 28px rgba(0,0,0,.1);
-    padding:.75rem 1.25rem 1rem;
+.nav-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-logo .dot { color: var(--copper); }
+.nav-links {
+  display: flex;
+  gap: 0.15rem;
+  list-style: none;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+.nav-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.38rem 0.75rem;
+  border-radius: 100px;
+  transition: color 0.18s var(--ease), background 0.18s var(--ease);
+  letter-spacing: 0.005em;
+}
+.nav-link:hover,
+.nav-link[aria-current="page"] {
+  color: var(--ink);
+  background: rgba(242,237,230,0.07);
+}
+.nav-cta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(242,237,230,0.06);
+  border: 1px solid rgba(242,237,230,0.1);
+  border-radius: 100px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.2s;
+  transform-origin: center;
+}
+.nav-toggle.is-active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.is-active span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile Menu Overlay ─────────────────────────────────── */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  background: rgba(11,10,8,0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.nav-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+.nav-menu-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0 2rem;
+}
+.nav-menu-link {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.4rem 0;
+  transition: color 0.18s;
+  text-align: center;
+  opacity: 0;
+}
+.nav-menu-link:hover { color: var(--ink); }
+.nav-overlay-footer {
+  position: absolute;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 0.62rem 1.25rem;
+  letter-spacing: 0.01em;
+  transition: background 0.18s var(--ease), border-color 0.18s var(--ease),
+              color 0.18s var(--ease), transform 0.12s var(--ease),
+              box-shadow 0.18s var(--ease);
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+
+.btn-primary {
+  background: var(--copper);
+  color: #fff;
+  border-color: var(--copper);
+}
+.btn-primary:hover {
+  background: #B85A37;
+  border-color: #B85A37;
+  box-shadow: 0 4px 20px rgba(201,105,66,0.32);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-mid);
+}
+.btn-outline:hover {
+  border-color: rgba(242,237,230,0.28);
+  background: rgba(242,237,230,0.04);
+}
+
+.btn-ghost {
+  background: rgba(242,237,230,0.06);
+  color: var(--muted);
+  border-color: var(--line);
+}
+.btn-ghost:hover {
+  background: rgba(242,237,230,0.10);
+  color: var(--ink);
+  border-color: var(--line-mid);
+}
+
+.btn-lg { padding: 0.82rem 1.65rem; font-size: 0.96rem; }
+.btn-sm { padding: 0.44rem 0.9rem; font-size: 0.80rem; }
+
+/* ── Sections ────────────────────────────────────────────── */
+.section { padding: 7rem 0; }
+.section-warm { padding: 7rem 0; background: var(--bg-2); }
+.section-accent-top { border-top: 1px solid var(--line); }
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  min-height: 100dvh;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(201,105,66,0.06), transparent),
+    radial-gradient(ellipse 50% 50% at 100% 0%, rgba(201,105,66,0.04), transparent);
+  padding-top: 6rem;
+}
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem clamp(2rem,6vw,4rem) 5rem clamp(2rem,9vw,5.5rem);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(201,105,66,0.1);
+  border: 1px solid rgba(201,105,66,0.22);
+  border-radius: 100px;
+  padding: 0.32rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(201,105,66,0.9);
+  margin-bottom: 2rem;
+  width: fit-content;
+  letter-spacing: 0.02em;
+}
+.hero-h1 {
+  margin-bottom: 1.35rem;
+  max-width: 580px;
+}
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.78;
+  max-width: 480px;
+  margin-bottom: 2.25rem;
+}
+.hero-cta-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.hero-image-side {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+.hero-img-clip {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  clip-path: inset(0 0 0 0);
+}
+.hero-img-clip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--bg) 0%, transparent 18%);
+  pointer-events: none;
+}
+.hero-img-clip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Stats Strip ─────────────────────────────────────────── */
+.stats-strip {
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 3.5rem 0;
+}
+.stats-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.stat-cell {
+  padding: 0 3rem 0 0;
+  border-right: 1px solid var(--line);
+  margin-right: 3rem;
+}
+.stat-cell:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.stat-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.stat-label {
+  font-size: 0.67rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--copper);
+  margin-bottom: 0.35rem;
+}
+.stat-note { font-size: 0.84rem; color: var(--faint); line-height: 1.55; }
+
+/* ── Problem Grid (2x2) ──────────────────────────────────── */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 1px;
+  margin-top: 3.5rem;
+  background: var(--line);
+}
+.problem-cell {
+  background: var(--bg);
+  padding: 2.75rem 2.5rem;
+  position: relative;
+}
+.problem-cell.alt { background: var(--bg-2); }
+.problem-cell.dark-accent {
+  background: var(--bg-card);
+}
+.problem-tag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 0.6rem;
+}
+.problem-cell h3 { font-size: 1.18rem; margin-bottom: 0.5rem; }
+.problem-cell p { color: var(--muted); font-size: 0.94rem; line-height: 1.75; }
+
+/* ── Editorial Section (accountability / mission) ──────── */
+.editorial-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 5rem;
+  margin-top: 3rem;
+  align-items: start;
+}
+.editorial-body p {
+  color: var(--muted);
+  line-height: 1.82;
+  font-size: 1.03rem;
+}
+.editorial-body p + p { margin-top: 1.15rem; }
+.quote-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 2.25rem 2rem;
+  position: relative;
+}
+.quote-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 1.2rem;
+  left: 1.8rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--copper);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.quote-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  padding-top: 1.5rem;
+}
+.quote-attr {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ── Values Grid ─────────────────────────────────────────── */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 3rem;
+  background: var(--line);
+}
+.value-cell {
+  background: var(--bg-2);
+  padding: 2rem 2rem 2.25rem;
+}
+.value-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  color: rgba(201,105,66,0.18);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  float: right;
+  margin-left: 0.5rem;
+  margin-top: -0.1rem;
+}
+.value-cell h3 { font-size: 0.95rem; margin-bottom: 0.35rem; }
+.value-cell p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* ── Services Bento ──────────────────────────────────────── */
+.services-bento {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  margin-top: 3rem;
+}
+.svc-tile {
+  background: var(--bg);
+  padding: 2.5rem 2.25rem;
+  transition: background 0.22s var(--ease);
+  cursor: default;
+}
+.svc-tile:hover { background: var(--bg-card); }
+.svc-tile.featured { grid-row: span 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem 2.5rem; }
+.svc-tile.alt { background: var(--bg-2); }
+.svc-tile.alt:hover { background: var(--bg-card-2); }
+.svc-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 4rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: rgba(201,105,66,0.12);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.svc-tile h3 { font-size: 1.12rem; margin-bottom: 0.4rem; }
+.svc-tile p { color: var(--muted); font-size: 0.93rem; line-height: 1.72; }
+.svc-tag {
+  display: inline-block;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-top: 0.75rem;
+  border: 1px solid var(--copper-line);
+  padding: 0.18rem 0.65rem;
+  border-radius: 100px;
+}
+
+/* Services list (full page - 6 services) */
+.svc-list { margin-top: 3rem; }
+.svc-row {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto;
+  gap: 2rem;
+  padding: 2.25rem 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+  transition: padding-left 0.2s var(--ease);
+}
+.svc-row:last-child { border-bottom: 1px solid var(--line); }
+.svc-row:hover { padding-left: 0.5rem; }
+.svc-n {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--faint);
+  padding-top: 0.15rem;
+  letter-spacing: -0.01em;
+}
+.svc-row h3 { font-size: 1.08rem; margin-bottom: 0.3rem; }
+.svc-row p { color: var(--muted); font-size: 0.93rem; line-height: 1.72; }
+
+/* ── Process Steps ───────────────────────────────────────── */
+.process-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 3.5rem;
+  position: relative;
+}
+.process-connector {
+  position: absolute;
+  top: 2.15rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  height: 1px;
+  background: linear-gradient(to right, var(--copper-line), var(--line));
+  pointer-events: none;
+}
+.pl-step { padding: 0 3rem 0 0; }
+.pl-step:last-child { padding-right: 0; }
+.pl-num-wrap {
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--line-mid);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+.section-warm .pl-num-wrap { background: var(--bg-2); }
+.pl-num-wrap span {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--copper);
+}
+.pl-step h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+.pl-step p { font-size: 0.91rem; color: var(--muted); line-height: 1.72; }
+.pl-tag {
+  margin-top: 0.6rem;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* 6-step process (full page) */
+.process-6 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 3rem;
+}
+.pl6-step {
+  background: var(--bg);
+  padding: 2.25rem 2rem;
+}
+.section-warm .pl6-step { background: var(--bg-2); }
+.pl6-step em {
+  display: block;
+  font-style: normal;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.55rem;
+}
+.pl6-step h3 { font-size: 0.97rem; margin-bottom: 0.35rem; }
+.pl6-step p { color: var(--muted); line-height: 1.7; font-size: 0.9rem; }
+
+/* ── Articles / Post List ────────────────────────────────── */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 2.5rem;
+}
+.post-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 2rem 0;
+  border-top: 1px solid var(--line);
+  transition: padding-left 0.2s var(--ease);
+}
+.post-list .post-link:last-child { border-bottom: 1px solid var(--line); }
+.post-link:hover { padding-left: 0.6rem; }
+.post-link[role="article"] { cursor: default; }
+.post-link[role="article"]:hover { padding-left: 0; }
+.post-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.post-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--copper);
+}
+.post-date { font-size: 0.82rem; color: var(--faint); }
+.post-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.25;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.45rem;
+}
+.post-excerpt { color: var(--muted); font-size: 0.93rem; line-height: 1.75; }
+.post-cta { margin-top: 0.6rem; font-size: 0.84rem; color: var(--copper); font-weight: 500; }
+
+/* ── Service Area Split ──────────────────────────────────── */
+.area-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  margin-top: 3rem;
+  align-items: center;
+}
+.area-photo {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--bg-card);
+  aspect-ratio: 4/3;
+}
+.area-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.area-text p { color: var(--muted); line-height: 1.82; font-size: 1.03rem; }
+.area-text p + p { margin-top: 1rem; }
+.area-link { color: var(--copper); font-weight: 600; text-decoration: none; }
+.area-link:hover { text-decoration: underline; }
+
+/* ── Testimonials ────────────────────────────────────────── */
+.testimonial-block { margin-top: 3.5rem; }
+.t-main-quote {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  max-width: 860px;
+}
+.t-attr {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+.t-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
+.t-secondary {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+.t2-text { font-style: italic; color: var(--muted); line-height: 1.75; font-size: 0.97rem; }
+.t2-attr {
+  margin-top: 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── CTA Block (inside sections) ────────────────────────── */
+.cta-block {
+  margin-top: 4.5rem;
+  padding-top: 4.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.cta-block h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+.cta-block .section-sub { margin-top: 0.4rem; }
+.cta-block-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+
+/* ── CTA Band (bottom of pages) ────────────────────────── */
+.cta-band {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 0;
+}
+.cta-band h2 { font-size: clamp(1.5rem, 2.8vw, 2.4rem); }
+.cta-band .section-sub { color: var(--muted); margin-top: 0.4rem; max-width: 480px; }
+.cta-band-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+
+/* ── FAQ ─────────────────────────────────────────────────── */
+.faq-block { margin-top: 2.5rem; max-width: 760px; }
+.faq-item { border-top: 1px solid var(--line); }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
+.faq-summary {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1.35rem 0;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.97rem;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  transition: color 0.15s;
+}
+.faq-summary:hover { color: var(--copper); }
+.faq-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--line-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--faint);
+  transition: transform 0.3s var(--ease), border-color 0.2s, color 0.2s;
+}
+.faq-item.is-open .faq-icon {
+  transform: rotate(45deg);
+  border-color: var(--copper-line);
+  color: var(--copper);
+}
+.faq-answer {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease), padding 0.3s var(--ease);
+}
+.faq-answer-inner {
+  padding: 0 0 1.5rem;
+  color: var(--muted);
+  line-height: 1.82;
+  font-size: 0.94rem;
+}
+.faq-item.is-open .faq-answer { max-height: 400px; }
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 2rem;
+}
+.card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+.card p { color: var(--muted); line-height: 1.78; font-size: 0.93rem; }
+.card-tag {
+  margin-top: 0.85rem;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--line); margin-top: 2.5rem; }
+.grid-auto .card { border-radius: 0; border-color: transparent; }
+
+/* ── Contact Form ────────────────────────────────────────── */
+.contact-2col {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 2rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 2.25rem 2rem;
+}
+.contact-card h3 { font-size: 1.12rem; margin-bottom: 0.5rem; }
+.contact-card > p { color: var(--muted); line-height: 1.78; font-size: 0.93rem; margin-bottom: 1.5rem; }
+.form-grid { display: grid; gap: 1rem; }
+.form-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.form-label {
+  font-size: 0.67rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+}
+.form-input {
+  width: 100%;
+  padding: 0.82rem 1rem;
+  background: rgba(242,237,230,0.04);
+  border: 1px solid rgba(242,237,230,0.12);
+  border-radius: 3px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-appearance: none;
+}
+.form-input::placeholder { color: rgba(242,237,230,0.30); }
+.form-input:focus {
+  border-color: var(--copper);
+  background: rgba(242,237,230,0.06);
+}
+textarea.form-input { resize: vertical; min-height: 120px; }
+.form-note { font-size: 0.82rem; color: var(--faint); line-height: 1.65; }
+.contact-meta { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 0.6rem; }
+.meta-row { display: flex; gap: 0.75rem; align-items: baseline; }
+.meta-label { font-size: 0.63rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); min-width: 3.5rem; flex-shrink: 0; }
+.meta-val { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+.meta-val a { color: var(--copper); text-decoration: none; font-weight: 500; }
+.meta-val a:hover { text-decoration: underline; }
+.map-wrap { margin-top: 2.5rem; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); }
+.map-wrap iframe { width: 100%; height: 320px; border: 0; display: block; filter: invert(1) hue-rotate(185deg) brightness(0.75) contrast(0.9); }
+
+/* ── Inner Page Hero ─────────────────────────────────────── */
+.page-hero {
+  padding: 9rem 0 5rem;
+  border-bottom: 1px solid var(--line);
+}
+.page-hero .eyebrow { margin-bottom: 0.85rem; }
+.page-hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); max-width: 720px; }
+.page-hero .section-sub { max-width: 600px; }
+
+/* ── Depth quad (2x2 dark/light alt grid) ─────────────────── */
+.depth-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin-top: 3rem;
+  background: var(--line);
+}
+.depth-tile { padding: 2.5rem 2.25rem; background: var(--bg-2); }
+.depth-tile.alt { background: var(--bg-card); }
+.depth-n {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: rgba(201,105,66,0.10);
+  margin-bottom: -0.2rem;
+}
+.depth-chip {
+  display: inline-block;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 0.55rem;
+}
+.depth-tile h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+.depth-tile p { color: var(--muted); line-height: 1.72; font-size: 0.93rem; }
+
+/* ── Why choose us (4-item) ──────────────────────────────── */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 3rem;
+}
+.why-cell { background: var(--bg-2); padding: 2.25rem 2rem; }
+.why-cell h3 { font-size: 0.98rem; margin-bottom: 0.35rem; }
+.why-cell p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+/* ── Article Topics ──────────────────────────────────────── */
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 3rem;
+}
+.topic-cell { background: var(--bg); padding: 2rem 2rem; }
+.section-warm .topic-cell { background: var(--bg-2); }
+.topic-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--copper);
+  margin-bottom: 0.3rem;
+}
+.topic-cell h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+.topic-cell p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+/* ── After you reach out (4 steps) ──────────────────────── */
+.steps-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 2.5rem;
+}
+.step4-cell { background: var(--bg-2); padding: 2.25rem 1.85rem; }
+.step4-cell em {
+  display: block;
+  font-style: normal;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 0.55rem;
+}
+.step4-cell h3 { font-size: 0.95rem; margin-bottom: 0.35rem; }
+.step4-cell p { color: var(--muted); line-height: 1.7; font-size: 0.88rem; }
+
+/* ── Footer ──────────────────────────────────────────────── */
+footer {
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+  padding: 5.5rem 2.5rem 2.5rem;
+}
+.footer-grid {
+  max-width: var(--w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 4rem;
+}
+.footer-brand-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+.footer-brand-name .dot { color: var(--copper); }
+.footer-blurb {
+  font-size: 0.88rem;
+  line-height: 1.78;
+  color: var(--faint);
+  max-width: 320px;
+}
+.footer-col-label {
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(242,237,230,0.22);
+  margin-bottom: 0.85rem;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-links a {
+  font-size: 0.88rem;
+  color: rgba(242,237,230,0.40);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--ink); }
+.footer-links li:not(:has(a)) {
+  font-size: 0.84rem;
+  color: rgba(242,237,230,0.24);
+  line-height: 1.65;
+}
+.footer-bottom {
+  max-width: var(--w);
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: rgba(242,237,230,0.20);
+}
+
+/* ── Noise grain overlay ─────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── CSS Animations ──────────────────────────────────────── */
+@keyframes faqOpen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CSS fallback hero animations (no-JS) */
+@media (prefers-reduced-motion: no-preference) {
+  html.no-js .hero-h1 {
+    animation: heroFadeUp 0.9s var(--ease) both;
+    animation-delay: 0.25s;
   }
-  header nav.nav-open{display:block}
-  header nav.nav-open ul{flex-direction:column;align-items:stretch;gap:0}
-  header nav.nav-open li{border-bottom:1px solid var(--line)}
-  header nav.nav-open li:last-child{border-bottom:0}
-  header nav.nav-open a{display:block;padding:.85rem 0;white-space:normal}
-  .inner{grid-template-columns:1fr 1fr}
-  .inner>.cta{grid-column:2}
+  html.no-js .hero-sub {
+    animation: heroFadeUp 0.7s var(--ease) both;
+    animation-delay: 0.55s;
+  }
+  html.no-js .hero-cta-group {
+    animation: heroFadeUp 0.6s var(--ease) both;
+    animation-delay: 0.75s;
+  }
 }
 
-/* Depth sections */
-.depth-marquee{display:flex;flex-wrap:wrap;gap:.5rem;padding:1.1rem clamp(1rem,3vw,2rem);border-top:1px solid var(--line);border-bottom:1px solid var(--line);justify-content:center;background:var(--tint)}
-.depth-marquee span{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:.38rem .9rem;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;color:var(--ink)}
-.depth-quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:2rem}
-@media(max-width:720px){.depth-quad{grid-template-columns:1fr}}
-.depth-tile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.35rem 1.25rem}
-.depth-tile.alt{background:#0f172a;color:#e5e7eb;border-color:rgba(255,255,255,.08)}
-.depth-tile.alt h3{color:#fff}
-.depth-tile.alt p{color:rgba(226,232,240,.9)}
-.depth-n{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-weight:800;font-size:clamp(2.4rem,5vw,3.4rem);color:rgba(29,78,216,.12);line-height:1;margin-bottom:-.35rem}
-.depth-tile.alt .depth-n{color:rgba(255,255,255,.1)}
-.depth-chip{display:inline-block;font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;background:rgba(29,78,216,.12);color:var(--p);padding:.22rem .55rem;border-radius:6px;margin-bottom:.65rem}
-.depth-tile.alt .depth-chip{background:rgba(255,255,255,.1);color:var(--accent-soft)}
-.depth-mission{display:grid;grid-template-columns:1.12fr .88fr;gap:2rem;margin-top:2rem;align-items:start}
-@media(max-width:900px){.depth-mission{grid-template-columns:1fr}}
-.depth-aside{background:#0f172a;color:#fff;border-radius:18px;padding:1.75rem;border:1px solid rgba(255,255,255,.1)}
-.depth-quote{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-weight:800;font-style:italic;font-size:1.22rem;line-height:1.4;margin-bottom:1rem;color:#fff}
-.depth-attr{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
-.values-6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}
-@media(max-width:900px){.values-6{grid-template-columns:1fr}}
-.depth-val{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.2rem}
-.depth-val h3{font-size:1.08rem;margin-bottom:.35rem}
-.depth-val p{font-size:.95rem;color:#555;line-height:1.65}
-.depth-vn{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-weight:800;font-size:2.25rem;color:rgba(29,78,216,.12);float:right;margin:-.2rem 0 .25rem .75rem;line-height:1}
-.faq-block{margin-top:2rem;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
-.faq-block details{border-bottom:1px solid var(--line)}
-.faq-block details:last-child{border-bottom:0}
-.faq-block summary{cursor:pointer;padding:1rem 1.15rem;font-weight:800;font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.faq-block summary::-webkit-details-marker{display:none}
-.faq-block summary::after{content:"+";color:var(--p);font-weight:900;font-size:1.1rem}
-.faq-block details[open] summary::after{content:"–"}
-.faq-block .faq-a{padding:0 1.15rem 1.1rem;color:#555;line-height:1.75;font-size:.95rem}
-.trust-stack{display:flex;flex-direction:column;margin-top:1.25rem}
-.trust-line{display:flex;gap:.85rem;padding:.85rem 0;border-bottom:1px solid var(--line);align-items:flex-start}
-.trust-line:first-child{border-top:1px solid var(--line)}
-.trust-ico{flex:0 0 38px;width:38px;height:38px;border-radius:10px;background:rgba(29,78,216,.1);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.7rem;color:var(--p)}
-.cta-band{margin-top:2.5rem;padding:1.75rem 1.5rem;border-radius:18px;background:linear-gradient(135deg,var(--tint),#fff);border:1px solid rgba(29,78,216,.14);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
-.depth-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:1.75rem}
-@media(max-width:960px){.depth-steps{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.depth-steps{grid-template-columns:1fr}}
-.depth-step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.15rem}
-.depth-step em{display:block;font-style:normal;font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--p);margin-bottom:.45rem}
-.depth-h{margin-top:3rem;padding-top:2.25rem;border-top:1px solid var(--line)}
+/* Ensure GSAP-targeted elements are visible if JS or GSAP fail to load */
+[data-reveal], [data-stagger-item], [data-reveal-heading] {
+  will-change: transform;
+}
+
+/* ── Reduced Motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .editorial-split { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-grid { grid-template-columns: 2fr 1fr; gap: 3rem; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-bottom: 5rem;
+  }
+  .hero-image-side { display: none; }
+  .hero-content {
+    padding: 3rem 1.5rem 4rem;
+  }
+  .stats-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .stat-cell { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--line); padding-bottom: 2rem; }
+  .stat-cell:last-child { border-bottom: none; padding-bottom: 0; }
+  .area-split { grid-template-columns: 1fr; gap: 2.5rem; }
+  .area-photo { min-height: 260px; }
+  .process-list { grid-template-columns: 1fr; }
+  .process-connector { display: none; }
+  .pl-step { padding: 2rem 0; border-top: 1px solid var(--line); }
+  .pl-step:first-child { border-top: none; }
+  .t-secondary { grid-template-columns: 1fr; gap: 2rem; }
+  .cta-block { flex-direction: column; align-items: flex-start; }
+  .depth-steps { grid-template-columns: repeat(2, 1fr); }
+  .process-6 { grid-template-columns: repeat(2, 1fr); }
+  .steps-4 { grid-template-columns: repeat(2, 1fr); }
+  .contact-2col { grid-template-columns: 1fr; }
+  .services-bento { grid-template-columns: 1fr; }
+  .svc-tile.featured { grid-row: auto; }
+  .depth-quad { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .topic-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .section { padding: 5rem 0; }
+  .section-warm { padding: 5rem 0; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .topic-grid { grid-template-columns: 1fr; }
+  .svc-row { grid-template-columns: 2.5rem 1fr; gap: 1.25rem; }
+  .svc-row .svc-tag { display: none; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-blurb { max-width: none; }
+  .cta-band { padding: 2rem 1.75rem; }
+  .process-6 { grid-template-columns: 1fr; }
+  .steps-4 { grid-template-columns: 1fr; }
+  .page-hero { padding: 8rem 0 4rem; }
+}
+
+/* ── Ahana starter template extensions ───────────────────── */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: 1rem !important;
+  top: 1rem !important;
+  width: auto !important;
+  height: auto !important;
+  z-index: 300;
+  padding: 0.55rem 0.85rem;
+  background: var(--bg-card);
+  color: var(--ink);
+  border-radius: 3px;
+  border: 1px solid var(--line-mid);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.nav-logo .logo__img {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: min(160px, 34vw);
+  object-fit: contain;
+}
+body.header-brand--text .nav-logo .logo__img { display: none !important; }
+body.header-brand--text .nav-logo__text--beside { display: none !important; }
+body.header-brand--image .nav-logo .logo__img { display: block; }
+body.header-brand--image .nav-logo__text { display: none !important; }
+body.header-brand--image-text .nav-logo .logo__img { display: block; }
+body.header-brand--image-text .nav-logo__text--fallback { display: none !important; }
+body.header-brand--image-text .nav-logo .dot { display: none !important; }
+body.header-brand--image-text .nav-logo__text--beside { display: inline; white-space: nowrap; }
+
+.area-split.split--text-only { grid-template-columns: 1fr; }
+.area-split.split--text-only .area-photo { display: none; }
+
+.article-shell { padding-top: 0; }
+.article-back { margin-bottom: 1.25rem; font-size: 0.88rem; }
+.article-back a { color: var(--copper); text-decoration: none; font-weight: 500; }
+.article-back a:hover { color: var(--ink); }
+.article-meta-line {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  margin-bottom: 1rem;
+}
+.article-cat { color: var(--copper); }
+.article-h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1rem; }
+.article-dek { margin-bottom: 1.5rem; }
+.article-tldr-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 1.5rem 1.35rem;
+  margin-bottom: 0;
+}
+.article-prose {
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 65ch;
+}
+.article-prose h2 {
+  color: var(--ink);
+  font-size: 1.45rem;
+  margin: 2rem 0 0.75rem;
+}
+.article-prose h3 {
+  color: var(--ink);
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.article-prose p { margin-bottom: 1rem; }
+.article-prose ul,
+.article-prose ol { margin: 0 0 1rem 1.25rem; }
+.article-prose li { margin-bottom: 0.35rem; }
+.article-prose a { color: var(--copper); }
 
 ================================================================================
 FILE: main.js
@@ -1445,30 +2795,186 @@ SOURCE: templates/starter/main.js
 TYPE: tier
 ================================================================================
 
+/* Maple & Stone — main.js */
 (function () {
-  document.documentElement.classList.add('js');
+  'use strict';
 
-  var navToggle = document.querySelector('.nav-toggle');
-  var primaryNav = document.getElementById('primary-nav');
-  if (navToggle && primaryNav) {
-    function setNavOpen(open) {
-      primaryNav.classList.toggle('nav-open', open);
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-    setNavOpen(false);
-    navToggle.addEventListener('click', function () {
-      setNavOpen(!primaryNav.classList.contains('nav-open'));
+  const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Body / html class for CSS targeting ──────────────── */
+  document.documentElement.classList.remove('no-js');
+  document.body.classList.remove('no-js');
+  document.body.classList.add('js-loaded');
+
+  /* ── Mobile Menu ──────────────────────────────────────── */
+  const toggle   = document.getElementById('nav-toggle');
+  const overlay  = document.getElementById('nav-overlay');
+  const menuLinks = document.querySelectorAll('.nav-menu-link');
+
+  if (toggle && overlay) {
+    toggle.addEventListener('click', function () {
+      const isOpen = overlay.classList.toggle('is-open');
+      toggle.classList.toggle('is-active', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+
+      if (isOpen && motionOK && typeof gsap !== 'undefined') {
+        gsap.fromTo('.nav-menu-link',
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.07, ease: 'power3.out', delay: 0.05 }
+        );
+      } else if (isOpen) {
+        menuLinks.forEach(function (l) { l.style.opacity = '1'; });
+      }
     });
-    primaryNav.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        if (window.matchMedia('(max-width: 760px)').matches) setNavOpen(false);
+
+    menuLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        overlay.classList.remove('is-open');
+        toggle.classList.remove('is-active');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       });
     });
+
+    /* Close overlay on Escape */
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setNavOpen(false);
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+        overlay.classList.remove('is-open');
+        toggle.classList.remove('is-active');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        toggle.focus();
+      }
     });
   }
 
+  /* ── FAQ Accordion ────────────────────────────────────── */
+  document.querySelectorAll('.faq-item').forEach(function (item) {
+    const btn    = item.querySelector('.faq-summary');
+    const answer = item.querySelector('.faq-answer');
+    if (!btn || !answer) return;
+
+    btn.addEventListener('click', function () {
+      const isOpen = item.classList.contains('is-open');
+
+      /* Close all */
+      document.querySelectorAll('.faq-item.is-open').forEach(function (openItem) {
+        openItem.classList.remove('is-open');
+        openItem.querySelector('.faq-summary').setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      if (motionOK) {
+        var inner = answer.querySelector('.faq-answer-inner');
+        var target = inner || answer;
+        target.animate(
+          [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 300, easing: 'cubic-bezier(0.32,0.72,0,1)', fill: 'forwards' }
+        );
+      }
+      }
+    });
+  });
+
+  /* ── GSAP Animations ──────────────────────────────────── */
+  if (typeof gsap === 'undefined') return;
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  /* ── Hero entrance (index only) ─────────────────────── */
+  const heroH1 = document.querySelector('.hero-h1');
+  if (heroH1 && motionOK) {
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+    tl.set('.hero-content', { opacity: 1 });
+
+    tl.fromTo('.hero-badge',
+      { y: 16, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, delay: 0.1 }
+    )
+    .fromTo('.hero-h1',
+      { y: 64, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.05 },
+      '-=0.3'
+    )
+    .fromTo('.hero-sub',
+      { y: 32, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.72 },
+      '-=0.55'
+    )
+    .fromTo('.hero-cta-group .btn',
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.55, stagger: 0.12 },
+      '-=0.45'
+    );
+
+    /* Hero image clip-path reveal */
+    gsap.fromTo('.hero-img-clip',
+      { clipPath: 'inset(100% 0 0 0)' },
+      { clipPath: 'inset(0% 0 0 0)', duration: 1.35, ease: 'power4.inOut', delay: 0.05 }
+    );
+
+  }
+
+  /* ── Inner page hero ───────────────────────────────────── */
+  const pageHero = document.querySelector('.page-hero');
+  if (pageHero && motionOK) {
+    const els = pageHero.querySelectorAll('.eyebrow, h1, .section-sub');
+    gsap.fromTo(els,
+      { y: 36, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out', delay: 0.2 }
+    );
+  }
+
+  /* ── Generic scroll reveal ───────────────────────────── */
+  if (motionOK && typeof ScrollTrigger !== 'undefined') {
+    gsap.utils.toArray('[data-reveal]').forEach(function (el) {
+      var yVal  = parseFloat(el.dataset.revealY)   || 40;
+      var dur   = parseFloat(el.dataset.revealDur) || 0.75;
+      var delay = parseFloat(el.dataset.revealDelay) || 0;
+
+      gsap.fromTo(el,
+        { opacity: 0, y: yVal },
+        {
+          opacity: 1, y: 0, duration: dur, ease: 'power3.out', delay: delay,
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        }
+      );
+    });
+
+    /* Stagger reveals for grids / lists */
+    gsap.utils.toArray('[data-reveal-stagger]').forEach(function (container) {
+      var items = container.querySelectorAll('[data-stagger-item]');
+      if (!items.length) return;
+
+      gsap.fromTo(items,
+        { opacity: 0, y: 32 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          stagger: 0.08,
+          scrollTrigger: { trigger: container, start: 'top 85%', once: true }
+        }
+      );
+    });
+
+    /* Section headings with a slight clip-path */
+    gsap.utils.toArray('[data-reveal-heading]').forEach(function (el) {
+      gsap.fromTo(el,
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1, y: 0, duration: 0.85, ease: 'power4.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        }
+      );
+    });
+  }
+
+  /* ── Smooth scroll for hash links ─────────────────────── */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
     if (!a) return;
@@ -1480,6 +2986,7 @@ TYPE: tier
     target.scrollIntoView({ behavior: 'smooth' });
   });
 
+  /* ── Phone click tracking ─────────────────────────────── */
   document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
     a.addEventListener('click', function () {
       if (typeof gtag === 'function') {
@@ -1491,6 +2998,7 @@ TYPE: tier
     });
   });
 
+  /* ── Contact form (demo / non-Netlify) ─────────────────── */
   var form = document.getElementById('contact-form');
   var success = document.getElementById('form-success');
   if (form) {
@@ -1515,6 +3023,7 @@ TYPE: tier
     });
   }
 
+  /* ── Nav active state (extensionless paths) ───────────── */
   function pathKeyFromPathname(p) {
     var pathOnly = (p || '').split(/[?#]/)[0];
     var trimmed = pathOnly.replace(/\/+$/, '');
@@ -1526,14 +3035,15 @@ TYPE: tier
   }
 
   var path = pathKeyFromPathname(window.location.pathname);
-  document.querySelectorAll('header nav a[href]').forEach(function (a) {
+  document.querySelectorAll('.nav-link, .nav-menu-link').forEach(function (a) {
     var h = a.getAttribute('href');
     if (!h || h.charAt(0) === '#' || /^tel:/i.test(h)) return;
     try {
       var file = pathKeyFromPathname(new URL(h, window.location.href).pathname);
-      if (file === path) a.classList.add('nav-current');
+      if (file === path) a.setAttribute('aria-current', 'page');
     } catch (err) {}
   });
+
 })();
 
 ================================================================================
@@ -1651,8 +3161,8 @@ TYPE: tier
 
 /* TEAM */
 Developer & SEO Manager: Ahana Digital
-Contact: hello@ahanadigital.com
-Site: https://ahanadigital.com
+Contact: info@getahana.com
+Site: https://getahana.com
 Location: Toronto, Ontario, Canada
 
 /* CLIENT */
@@ -1704,4 +3214,3 @@ dist/
 .vscode/
 .idea/
 *.swp
-
