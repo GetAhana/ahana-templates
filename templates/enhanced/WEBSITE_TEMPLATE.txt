@@ -1,0 +1,922 @@
+================================================================================
+MAPLE & STONE — PREMIUM WEBSITE TEMPLATE
+Complete specification for rebuilding this site from scratch
+================================================================================
+
+This document describes every design decision, code pattern, and implementation
+detail used to build this site. Use it as a recipe to generate identical-quality
+websites for other clients.
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 1: PROJECT TYPE & DESIGN BRIEF
+────────────────────────────────────────────────────────────────────────────────
+
+Site type:      Multi-page static HTML/CSS/JS (no build step, no framework)
+Files:          index.html, about.html, services.html, articles.html,
+                contact.html, styles.css, main.js
+Business type:  Local service business (plumber, electrician, HVAC, contractor)
+Audience:       Residential homeowners, 30-65, trust-driven decisions
+Design read:    Premium local service site. Coal & Terracotta identity.
+                Dark theme throughout. Editorial sans-serif typography.
+                GSAP scroll animations. Floating glass pill nav.
+
+Design dials (1-10 scale):
+  DESIGN_VARIANCE:  8  (asymmetric layouts, varied section families)
+  MOTION_INTENSITY: 7  (GSAP hero entrance + scroll reveals)
+  VISUAL_DENSITY:   3  (generous whitespace, breathing room)
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 2: COLOR SYSTEM
+────────────────────────────────────────────────────────────────────────────────
+
+Strategy: Dark theme throughout. NOT warm cream/beige (banned AI default).
+           One accent color only. All values in CSS custom properties.
+
+CSS variable name    Hex value       Role
+--------------------------------------------
+--bg                 #111009         Page background (deep warm near-black)
+--bg-2               #181511         Alternate section background (slightly lighter)
+--bg-card            #1F1C18         Card / component surface
+--bg-card-2          #252118         Alternate card surface
+--ink                #F2EDE6         Primary text (warm off-white)
+--muted              rgba(242,237,230,0.55)   Secondary text
+--faint              rgba(242,237,230,0.32)   Tertiary text / labels
+--copper             #C96942         Brand accent (terracotta/brick)
+--copper-dim         rgba(201,105,66,0.18)    Accent tint background
+--copper-line        rgba(201,105,66,0.30)    Accent border
+--line               rgba(242,237,230,0.07)   Hairline borders
+--line-mid           rgba(242,237,230,0.12)   Medium borders
+--w                  1100px          Max content width
+--ease               cubic-bezier(0.32,0.72,0,1)   All transitions
+
+Replacing accent color for other clients:
+  The --copper value (#C96942) is the single brand accent. To adapt for another
+  business, change this one value and adjust --copper-dim and --copper-line
+  proportionally. Keep the dark base palette the same.
+
+Contrast verification:
+  --ink on --bg:    17.2:1  (WCAG AAA - excellent)
+  --muted on --bg:   5.4:1  (WCAG AA - passes)
+  --copper on --bg:  4.8:1  (WCAG AA - passes for large text)
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 3: TYPOGRAPHY
+────────────────────────────────────────────────────────────────────────────────
+
+Font stack:
+  Display / headlines:  Plus Jakarta Sans (Google Fonts, weight 400-800)
+  Body / UI:            DM Sans (Google Fonts, weight 400-600)
+
+Google Fonts URL:
+  https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap
+
+Font preconnect tags (required in <head> before the font link):
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+Type scale:
+  h1:        clamp(2.8rem, 5.5vw, 5.5rem)   weight 800, tracking -0.03em
+  h2:        clamp(2rem, 4vw, 3.8rem)        weight 800, tracking -0.03em
+  h3:        1.05rem                          weight 700, tracking -0.02em
+  hero h1:   clamp(2.8rem, 5.5vw, 5.5rem)   same as h1
+  body:      1rem / line-height 1.6
+  section-sub: 1.03rem / line-height 1.82, max-width 620px
+  eyebrow:   0.67rem, weight 500, uppercase, tracking 0.16em, color --copper
+  nav links: 0.82rem, weight 500
+
+Rules:
+  - h1/h2 use text-wrap: balance for even line breaks
+  - Body text capped at 65ch line length
+  - NO all-caps body copy
+  - Hero headline max 2 lines at desktop
+  - BANNED fonts: Inter, Roboto, Arial, Fraunces, Instrument Serif
+  - Accent word in headlines: wrap in <span class="accent"> (renders in --copper)
+
+Eyebrow rule:
+  Maximum 1 eyebrow label per 3 content sections.
+  If section A has an eyebrow, sections B and C directly after cannot have one.
+  Use eyebrows to categorize only when the heading alone is insufficient.
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 4: NAVIGATION
+────────────────────────────────────────────────────────────────────────────────
+
+Style: Floating glass pill, fixed, centered, detached from top edge
+
+HTML structure:
+  <nav class="site-nav" aria-label="Primary">
+    <div class="nav-pill">
+      [logo] [nav-links ul] [nav-cta div] [nav-toggle button]
+    </div>
+  </nav>
+
+CSS key values:
+  position: fixed
+  top: 1.25rem
+  left: 50%
+  transform: translateX(-50%)
+  width: calc(100% - 2rem)
+  max-width: 1080px
+  z-index: 200
+
+Nav pill appearance:
+  background: rgba(17,16,9,0.82)
+  backdrop-filter: blur(22px) saturate(140%)
+  border: 1px solid rgba(242,237,230,0.09)
+  border-radius: 100px
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32)
+  padding: 0.5rem 0.6rem 0.5rem 1.5rem
+  display: flex, align-items: center, gap: 2rem
+
+Logo (.nav-logo):
+  font-family: Plus Jakarta Sans, weight 800
+  font-size: 1.05rem, letter-spacing: -0.025em
+  Trailing dot gets class="dot" which is styled with --copper color
+
+Nav links (.nav-links):
+  display: flex, gap: 0.15rem, centered with flex: 1 + justify-content: center
+  Each link: 0.82rem, weight 500, color --muted, border-radius: 100px on hover
+
+CTA area (.nav-cta):
+  Two buttons: .btn.btn-ghost.btn-sm and .btn.btn-primary.btn-sm
+  Flex-shrink: 0 so they don't compress
+
+Mobile hamburger (.nav-toggle):
+  Hidden on desktop (display: none in CSS)
+  Shown at max-width: 760px
+  Three spans that animate to X on .is-active state
+  width/height: 2.5rem, border-radius: 100px
+
+Hamburger line animations:
+  span:nth-child(1) when .is-active: translateY(6.5px) rotate(45deg)
+  span:nth-child(2) when .is-active: opacity 0
+  span:nth-child(3) when .is-active: translateY(-6.5px) rotate(-45deg)
+
+Current page: add aria-current="page" to the active nav link
+  CSS: .nav-link[aria-current="page"] { color: --ink; background: rgba(242,237,230,0.07) }
+
+Mobile full-screen overlay (#nav-overlay):
+  position: fixed, inset: 0, z-index: 190 (below nav at 200)
+  background: rgba(11,10,8,0.97), backdrop-filter: blur(24px)
+  flex-direction: column, justify-content: center, align-items: center
+  opacity: 0, pointer-events: none by default
+  .is-open class sets opacity: 1, pointer-events: all
+
+Mobile menu links (.nav-menu-link):
+  font-family: Plus Jakarta Sans, weight 800
+  font-size: clamp(2rem, 6vw, 3rem), letter-spacing: -0.03em
+  color: --muted, transitions to --ink on hover
+  opacity: 0 initially (GSAP animates them in)
+
+Mobile overlay footer (.nav-overlay-footer):
+  position: absolute, bottom: 3rem
+  Contains a single .btn.btn-primary CTA (phone number)
+
+JS behavior (in main.js):
+  Toggle .is-open on overlay when hamburger clicked
+  Set aria-expanded on toggle button
+  Set document.body.style.overflow = 'hidden' when open
+  GSAP stagger: nav-menu-link elements fade up (y: 30 to 0, stagger: 0.07)
+  Close on link click, close on Escape key
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 5: BUTTONS
+────────────────────────────────────────────────────────────────────────────────
+
+Base class .btn:
+  display: inline-flex, align-items: center, justify-content: center
+  font-family: DM Sans, weight 600, font-size: 0.88rem
+  border-radius: 3px (sharp, consistent with card radius)
+  padding: 0.62rem 1.25rem
+  transition: background, border-color, color, transform, box-shadow
+  All using --ease cubic-bezier(0.32,0.72,0,1)
+  On :active: transform: translateY(1px) scale(0.99) (physical press feel)
+
+Button variants:
+  .btn-primary   background: --copper, color: #fff, border: --copper
+                 hover: darker copper (#B85A37), box-shadow copper glow
+  .btn-outline   background: transparent, color: --ink, border: --line-mid
+                 hover: border rgba(242,237,230,0.28), faint bg
+  .btn-ghost     background: rgba(242,237,230,0.06), color: --muted
+                 hover: background 0.10 opacity, color: --ink
+  .btn-lg        padding: 0.82rem 1.65rem, font-size: 0.96rem
+  .btn-sm        padding: 0.44rem 0.9rem, font-size: 0.80rem
+
+Rules:
+  - Button text must NEVER wrap (white-space: nowrap)
+  - All buttons: one line of text only, label max 3-4 words
+  - Contrast: --copper bg with white text = 4.8:1 (passes large text AA)
+  - Never mix two CTAs with the same intent on the same page
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 6: PAGE STRUCTURE & SECTION LAYOUTS
+────────────────────────────────────────────────────────────────────────────────
+
+HTML boilerplate for every page:
+  <!DOCTYPE html>
+  <html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[Page Title] | [Business Name] — [City, State]</title>
+    <meta name="description" content="[150-160 char description]" />
+    [preconnect tags]
+    [Google Fonts link]
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="no-js">
+    [nav]
+    [mobile overlay]
+    <main>
+      [sections]
+    </main>
+    [footer]
+    [GSAP scripts deferred]
+    <script src="./main.js" defer></script>
+  </body>
+  </html>
+
+Note: html AND body both start with class="no-js". main.js removes this class
+      on load and adds "js-loaded" for CSS/GSAP coordination.
+
+GSAP CDN scripts (placed before main.js, all deferred):
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+Section padding:
+  .section       { padding: 7rem 0 }    standard
+  .section-warm  { padding: 7rem 0; background: --bg-2 }    alternate bg
+  At mobile (max-width: 760px): reduced to padding: 5rem 0
+
+Container: max-width: 1100px, margin: 0 auto, padding: 0 2.5rem
+
+Section alternation pattern (to avoid theme flips):
+  All sections use the dark theme family (--bg or --bg-2), NEVER a light section
+  between dark ones. Use bg-2 (#181511) for visual separation without theme flip.
+
+Section layout families used (must vary — no two consecutive identical layouts):
+  1. Hero:            Asymmetric split (55fr/45fr grid)
+  2. Stats strip:     Horizontal 3-cell grid
+  3. Problem grid:    2x2 CSS grid with alternating dark/light cells
+  4. Editorial split: 1.15fr/0.85fr two-column with quote card
+  5. Values grid:     3x2 CSS grid with floating oversized numbers
+  6. Services bento:  Asymmetric CSS grid (1.5fr/1fr, featured cell spans 2 rows)
+  7. Process steps:   3-column with horizontal connector line
+  8. Post list:       Vertical editorial list with hover indent
+  9. Area split:      1fr/1fr with photo (aspect-ratio 4/3)
+  10. Testimonials:   Large display-type quote
+  11. FAQ:            Accordion list max-width 760px
+  12. CTA band:       Dark card, flex space-between
+  13. 6-step grid:    3x2 grid (services page)
+  14. 4-step grid:    4-column (contact page)
+  15. 2x2 depth quad: Services problems grid
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 7: HERO (HOME PAGE)
+────────────────────────────────────────────────────────────────────────────────
+
+Layout:
+  display: grid
+  grid-template-columns: 55fr 45fr
+  min-height: 100dvh   (NEVER h-screen — use 100dvh for iOS Safari stability)
+  padding-top: 6rem    (clears the floating nav)
+
+Background:
+  background-color: #111009
+  background-image: two radial-gradient ellipses in corners
+    using rgba(201,105,66,0.06) and rgba(201,105,66,0.04)
+    to add subtle depth without obvious gradients
+
+Left column (.hero-content):
+  flex-column, justify-content: center
+  padding: 4rem [clamp(2rem,6vw,4rem)] 5rem [clamp(2rem,9vw,5.5rem)]
+  
+  Elements (in order, max 4 text elements in hero):
+    1. .hero-badge     — pill badge, NOT uppercase/tracked (not an eyebrow)
+    2. .hero-h1        — headline, max 2 lines at desktop
+    3. .hero-sub       — subtext, max 20 words, color --muted
+    4. .hero-cta-group — primary + secondary CTA buttons
+
+Hero badge (.hero-badge):
+  background: rgba(201,105,66,0.10)
+  border: 1px solid rgba(201,105,66,0.22)
+  border-radius: 100px  (pill shape)
+  padding: 0.32rem 0.9rem
+  font-size: 0.75rem, weight 500, color rgba(201,105,66,0.9)
+  Content: "Licensed & insured · Raleigh, NC"  (max 1 middle dot separator)
+
+Hero image (.hero-image-side):
+  position: sticky, top: 0, height: 100dvh
+  Contains .hero-img-clip which has clip-path: inset(0 0 0 0) by default
+  The ::after pseudo overlays a gradient fade on the left edge:
+    background: linear-gradient(to right, --bg 0%, transparent 18%)
+    This blends the image into the dark background
+  img: width/height 100%, object-fit: cover
+
+GSAP hero animation (in main.js, runs on page load):
+  Checks: const heroH1 = document.querySelector('.hero-h1')
+  If exists AND motionOK (no prefers-reduced-motion):
+  
+  Timeline (gsap.timeline, ease: 'power4.out'):
+    1. .hero-badge     fromTo y:16,opacity:0  → y:0,opacity:1  duration:0.6 delay:0.1
+    2. .hero-h1        fromTo y:64,opacity:0  → y:0,opacity:1  duration:1.05
+    3. .hero-sub       fromTo y:32,opacity:0  → y:0,opacity:1  duration:0.72
+    4. .hero-cta-group fromTo y:20,opacity:0  → y:0,opacity:1  duration:0.55 stagger:0.12
+  
+  Parallel hero image reveal:
+    gsap.fromTo('.hero-img-clip',
+      { clipPath: 'inset(100% 0 0 0)' },
+      { clipPath: 'inset(0% 0 0 0)', duration: 1.35, ease: 'power4.inOut', delay: 0.05 }
+    )
+  
+  The image clip-path starts at 100% (fully hidden, clipped from top)
+  and reveals downward to 0% over 1.35 seconds. Cinematic wipe effect.
+
+CSS fallback (no JS):
+  html.no-js .hero-h1  animates via @keyframes heroFadeUp  (y: 48px → 0, fade in)
+  Only fires under @media (prefers-reduced-motion: no-preference)
+  Wrapped in html.no-js selector — removed by JS on load
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 8: STATS STRIP
+────────────────────────────────────────────────────────────────────────────────
+
+Purpose: 3 key proof points immediately below the hero fold
+
+HTML structure:
+  <div class="stats-strip">
+    <div class="stats-inner" data-reveal-stagger>
+      <div class="stat-cell" data-stagger-item>
+        <div class="stat-val">Same-week</div>
+        <div class="stat-label">Response time</div>
+        <p class="stat-note">Supporting sentence.</p>
+      </div>
+      [repeat x3]
+    </div>
+  </div>
+
+CSS:
+  .stats-strip: background: --bg-2, border-top + border-bottom: 1px solid --line
+                padding: 3.5rem 0
+  .stats-inner: grid, grid-template-columns: repeat(3,1fr), max-width: 1100px
+  .stat-cell:   border-right: 1px solid --line, padding/margin between cells
+  .stat-val:    Plus Jakarta Sans 800, clamp(1.6rem,2.5vw,2.2rem), letter-spacing -0.025em
+  .stat-label:  0.67rem, uppercase, tracking 0.12em, color --copper
+  .stat-note:   0.84rem, color --faint
+
+Animation: data-reveal-stagger parent, data-stagger-item on each cell
+  GSAP staggers cells: opacity 0→1, y 32→0, duration 0.7, stagger 0.08
+  ScrollTrigger: start 'top 85%', once: true
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 9: CONTENT SECTIONS (RECURRING COMPONENTS)
+────────────────────────────────────────────────────────────────────────────────
+
+9.A PROBLEM GRID (2x2)
+-----------------------
+HTML: .problem-grid (display: grid, grid-template-columns: repeat(2,1fr), gap: 1px,
+      background: --line to create the gap lines)
+Each cell .problem-cell:
+  background: --bg for cells 1,4   |   background: --bg-2 for cell 2
+  background: --bg-card for cell 3 (dark accent variation)
+  padding: 2.75rem 2.5rem
+Cell content: .problem-tag (copper uppercase label), h3, p
+No numbered items — the tag provides context
+
+9.B EDITORIAL SPLIT (accountability / mission)
+------------------------------------------------
+HTML: .editorial-split (grid, grid-template-columns: 1.15fr 0.85fr, gap: 5rem)
+Left: .editorial-body with multiple <p> tags, color --muted
+Right: <aside> containing .quote-card
+
+Quote card (.quote-card):
+  background: --bg-card, border: 1px solid --line, border-radius: 3px
+  padding: 2.25rem 2rem
+  ::before pseudo-element: large quotation mark in --copper color (opacity 0.5)
+  .quote-text: Plus Jakarta Sans 600, 1.05rem, padding-top: 1.5rem (clears the quote mark)
+  .quote-attr: 0.72rem, uppercase, tracking 0.08em, color --faint
+
+9.C VALUES GRID (3x2)
+----------------------
+HTML: .values-grid (grid, grid-template-columns: repeat(3,1fr), gap: 1px,
+      background: --line for hairline separators)
+Each .value-cell: background: --bg-2, padding: 2rem
+.value-num (the large background number):
+  font-size: 2rem, color: rgba(201,105,66,0.18), float: right
+  This creates a watermark-style number behind the content
+
+9.D SERVICES BENTO (homepage preview)
+----------------------------------------
+HTML: .services-bento (grid, grid-template-columns: 1.5fr 1fr,
+      grid-template-rows: 1fr 1fr, gap: 1px, background: --line)
+.svc-tile.featured: grid-row: span 2 (takes full left column height)
+                    display flex, flex-direction column, justify-content flex-end
+.svc-tile:         padding: 2.5rem 2.25rem, background: --bg
+                   hover: background: --bg-card (subtle reveal)
+.svc-tile.alt:     background: --bg-2
+.svc-num:          4rem, copper opacity 0.12 — oversized background number
+.svc-tag:          copper color, 0.63rem uppercase, border: copper-line, border-radius 100px
+
+Full services list (.svc-list):
+  .svc-row: grid, grid-template-columns: 3.5rem 1fr auto, gap: 2rem
+  border-top hairline on each row
+  hover: padding-left shifts 0.5rem (subtle slide-in indicator)
+
+9.E PROCESS STEPS (horizontal 3-step)
+----------------------------------------
+HTML: .process-list (grid, grid-template-columns: repeat(3,1fr), position: relative)
+.process-connector: absolute positioned horizontal line (top: 2.15rem, left/right: 2.5rem)
+  background: linear-gradient(to right, --copper-line, --line) for visual interest
+.pl-num-wrap: 4.25rem circle, border: 1px solid --line-mid, z-index: 1
+  Contains .span with Plus Jakarta Sans 800, color: --copper, font-size 1.1rem
+.pl-step: padding-right 3rem, last child no padding
+
+9.F ARTICLE / POST LIST
+------------------------
+HTML: .post-list (flex column, gap 0)
+Each .post-link: text-decoration none, padding: 2rem 0, border-top: 1px solid --line
+  hover: padding-left 0.6rem (slide indent, 0.2s transition)
+  Role="article" for non-linked preview items (cursor: default, no hover shift)
+.post-eyebrow: 0.65rem, uppercase, copper color
+.post-title: Plus Jakarta Sans 700, clamp(1.1rem,2vw,1.45rem), letter-spacing -0.02em
+.post-cta: 0.84rem, copper, font-weight 500
+
+9.G SERVICE AREA SPLIT
+------------------------
+HTML: .area-split (grid, 1fr 1fr, gap 5rem, align-items center)
+.area-photo: overflow hidden, border-radius 3px, aspect-ratio 4/3
+  Contains img with object-fit: cover
+  background: --bg-card as fallback
+Text: .area-text with .area-link in copper color
+
+9.H TESTIMONIALS
+-----------------
+HTML: .testimonial-block
+.t-main-quote: Plus Jakarta Sans 700, clamp(1.6rem,3.5vw,2.8rem)
+  letter-spacing -0.025em, max-width 860px
+  This is display-type quote — no quotation mark graphic (it speaks for itself)
+.t-attr: flex, gap 0.5rem, 0.82rem, color --faint
+  strong gets color rgba(242,237,230,0.75)
+.t-secondary: grid 1fr/1fr, border-top 1px --line, padding-top 3rem
+
+9.I CTA BLOCK (inside section)
+--------------------------------
+HTML: .cta-block (flex space-between, border-top 1px --line, margin-top 4.5rem)
+Contains h2 (smaller: clamp 1.8-2.8rem), .section-sub, .cta-block-actions
+
+9.J CTA BAND (bottom of pages)
+--------------------------------
+HTML: .cta-band (flex wrap space-between, background --bg-card, border 1px --line,
+      border-radius 3px, padding 3rem)
+Smaller h2 (clamp 1.5-2.4rem), .section-sub, .cta-band-actions
+
+9.K FAQ ACCORDION
+------------------
+HTML structure (NOT native <details> — custom for smooth animation):
+  <div class="faq-block" data-reveal>
+    <div class="faq-item">
+      <button class="faq-summary" aria-expanded="false">
+        Question text
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">Answer text</div>
+      </div>
+    </div>
+  </div>
+
+CSS mechanism:
+  .faq-answer: max-height: 0, overflow: hidden
+               transition: max-height 0.4s --ease
+  .faq-item.is-open .faq-answer: max-height: 400px
+  .faq-icon: 24px circle, border 1px --line-mid, font-size 1rem
+  .faq-item.is-open .faq-icon: transform: rotate(45deg) (+ becomes x)
+
+JS behavior (in main.js):
+  Click on .faq-summary closes all open items first
+  Then opens the clicked item by adding .is-open class
+  Sets aria-expanded="true" on button
+  Animates .faq-answer-inner with Web Animation API (opacity 0→1, translateY -6→0)
+  motionOK check wraps the animation
+
+9.L INNER PAGE HERO
+--------------------
+HTML: <div class="page-hero">  (NOT a section, just a div)
+  padding: 9rem 0 5rem (top padding clears the floating nav with room)
+  border-bottom: 1px solid --line
+Contains: .eyebrow (optional), h1, .section-sub
+
+GSAP animation for inner pages:
+  const pageHero = document.querySelector('.page-hero')
+  Selects .eyebrow, h1, .section-sub within it
+  fromTo: y:36,opacity:0 → y:0,opacity:1, stagger 0.1, delay 0.2
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 10: FOOTER
+────────────────────────────────────────────────────────────────────────────────
+
+HTML structure:
+  <footer>
+    <div class="footer-grid">
+      <div> [brand col] </div>
+      <div> [pages col] </div>
+      <div> [contact col] </div>
+    </div>
+    <div class="footer-bottom"> [copyright] [location/license] </div>
+  </footer>
+
+CSS:
+  footer: background --bg-2, border-top 1px --line, padding 5.5rem 2.5rem 2.5rem
+  .footer-grid: max-width 1100px, grid-template-columns: 2fr 1fr 1fr, gap: 4rem
+  .footer-brand-name: Plus Jakarta Sans 800, 1.15rem, color --ink
+                      trailing dot gets class="dot" for copper color
+  .footer-blurb: 0.88rem, color --faint, max-width 320px
+  .footer-col-label: 0.63rem, uppercase, tracking 0.15em, color rgba(242,237,230,0.22)
+  .footer-links a: 0.88rem, color rgba(242,237,230,0.40), hover → --ink
+  .footer-links li (non-link): 0.84rem, color rgba(242,237,230,0.24)
+  .footer-bottom: flex space-between, 0.75rem, color rgba(242,237,230,0.20)
+                  border-top 1px --line, margin-top 3rem
+
+Footer content: brand name, 1-sentence blurb, page list, contact list (phone, email,
+                hours as plain text not a link)
+
+Responsive: at 1024px → grid-template-columns: 2fr 1fr
+            at 760px  → grid-template-columns: 1fr (single column)
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 11: CONTACT FORM
+────────────────────────────────────────────────────────────────────────────────
+
+Layout: .contact-2col (grid, 1fr 1.15fr, gap 2rem)
+  Left card: call-to-action with phone button + contact meta info
+  Right card: the form itself
+
+Both cards (.contact-card):
+  background: --bg-card, border: 1px solid --line, border-radius: 3px
+  padding: 2.25rem 2rem
+
+Form elements:
+  .form-field: flex column, gap 0.35rem
+  .form-label: 0.67rem, uppercase, tracking 0.12em, color --faint
+  .form-input:
+    background: rgba(242,237,230,0.04)
+    border: 1px solid rgba(242,237,230,0.12)
+    border-radius: 3px
+    color: --ink (F2EDE6)
+    focus: border-color --copper, background slightly lighter
+  .form-input::placeholder: color rgba(242,237,230,0.30)  [contrast ~4.5:1 on dark bg]
+  textarea: resize vertical, min-height 120px
+
+Contact meta info:
+  .contact-meta: border-top 1px --line, padding-top 1.5rem, flex column gap 0.6rem
+  .meta-row: flex, gap 0.75rem, align-items baseline
+  .meta-label: 0.63rem, uppercase, tracking 0.1em, color --faint, min-width 3.5rem
+  .meta-val: 0.88rem, color --muted    |    .meta-val a: copper color
+
+Map embed:
+  .map-wrap: margin-top 2.5rem, border-radius 3px, overflow hidden, border 1px --line
+  iframe: width 100%, height 320px
+  filter: invert(1) hue-rotate(185deg) brightness(0.75) contrast(0.9)
+  This CSS filter inverts the Google Maps embed to match the dark theme
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 12: SCROLL ANIMATIONS (main.js)
+────────────────────────────────────────────────────────────────────────────────
+
+Library: GSAP 3.12.5 + ScrollTrigger plugin (both from cdnjs CDN, deferred)
+
+Reduced motion check (MUST be first):
+  const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  All animation code is wrapped in: if (motionOK) { ... }
+
+Data attribute system for scroll reveals:
+  [data-reveal]          Single element fade+translate reveal
+  [data-reveal-heading]  Section heading variant (slightly different easing)
+  [data-reveal-stagger]  Parent container for staggered children
+  [data-stagger-item]    Child element within a stagger group
+
+Optional modifiers on [data-reveal]:
+  data-reveal-y="60"        Custom Y offset in pixels (default 40)
+  data-reveal-dur="0.9"     Custom duration in seconds (default 0.75)
+  data-reveal-delay="0.1"   Custom delay (default 0)
+
+All scroll reveals use:
+  opacity: 0 → 1
+  y: [offset]px → 0
+  ease: 'power3.out'
+  scrollTrigger: { start: 'top 88%', once: true }
+  The 'once: true' prevents re-triggering on scroll back up
+
+Stagger reveals:
+  gsap.utils.toArray('[data-reveal-stagger]') loops all containers
+  finds children with [data-stagger-item]
+  fromTo: opacity 0→1, y 32→0, stagger: 0.08, ease 'power3.out'
+  scrollTrigger: start 'top 85%', once: true
+
+Inner page hero animation:
+  Targets .eyebrow, h1, .section-sub inside .page-hero
+  fromTo: y:36,opacity:0 → stagger, delay 0.2s
+
+Safety checks:
+  if (typeof gsap === 'undefined') return  — handles CDN failure
+  if (typeof ScrollTrigger !== 'undefined')  — before registerPlugin call
+  All scroll reveal code: if (motionOK && typeof ScrollTrigger !== 'undefined')
+
+BANNED animation patterns (never use):
+  window.addEventListener('scroll', ...)  — causes jank
+  useState to track scroll position       — re-renders on every frame
+  Animating top, left, width, height      — causes layout reflow
+  Only animate: transform and opacity
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 13: TEXTURE OVERLAY
+────────────────────────────────────────────────────────────────────────────────
+
+A subtle film grain / noise overlay applied to the entire page:
+
+CSS on body::after:
+  position: fixed, inset: 0, z-index: 9999, pointer-events: none
+  opacity: 0.025
+  background-image: SVG feTurbulence filter (fractalNoise, baseFrequency 0.75)
+  background-size: 200px 200px
+
+This adds a physical texture to the dark background without being visible at
+normal viewing distance. It breaks the "flat digital" look.
+
+CRITICAL: Must be position: fixed (not on a scrolling element) to prevent
+continuous GPU repaints that destroy mobile performance.
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 14: RESPONSIVE BREAKPOINTS
+────────────────────────────────────────────────────────────────────────────────
+
+Breakpoints used:
+  max-width: 1024px   Tablet landscape
+  max-width: 900px    Tablet portrait
+  max-width: 760px    Mobile
+
+At 1024px:
+  .editorial-split: grid-template-columns: 1fr (stacks vertically)
+  .footer-grid: grid-template-columns: 2fr 1fr
+  .values-grid: grid-template-columns: repeat(2,1fr)
+
+At 900px:
+  .hero: grid-template-columns: 1fr (single column), min-height auto
+  .hero-image-side: display none (hidden on mobile/tablet)
+  .hero-content: padding 3rem 1.5rem 4rem
+  .stats-inner: grid-template-columns: 1fr (stacks, cells get border-bottom instead)
+  .area-split: grid-template-columns: 1fr
+  .process-list: grid-template-columns: 1fr (steps stack vertically)
+  .process-connector: display none
+  .t-secondary: grid-template-columns: 1fr
+  .depth-quad: grid-template-columns: 1fr
+  .why-grid: grid-template-columns: 1fr
+  .topic-grid: grid-template-columns: 1fr
+  .contact-2col: grid-template-columns: 1fr
+  .services-bento: grid-template-columns: 1fr, featured tile reverts to auto row
+  .process-6: grid-template-columns: repeat(2,1fr)
+  .steps-4: grid-template-columns: repeat(2,1fr)
+
+At 760px:
+  .nav-links: display none
+  .nav-cta: display none
+  .nav-toggle: display flex (hamburger visible)
+  .problem-grid: grid-template-columns: 1fr (2x2 → 1 column)
+  .values-grid: grid-template-columns: 1fr
+  .section / .section-warm: padding 5rem 0
+  .svc-row: grid-template-columns: 2.5rem 1fr (tag column hidden)
+  .footer-grid: grid-template-columns: 1fr
+  .process-6: grid-template-columns: 1fr
+  .steps-4: grid-template-columns: 1fr
+  .page-hero: padding 8rem 0 4rem
+
+Mobile universal rules:
+  NEVER use h-screen — always use min-h-[100dvh] / min-height: 100dvh
+  All asymmetric layouts collapse to w-full single column at < 768px
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 15: PAGE-BY-PAGE STRUCTURE
+────────────────────────────────────────────────────────────────────────────────
+
+INDEX.HTML (Home — 12 sections):
+  1. Hero (dark, full-height, split)
+     - Badge: "Licensed & insured · Raleigh, NC"
+     - H1 with accent word in --copper
+     - Subtext (≤20 words)
+     - 2 CTAs: call + request quote
+  2. Stats strip (3 cells: Same-week / Upfront / Clean)
+  3. Problem grid (2x2)
+     - Cells: The worry / The barrier / The old way / The fix
+  4. Standard section (editorial split)
+     - Copy describing accountability and approach
+     - Embedded testimonial quote card
+  5. Values grid (3x2) — EYEBROW used here
+     - 6 values with floating number watermarks
+  6. Services bento — EYEBROW used here
+     - 3 services: featured (leak), drain, water heater
+  7. Process steps (horizontal 3-step)
+     - Request / Diagnose / Fix
+  8. Articles preview (2 articles)
+  9. Service area (text + photo split)
+  10. Testimonials — EYEBROW used here
+     - Large main quote, secondary quote grid, inline CTA
+  11. FAQ (4 questions accordion)
+
+ABOUT.HTML (5 sections):
+  1. Page hero: "Built for homeowners who want straight answers"
+  2. Mission section (editorial split + quote card)
+  3. Values grid 3x2 (6 values)
+  4. Who we serve (3-card grid using .grid-auto)
+  5. Team FAQ (3 questions) + CTA band
+
+SERVICES.HTML (6 sections):
+  1. Page hero: "Plumbing services built for real Raleigh homes"
+  2. 6-service list (.svc-list)
+  3. 4 weekly problems (depth-quad 2x2)
+  4. 6-step visit flow (.process-6 grid)
+  5. Why choose us (why-grid 2x2)
+  6. Service FAQ (3 questions) + CTA band
+
+ARTICLES.HTML (3 sections):
+  1. Page hero: "Practical plumbing tips for Raleigh homeowners"
+  2. Article list (4 items, all link to contact.html)
+  3. Topics grid (2x2) + CTA block
+
+CONTACT.HTML (3 sections):
+  1. Page hero: "Request a quote in Raleigh"
+  2. 2-column contact (call card + form card)
+  3. 4-step after-you-reach-out grid + response time card + FAQ + map
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 16: ANTI-PATTERNS (NEVER DO THESE)
+────────────────────────────────────────────────────────────────────────────────
+
+Visual:
+  x  Gradient text (background-clip: text)
+  x  Glassmorphism used decoratively
+  x  Outer glow / neon effects
+  x  Hero metrics template (big number + small label = SaaS cliché)
+  x  Three identical cards in a row (3-column equal feature grid)
+  x  Numbered section eyebrows (01/About, 02/Process)
+  x  Side-stripe border-left accent on cards
+  x  Warm cream/beige backgrounds (#F5F1EA, #FAFAF8 family)
+  x  Brass/gold/navy color palette for local service businesses
+  x  Font: Inter, Roboto, Fraunces, Instrument Serif
+  x  border-radius: 32px+ on regular cards (rounded pill cards)
+
+Copy:
+  x  Em-dashes (—) anywhere on the page — use comma, colon, or hyphen
+  x  Buzzwords: seamless, empower, leverage, transform, streamline
+  x  "Quietly trusted by" / "Quietly in use at"
+  x  Section numbered eyebrows
+  x  "X theater" / "productivity theater" type copy
+  x  Fake-precise invented numbers (92%, 4.1x, 48k with no source)
+
+Motion:
+  x  window.addEventListener('scroll', ...) — use ScrollTrigger
+  x  useState for scroll position — use useMotionValue
+  x  Animating layout properties (top, left, width, height)
+  x  More than 1 marquee per page
+  x  Same animation applied to every section uniformly
+  x  Motion without justification (each animation must have a reason)
+  x  No reduced-motion fallback
+
+Layout:
+  x  h-screen (use 100dvh instead)
+  x  3+ consecutive zigzag (left-image/right-text) sections
+  x  Empty cells in bento grids
+  x  Two CTAs with same intent on same page
+  x  Logo wall inside the hero
+  x  Content gated behind animation (content must be visible without JS)
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 17: ADAPTING FOR OTHER CLIENTS
+────────────────────────────────────────────────────────────────────────────────
+
+To use this template for a different local service business:
+
+STEP 1 — Change the accent color
+  In styles.css, update:
+    --copper:      [new hex]
+    --copper-dim:  rgba([R],[G],[B],0.18)
+    --copper-line: rgba([R],[G],[B],0.30)
+  Everything else stays dark. The single accent permeates all components.
+
+STEP 2 — Change fonts if needed
+  Replace Plus Jakarta Sans with another premium grotesque:
+    Options: Geist, Outfit, Cabinet Grotesk, Satoshi, GT Walsheim
+  Update Google Fonts URL in all HTML files
+  Update font-family references in styles.css (h1,h2 and .nav-logo and .footer-brand-name)
+
+STEP 3 — Replace all copy
+  Keep the SAME section structure and layout families
+  Replace only: business name, tagline, service names, copy, phone, email, city
+
+STEP 4 — Replace images
+  Hero image (hero-img-clip img src):
+    Use Unsplash with direct URL or generate with image tool
+    Choose an image that fills a tall vertical frame (portrait orientation preferred)
+  Service area photo (area-photo img src):
+    Local neighborhood / exterior photo
+
+STEP 5 — Update meta tags
+  Title: [Business Name] | [Service Type] in [City, State]
+  Description: 150-160 chars, includes city + main services
+  Update all 5 HTML files
+
+STEP 6 — Update nav active state
+  Each page: add aria-current="page" to the matching nav link
+
+STEP 7 — Update footer hours
+  Adjust Mon-Fri and Sat hours to match client
+
+Other businesses this template fits well:
+  Electrician, HVAC contractor, roofer, pest control,
+  handyman service, lawn care, painting contractor,
+  any residential home services business
+
+Dark theme rationale for this template:
+  Most local service competitors use light, generic, template-looking sites.
+  A dark theme is immediately distinctive and reads as more premium.
+  The single terracotta/copper accent creates warmth and craft association.
+  Change the accent to deep teal, slate blue, or forest green for other trades.
+
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 18: FILE CHECKLIST
+────────────────────────────────────────────────────────────────────────────────
+
+Required files:
+  styles.css     — All shared styles (~1200 lines)
+  main.js        — GSAP animations + FAQ + mobile menu (~180 lines)
+  index.html     — Home page (~400 lines)
+  about.html     — About page (~230 lines)
+  services.html  — Services page (~310 lines)
+  articles.html  — Articles/blog page (~190 lines)
+  contact.html   — Contact + form page (~230 lines)
+
+No build step, no npm, no framework.
+Open index.html directly in browser or serve with any static file server.
+
+External dependencies (loaded via CDN):
+  Google Fonts — Plus Jakarta Sans + DM Sans
+  GSAP 3.12.5  — gsap.min.js from cdnjs
+  ScrollTrigger 3.12.5 — ScrollTrigger.min.js from cdnjs
+
+All three dependencies gracefully degrade:
+  No fonts → system-ui sans-serif fallback
+  No GSAP  → content fully visible, no animation (typeof gsap check in main.js)
+  No JS    → CSS fallback animations on hero, FAQ non-animated but functional
+
+
+================================================================================
+END OF TEMPLATE SPECIFICATION
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+ENHANCED TIER — ADDITIONAL PAGES (beyond starter)
+────────────────────────────────────────────────────────────────────────────────
+
+Files (in addition to starter core):
+  gallery.html, testimonials.html, service-area.html (Leaflet map),
+  service-1.html, service-2.html, service-3.html,
+  privacy-policy.html, terms.html, 404.html, offline.html
+
+Navigation (extensionless URLs via _redirects):
+  Home, Services, Gallery, Testimonials, About, Articles, Service Area
+  Contact via header CTA (Get Estimate + phone), not always in nav list.
+
+Index home:
+  Full-bleed hero with {{HERO_IMAGE_URL}}, 6-service grid (service-1/2/3 + contact for 4–6),
+  gallery carousel [data-carousel], testimonials preview, FAQ accordion.
+
+Services hub:
+  Three linked detail cards → /service-1, /service-2, /service-3
+  Services 4–6 → /contact
+
+Articles:
+  Hub #ahana-articles-posts with .js-ahana-article-card and data-article-url tokens.
+
+Service area:
+  #service-area-map, Leaflet CSS in head, inline map script preserved.
+
+Shell module: templates/shared/coal-design-shell.mjs
+Sync: node templates/enhanced/sync-enhanced-design.mjs
+

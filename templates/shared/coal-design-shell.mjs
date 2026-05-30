@@ -1,31 +1,73 @@
-<!DOCTYPE html>
-<html lang="{{HTML_LANG|en}}" class="no-js">
-<head>
+/** Coal & Terracotta dark shell — shared by starter sync and enhanced tier */
+
+export const FONTS =
+  "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap";
+
+export function faqItem(question, answer) {
+  return `          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              ${question}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">${answer}</div>
+            </div>
+          </div>`;
+}
+
+export function shellHead({
+  title,
+  description,
+  canonical,
+  ogUrl,
+  themeColor = "{{BRAND_DARK}}",
+  cssHref = "./styles.css",
+  faviconHref = "./favicon.svg",
+  extraHead = "",
+  preloadHero = false,
+  ogType = "website",
+  ogImage = "{{OG_IMAGE_URL}}",
+  twitter = true,
+  robots = "",
+}) {
+  const robotsTag = robots ? `\n  <meta name="robots" content="${robots}" />` : "";
+  return `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{BUSINESS_NAME}} Articles | {{PRIMARY_SERVICE}} Tips in {{CITY}}, {{STATE}}</title>
-  <meta name="description" content="{{BLOG_META_DESCRIPTION}}" />
-  <meta name="theme-color" content="{{BRAND_DARK}}" />
-  <link rel="canonical" href="{{SITE_URL}}/articles" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="{{BUSINESS_NAME}} Articles | {{PRIMARY_SERVICE}} Tips in {{CITY}}, {{STATE}}" />
-  <meta property="og:description" content="{{BLOG_META_DESCRIPTION}}" />
-  <meta property="og:url" content="{{SITE_URL}}/articles" />
-  <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <title>${title}</title>
+  <meta name="description" content="${description}" />${robotsTag}
+  <meta name="theme-color" content="${themeColor}" />
+  <link rel="canonical" href="${canonical}" />
+  <meta property="og:type" content="${ogType}" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${description}" />
+  <meta property="og:url" content="${ogUrl}" />
+  <meta property="og:image" content="${ogImage}" />${
+    twitter
+      ? `
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{BUSINESS_NAME}} Articles | {{PRIMARY_SERVICE}} Tips in {{CITY}}, {{STATE}}" />
-  <meta name="twitter:description" content="{{BLOG_META_DESCRIPTION}}" />
-  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
+  <meta name="twitter:title" content="${title}" />
+  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:image" content="${ogImage}" />`
+      : ""
+  }
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css" />
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./favicon.svg" />
-  <link rel="manifest" href="./site.webmanifest" />
-</head>
-<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
-  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL|Skip to content}}</a>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />${
+    preloadHero
+      ? `
+  <link rel="preload" as="image" href="{{HERO_IMAGE_URL}}" fetchpriority="high" />`
+      : ""
+  }
+  <link href="${FONTS}" rel="stylesheet" />
+  <link rel="stylesheet" href="${cssHref}" />
+  <link rel="icon" href="${faviconHref}" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="${faviconHref}" />
+  <link rel="manifest" href="./site.webmanifest" />${extraHead}
+</head>`;
+}
+
+export function shellNavEnhanced() {
+  return `  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL|Skip to content}}</a>
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL|Primary}}">
     <div class="nav-pill">
@@ -62,52 +104,19 @@
     <div class="nav-overlay-footer">
       <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
     </div>
-  </div>
+  </div>`;
+}
 
-  <main id="main">
+export function shellFooterEnhanced({ includeHours = true, includeEmail = true } = {}) {
+  const contactItems = [
+    `<li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>`,
+    includeEmail ? `<li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>` : "",
+    includeHours ? `<li>{{BUSINESS_HOURS}}</li>` : "",
+  ]
+    .filter(Boolean)
+    .join("\n          ");
 
-    <div class="page-hero">
-      <div class="container">
-        <p class="enh-label">Articles</p>
-        <h1>{{PRIMARY_SERVICE}} Advice for <span class="accent">{{CITY}}</span> Homeowners</h1>
-        <p class="section-sub">{{BLOG_INTRO}}</p>
-      </div>
-    </div>
-
-    <section class="section">
-      <div class="container">
-        <div class="posts" id="ahana-articles-posts" data-reveal-stagger>
-          <a class="post js-ahana-article-card" href="#" data-article-url="{{ARTICLE_1_URL}}" aria-labelledby="article-1" data-stagger-item>
-            <div class="top">
-              <div class="tag">{{ARTICLE_1_CATEGORY}}</div>
-              <div class="meta">{{ARTICLE_1_DATE}}</div>
-            </div>
-            <h2 id="article-1">{{ARTICLE_1_TITLE}}</h2>
-            <p class="excerpt">{{ARTICLE_1_EXCERPT}}</p>
-          </a>
-          <a class="post js-ahana-article-card" href="#" data-article-url="{{ARTICLE_2_URL}}" aria-labelledby="article-2" data-stagger-item>
-            <div class="top">
-              <div class="tag">{{ARTICLE_2_CATEGORY}}</div>
-              <div class="meta">{{ARTICLE_2_DATE}}</div>
-            </div>
-            <h2 id="article-2">{{ARTICLE_2_TITLE}}</h2>
-            <p class="excerpt">{{ARTICLE_2_EXCERPT}}</p>
-          </a>
-          <a class="post js-ahana-article-card" href="#" data-article-url="{{ARTICLE_3_URL}}" aria-labelledby="article-3" data-stagger-item>
-            <div class="top">
-              <div class="tag">{{ARTICLE_3_CATEGORY}}</div>
-              <div class="meta">{{ARTICLE_3_DATE}}</div>
-            </div>
-            <h2 id="article-3">{{ARTICLE_3_TITLE}}</h2>
-            <p class="excerpt">{{ARTICLE_3_EXCERPT}}</p>
-          </a>
-        </div>
-        <p id="ahana-articles-empty" class="ahana-articles-empty" role="status" hidden>We're preparing helpful articles for homeowners in {{CITY}}. Check back soon.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
+  return `  <footer>
     <div class="footer-grid">
       <div>
         <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
@@ -128,9 +137,7 @@
       <div>
         <div class="footer-col-label">Contact</div>
         <ul class="footer-links" role="list">
-          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
-          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
-          <li>{{BUSINESS_HOURS}}</li>
+          ${contactItems}
         </ul>
       </div>
     </div>
@@ -138,9 +145,42 @@
       <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
-  </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  </footer>`;
+}
+
+export function shellScripts(cssPrefix = ".") {
+  const p = cssPrefix === ".." ? ".." : ".";
+  return `  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="./main.js" defer></script>
+  <script src="${p}/main.js" defer></script>`;
+}
+
+export function pageWrap(head, main, footer, scripts) {
+  return `<!DOCTYPE html>
+<html lang="{{HTML_LANG|en}}" class="no-js">
+${head}
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
+${shellNavEnhanced()}
+
+  <main id="main">
+${main}
+  </main>
+
+${footer}
+${scripts}
 </body>
-</html>
+</html>`;
+}
+
+export function minimalPageWrap(head, bodyMain, scripts = "") {
+  return `<!DOCTYPE html>
+<html lang="{{HTML_LANG|en}}" class="no-js">
+${head}
+<body class="no-js minimal-page">
+  <main id="main" class="minimal-main">
+${bodyMain}
+  </main>
+${scripts || `  <script src="./main.js" defer></script>`}
+</body>
+</html>`;
+}

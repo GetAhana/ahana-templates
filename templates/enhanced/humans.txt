@@ -1,7 +1,7 @@
 /* TEAM */
 Developer & SEO Manager: Ahana Digital
-Contact: hello@ahanadigital.com
-Site: https://ahanadigital.com
+Contact: info@getahana.com
+Site: https://getahana.com
 Location: Toronto, Ontario, Canada
 
 /* CLIENT */

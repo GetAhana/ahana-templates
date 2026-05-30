@@ -1,222 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{HTML_LANG|en}}" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <link rel="stylesheet" href="./styles.css" />
   <title>{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root{--container-w:1100px;--brand-primary:{{BRAND_PRIMARY|#FF5733}};--brand-dark:{{BRAND_DARK|#1A1A1B}};--brand-light:{{BRAND_LIGHT|#F7F7F7}};--brand-accent:{{BRAND_ACCENT|#FF5733}};--ink:#0E0E10;--p:var(--brand-primary);--d:var(--brand-dark);--l:var(--brand-light);--a:var(--brand-accent)}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',sans-serif;background:var(--l);color:#111}
-    #sticky-header{
-      position:fixed;top:0;left:0;right:0;z-index:100;
-      background:rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:1rem;
-      padding:0 clamp(1.25rem,3.2vw,2.75rem);
-      height:80px;
-      box-shadow:0 10px 28px rgba(0,0,0,.08);
-      border-bottom:1px solid rgba(0,0,0,.08);
-    }
-    #sticky-header .logo{
-      position:relative;z-index:2;flex-shrink:0;
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;text-decoration:none;
-      display:inline-flex;align-items:center;gap:0.55rem
-    }
-    #sticky-header .logo .logo__accent{color:var(--brand-accent)}
-    #sticky-header .logo__img{display:block;height:40px;width:auto;max-width:min(200px,42vw);object-fit:contain}
-    #sticky-header .logo__wordmark{font-family:inherit;font-weight:inherit;font-size:inherit;letter-spacing:inherit;color:inherit}
-    .header-brand--text #sticky-header .logo__img{display:none !important}
-    .header-brand--text #sticky-header .logo__wordmark--beside{display:none !important}
-    .header-brand--image #sticky-header .logo__img{display:block}
-    .header-brand--image #sticky-header .logo__wordmark{display:none !important}
-    .header-brand--image-text #sticky-header .logo__img{display:block}
-    .header-brand--image-text #sticky-header .logo__wordmark--fallback{display:none !important}
-    .header-brand--image-text #sticky-header .logo__dot{display:none !important}
-    .header-brand--image-text #sticky-header .logo__wordmark--beside{display:inline;white-space:nowrap}
-    #sticky-header .header-nav-layer{
-      position:absolute;left:0;right:0;top:0;bottom:0;
-      display:flex;align-items:center;justify-content:center;
-      pointer-events:none;
-    }
-    #sticky-header .header-nav-layer nav{pointer-events:auto;max-width:min(920px,calc(100vw - 22rem))}
-    .nav-links{display:flex;gap:1.85rem;list-style:none;align-items:center;justify-content:center;flex-wrap:wrap}
-    .nav-links a{color:rgba(14,14,16,.78);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.10em;text-decoration:none;white-space:nowrap}
-    .nav-links a:hover{color:var(--brand-primary)}
-    .header-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;position:relative;z-index:2;flex-shrink:0;margin-left:auto}
-    .btn-call-now{
-      display:inline-flex;align-items:center;gap:.5rem;background:var(--brand-primary);color:#fff;
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.03rem;padding:.62rem 1.2rem;border-radius:12px;text-decoration:none;white-space:nowrap
-    }
-    .btn-outline{
-      display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(0,0,0,.16);
-      color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.98rem;padding:.62rem 1.05rem;border-radius:12px;text-decoration:none;white-space:nowrap
-    }
-    #menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink)}
-    #menu-toggle svg{stroke:currentColor}
-    #mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(255,255,255,.98);z-index:99;padding:1rem clamp(1.25rem,3.2vw,2.75rem);flex-direction:column;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08)}
-    #mobile-menu a{color:rgba(14,14,16,.86);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;text-decoration:none;padding:.6rem 0;border-bottom:1px solid rgba(0,0,0,.08)}
-    #mobile-menu.open{display:flex}
-    @media(max-width:860px){
-      #sticky-header .header-nav-layer{display:none}
-      .nav-links{display:none}
-      #menu-toggle{display:block}
-    }
-    main{padding:124px 1.5rem 4rem;background:#fff}
-    .container{max-width:var(--container-w,1100px);margin:0 auto;width:100%}
-    .k{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:var(--p);margin-bottom:.5rem}
-    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.05}
-    h1 span{color:var(--p)}
-    p{margin-top:1rem;color:#4A4A4A;line-height:1.75;max-width:820px}
-    .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem;min-height:1.5rem}
-    .chip{background:#fff;border:1px solid rgba(0,0,0,.1);padding:.35rem .9rem;border-radius:20px;font-size:.85rem;font-weight:800}
-    .map{margin-top:2.25rem;border-radius:12px;overflow:hidden;border:2px solid rgba(0,0,0,.08);background:#e8eaed}
-    #service-area-map{height:420px;width:100%;z-index:1}
-    .leaflet-container{font-family:'Inter',system-ui,sans-serif}
-  </style>
+  <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <link rel="canonical" href="{{SITE_URL}}/service-area" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}" />
+  <meta property="og:description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
+  <meta property="og:url" content="{{SITE_URL}}/service-area" />
+  <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}" />
+  <meta name="twitter:description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./favicon.svg" />
+  <link rel="manifest" href="./site.webmanifest" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 </head>
-<body class="{{HEADER_BRAND_CLASS|header-brand--text}}">
-  <header id="sticky-header">
-    <a class="logo" href="index.html">{{HEADER_LOGO_IMG}}<span class="logo__wordmark logo__wordmark--fallback">{{BUSINESS_NAME_SHORT}}<span class="logo__accent logo__dot">.</span></span><span class="logo__wordmark logo__wordmark--beside">{{BUSINESS_NAME_SHORT}}</span></a>
-    <div class="header-nav-layer">
-    <nav aria-label="Primary">
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="articles.html">Articles</a></li>
+<body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
+  <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL|Skip to content}}</a>
+
+  <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL|Primary}}">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <ul class="nav-links" role="list">
+        <li><a class="nav-link" href="/">{{NAV_LABEL_HOME|Home}}</a></li>
+        <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES|Services}}</a></li>
+        <li><a class="nav-link" href="/gallery">Gallery</a></li>
+        <li><a class="nav-link" href="/testimonials">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+        <li><a class="nav-link" href="/about">{{NAV_LABEL_ABOUT|About}}</a></li>
+        <li><a class="nav-link" href="/articles">{{NAV_LABEL_ARTICLES|Articles}}</a></li>
         <li class="nav-dd">
           <button type="button" class="nav-dd-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="nav-dd-sa-panel">{{SERVICE_AREA_PAGE_LABEL|Service area}} <span class="nav-dd-caret" aria-hidden="true">▾</span></button>
           <ul class="nav-dd-panel" id="nav-dd-sa-panel" role="menu">
-            <li role="none"><a role="menuitem" href="service-area.html">Coverage map &amp; list</a></li>
-            <li role="none"><a role="menuitem" href="location-1.html">{{LOCATION_1_MENU_LABEL|Metro north}}</a></li>
-            <li role="none"><a role="menuitem" href="location-2.html">{{LOCATION_2_MENU_LABEL|Central corridor}}</a></li>
-            <li role="none"><a role="menuitem" href="location-3.html">{{LOCATION_3_MENU_LABEL|South county}}</a></li>
+            <li role="none"><a role="menuitem" href="/service-area">Coverage map &amp; list</a></li>
+            <li role="none"><a role="menuitem" href="/location-1">{{LOCATION_1_MENU_LABEL|Metro north}}</a></li>
+            <li role="none"><a role="menuitem" href="/location-2">{{LOCATION_2_MENU_LABEL|Central corridor}}</a></li>
+            <li role="none"><a role="menuitem" href="/location-3">{{LOCATION_3_MENU_LABEL|South county}}</a></li>
           </ul>
         </li>
       </ul>
-    </nav>
-    </div>
-    <div class="header-ctas">
-      <a class="btn-outline" href="contact.html">Get Estimate</a>
-      <a class="btn-call-now" href="tel:{{PHONE_NUMBER_E164}}">Call Now</a>
-      <button type="button" id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="/contact">{{HEADER_CTA_SECONDARY_LABEL|Get Estimate}}</a>
+        <a class="btn btn-primary btn-sm" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
       </button>
     </div>
-  </header>
-  <nav id="mobile-menu">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="testimonials.html">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a>
-    <a href="about.html">About</a>
-    <a href="articles.html">Articles</a>
-    <div class="mobile-nav-dd" role="group" aria-label="Service area links">
-      <span class="mobile-nav-dd-label">{{SERVICE_AREA_PAGE_LABEL|Service area}}</span>
-      <a href="service-area.html">Coverage map &amp; list</a>
-      <a href="location-1.html">{{LOCATION_1_MENU_LABEL|Metro north}}</a>
-      <a href="location-2.html">{{LOCATION_2_MENU_LABEL|Central corridor}}</a>
-      <a href="location-3.html">{{LOCATION_3_MENU_LABEL|South county}}</a>
-    </div>
-    <a href="tel:{{PHONE_NUMBER_E164}}" style="color:var(--brand-primary)!important;">{{PHONE_NUMBER}}</a>
   </nav>
 
-  <main>
-    <div class="container">
-      <div class="k">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</div>
-      <h1>Serving <span>{{SERVICE_AREA_SHORT}}</span></h1>
-      <p>{{SERVICE_AREA_INTRO}}</p>
-
-      <div class="chips" id="service-area-chips" role="list" aria-label="Communities served"></div>
-      <script type="application/json" id="svc-cities-json">{{SERVICE_CITIES}}</script>
-      <span id="ahana-svc-cities-one-line" hidden aria-hidden="true">{{SERVICE_CITIES_ONE_LINE}}</span>
-      <span id="ahana-city-fallback" hidden aria-hidden="true">{{CITY}}</span>
-      <noscript>
-        <p class="chips" style="margin-top:1.75rem"><strong>Areas:</strong> {{SERVICE_CITIES_ONE_LINE}}</p>
-      </noscript>
-
-      <section class="local-pages-section" aria-labelledby="local-pages-heading">
-        <h2 id="local-pages-heading">Service-focused pages for <span>priority submarkets</span></h2>
-        <p class="section-lead">{{SERVICE_AREA_LOCAL_PAGES_INTRO|These pages target how homeowners search in each area—by city plus the services you want to own. Each page uses unique, helpful copy (not duplicate templates) so search engines and visitors both see real local intent.}}</p>
-        <div class="local-pages-grid">
-          <a class="local-page-card" href="location-1.html">
-            <span class="local-page-card__k">Local SEO</span>
-            <strong>{{LOCATION_1_MENU_LABEL|Metro north}}</strong>
-            <span class="local-page-card__d">{{LOCATION_1_CARD_TEASER|Roofing, storm restoration, and exterior projects with crews staged closer to this corridor.}}</span>
-          </a>
-          <a class="local-page-card" href="location-2.html">
-            <span class="local-page-card__k">Local SEO</span>
-            <strong>{{LOCATION_2_MENU_LABEL|Central corridor}}</strong>
-            <span class="local-page-card__d">{{LOCATION_2_CARD_TEASER|High-demand repairs and replacements where response time and permitting familiarity matter.}}</span>
-          </a>
-          <a class="local-page-card" href="location-3.html">
-            <span class="local-page-card__k">Local SEO</span>
-            <strong>{{LOCATION_3_MENU_LABEL|South county}}</strong>
-            <span class="local-page-card__d">{{LOCATION_3_CARD_TEASER|Neighborhood-focused messaging, seasonal risks, and the services you want to rank for here.}}</span>
-          </a>
-        </div>
-      </section>
-
-      <div class="map" id="area-map-wrap">
-        <div id="service-area-map" role="img" aria-label="Map centered on {{BUSINESS_NAME}} showing combined service coverage area" data-lat="{{MAP_CENTER_LAT}}" data-lng="{{MAP_CENTER_LNG}}" data-zoom="{{MAP_ZOOM|10}}"></div>
-      </div>
-      <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
-
-      <script type="application/json" id="area-markers-json">{{SERVICE_AREA_MAP_MARKERS_JSON}}</script>
-      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-      <script src="./ahana-service-area-map.js" defer></script>
-      <script>
-        (function () {
-          var chipHost = document.getElementById('service-area-chips');
-          var rawCities = document.getElementById('svc-cities-json');
-          if (chipHost && rawCities && rawCities.textContent.trim()) {
-            try {
-              var cities = JSON.parse(rawCities.textContent);
-              if (Array.isArray(cities)) {
-                cities.forEach(function (lab) {
-                  if (lab == null || String(lab).trim() === '') return;
-                  var sp = document.createElement('span');
-                  sp.className = 'chip';
-                  sp.setAttribute('role', 'listitem');
-                  sp.textContent = String(lab).trim();
-                  chipHost.appendChild(sp);
-                });
-              }
-            } catch (e) {}
-          }
-          if (chipHost && chipHost.childElementCount === 0) {
-            var oneLineEl = document.getElementById('ahana-svc-cities-one-line');
-            var cityEl = document.getElementById('ahana-city-fallback');
-            var oneLine = oneLineEl ? oneLineEl.textContent.replace(/\s+/g, ' ').trim() : '';
-            var cityFb = cityEl ? cityEl.textContent.replace(/\s+/g, ' ').trim() : '';
-            var tokenBroken = function (s) {
-              return !s || s.indexOf('{{') !== -1;
-            };
-            var text = !tokenBroken(oneLine) ? oneLine : (!tokenBroken(cityFb) ? cityFb : '');
-            if (text) {
-              var fb = document.createElement('p');
-              fb.className = 'chips';
-              fb.style.marginTop = '1.75rem';
-              fb.style.fontWeight = '700';
-              fb.textContent = text;
-              chipHost.parentNode.insertBefore(fb, chipHost.nextSibling);
-            }
-          }
-        })();
-      </script>
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="{{NAV_PRIMARY_ARIA_LABEL|Primary}}">
+    <ul class="nav-menu-links" role="list">
+      <li><a class="nav-menu-link" href="/">{{NAV_LABEL_HOME|Home}}</a></li>
+      <li><a class="nav-menu-link" href="/services">{{NAV_LABEL_SERVICES|Services}}</a></li>
+      <li><a class="nav-menu-link" href="/gallery">Gallery</a></li>
+      <li><a class="nav-menu-link" href="/testimonials">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+      <li><a class="nav-menu-link" href="/about">{{NAV_LABEL_ABOUT|About}}</a></li>
+      <li><a class="nav-menu-link" href="/articles">{{NAV_LABEL_ARTICLES|Articles}}</a></li>
+    </ul>
+    <div class="nav-overlay-sa-group" role="group" aria-label="{{SERVICE_AREA_PAGE_LABEL|Service area}}">
+      <span class="nav-overlay-sa-label">{{SERVICE_AREA_PAGE_LABEL|Service area}}</span>
+      <a class="nav-menu-link nav-menu-link--sub" href="/service-area">Coverage map &amp; list</a>
+      <a class="nav-menu-link nav-menu-link--sub" href="/location-1">{{LOCATION_1_MENU_LABEL|Metro north}}</a>
+      <a class="nav-menu-link nav-menu-link--sub" href="/location-2">{{LOCATION_2_MENU_LABEL|Central corridor}}</a>
+      <a class="nav-menu-link nav-menu-link--sub" href="/location-3">{{LOCATION_3_MENU_LABEL|South county}}</a>
     </div>
+    <div class="nav-overlay-footer">
+      <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER_DISPLAY}}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <div class="page-hero">
+      <div class="container">
+        <p class="enh-label">{{SERVICE_AREA_PAGE_LABEL|Service Area}}</p>
+        <h1>Serving <span class="accent">{{SERVICE_AREA_SHORT}}</span></h1>
+        <p class="section-sub">{{SERVICE_AREA_INTRO}}</p>
+        <p class="sa-prose">{{SERVICE_AREA_SEO_PARAGRAPH_1|From the city core to the suburbs we mark on the map, homeowners call us for primary trade work they can schedule with confidence. Each pin reflects a community where we answer emergency calls, book inspections, and return for documented repairs—not one-off estimates that never follow through.}}</p>
+        <p class="sa-prose">{{SERVICE_AREA_SEO_PARAGRAPH_2|Whether you need a targeted fix after storm damage or a full replacement with upgraded materials, crews familiar with local codes and weather patterns reduce callbacks. Use the map above to confirm we run trucks in your neighborhood, then follow the service links below for scopes, FAQs, and timelines.}}</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="chips" id="service-area-chips" role="list" aria-label="Communities served"></div>
+        <script type="application/json" id="svc-cities-json">{{SERVICE_CITIES}}</script>
+        <span id="ahana-svc-cities-one-line" hidden aria-hidden="true">{{SERVICE_CITIES_ONE_LINE}}</span>
+        <span id="ahana-city-fallback" hidden aria-hidden="true">{{CITY}}</span>
+        <noscript>
+          <p class="chips chips-fallback"><strong>Areas:</strong> {{SERVICE_CITIES_ONE_LINE}}</p>
+        </noscript>
+
+        <section class="local-pages-section" aria-labelledby="local-pages-heading" data-reveal>
+          <h2 id="local-pages-heading" data-reveal-heading>Service-focused pages for <span class="accent">priority submarkets</span></h2>
+          <p class="section-sub">{{SERVICE_AREA_LOCAL_PAGES_INTRO|These pages target how homeowners search in each area—by city plus the services you want to own. Each page uses unique, helpful copy (not duplicate templates) so search engines and visitors both see real local intent.}}</p>
+          <div class="local-pages-grid" data-reveal-stagger>
+            <a class="local-page-card" href="/location-1" data-stagger-item>
+              <span class="local-page-card__k">Local SEO</span>
+              <strong>{{LOCATION_1_MENU_LABEL|Metro north}}</strong>
+              <span class="local-page-card__d">{{LOCATION_1_CARD_TEASER|Roofing, storm restoration, and exterior projects with crews staged closer to this corridor.}}</span>
+            </a>
+            <a class="local-page-card" href="/location-2" data-stagger-item>
+              <span class="local-page-card__k">Local SEO</span>
+              <strong>{{LOCATION_2_MENU_LABEL|Central corridor}}</strong>
+              <span class="local-page-card__d">{{LOCATION_2_CARD_TEASER|High-demand repairs and replacements where response time and permitting familiarity matter.}}</span>
+            </a>
+            <a class="local-page-card" href="/location-3" data-stagger-item>
+              <span class="local-page-card__k">Local SEO</span>
+              <strong>{{LOCATION_3_MENU_LABEL|South county}}</strong>
+              <span class="local-page-card__d">{{LOCATION_3_CARD_TEASER|Neighborhood-focused messaging, seasonal risks, and the services you want to rank for here.}}</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="map" id="area-map-wrap">
+          <div id="service-area-map" role="img" aria-label="Map centered on {{BUSINESS_NAME}} showing combined service coverage area" data-lat="{{MAP_CENTER_LAT}}" data-lng="{{MAP_CENTER_LNG}}" data-zoom="{{MAP_ZOOM|10}}"></div>
+        </div>
+        <span id="biz-name-for-map" hidden>{{BUSINESS_NAME}}</span>
+
+        <section class="sa-cross" aria-labelledby="sa-cross-h2" data-reveal>
+          <h2 id="sa-cross-h2" class="sa-cross-h2">{{SERVICE_AREA_CROSS_H2|Service coverage tied to the work we perform}}</h2>
+          <p class="sa-cross-intro">{{SERVICE_AREA_CROSS_INTRO|Match your town with the programs we run most often in your metro area. Each page lists FAQs, process steps, and photo-ready examples so you know what we recommend before we arrive.}}</p>
+          <div class="sa-xgrid" data-reveal-stagger>
+            <article class="sa-xcard" data-stagger-item>
+              <h3><a href="/service-1">{{SERVICE_1_NAME}}</a></h3>
+              <p>{{SERVICE_AREA_CROSS_CARD_1_BODY|Homeowners in our mapped service towns choose this flagship program when wind, hail, or age shows up on inspections—especially where attic ventilation and decking matter. We document findings, explain repair vs replacement, and schedule crews who already know local suppliers.}}</p>
+              <a class="sa-xcard-lm" href="/service-1">View {{SERVICE_1_NAME}} details</a>
+            </article>
+            <article class="sa-xcard" data-stagger-item>
+              <h3><a href="/service-2">{{SERVICE_2_NAME}}</a></h3>
+              <p>{{SERVICE_AREA_CROSS_CARD_2_BODY|If gutters, flashing, or wall transitions are failing, we scope this line of work with photos you can share with insurance or HOAs. Expect clear pricing bands, realistic timelines, and crews who protect landscaping while we work.}}</p>
+              <a class="sa-xcard-lm" href="/service-2">View {{SERVICE_2_NAME}} details</a>
+            </article>
+            <article class="sa-xcard" data-stagger-item>
+              <h3><a href="/service-3">{{SERVICE_3_NAME}}</a></h3>
+              <p>{{SERVICE_AREA_CROSS_CARD_3_BODY|For long-term performance in local heat and storm cycles, this upgrade path ties materials to code-ready installs. We align underlayment, ridge details, and manufacturer specs so work survives the next inspection cycle.}}</p>
+              <a class="sa-xcard-lm" href="/service-3">View {{SERVICE_3_NAME}} details</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="sa-hub" aria-labelledby="sa-hub-h2" data-reveal>
+          <p class="sa-hub-k">{{SERVICE_AREA_HUB_CTA_KICKER|All services}}</p>
+          <h2 id="sa-hub-h2" class="sa-hub-h2">{{SERVICE_AREA_HUB_CTA_HEADLINE|Compare every option in one place}}</h2>
+          <p class="section-sub">{{SERVICE_AREA_HUB_CTA_BODY|The full services hub stacks priority work, add-ons, and neighborhood-specific notes so you can plan upgrades without guessing. Start there if you are weighing multiple scopes or want a single call to coordinate the next steps.}}</p>
+          <div class="sa-hub-actions">
+            <a class="btn btn-primary" href="/services">{{SERVICE_AREA_HUB_CTA_BUTTON|Open the full services hub}}</a>
+            <a class="btn btn-outline" href="/contact">{{SERVICE_AREA_HUB_CTA_SECONDARY|Request a local estimate}}</a>
+          </div>
+        </section>
+
+        <script type="application/json" id="area-markers-json">{{SERVICE_AREA_MAP_MARKERS_JSON}}</script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+        <script src="./ahana-service-area-map.js" defer></script>
+
+        <script>
+          (function () {
+            var chipHost = document.getElementById('service-area-chips');
+            var rawCities = document.getElementById('svc-cities-json');
+            if (chipHost && rawCities && rawCities.textContent.trim()) {
+              try {
+                var cities = JSON.parse(rawCities.textContent);
+                if (Array.isArray(cities)) {
+                  cities.forEach(function (lab) {
+                    if (lab == null || String(lab).trim() === '') return;
+                    var sp = document.createElement('span');
+                    sp.className = 'chip';
+                    sp.setAttribute('role', 'listitem');
+                    sp.textContent = String(lab).trim();
+                    chipHost.appendChild(sp);
+                  });
+                }
+              } catch (e) {}
+            }
+            if (chipHost && chipHost.childElementCount === 0) {
+              var oneLineEl = document.getElementById('ahana-svc-cities-one-line');
+              var cityEl = document.getElementById('ahana-city-fallback');
+              var oneLine = oneLineEl ? oneLineEl.textContent.replace(/\s+/g, ' ').trim() : '';
+              var cityFb = cityEl ? cityEl.textContent.replace(/\s+/g, ' ').trim() : '';
+              var tokenBroken = function (s) {
+                return !s || s.indexOf('{{') !== -1;
+              };
+              var text = !tokenBroken(oneLine) ? oneLine : (!tokenBroken(cityFb) ? cityFb : '');
+              if (text) {
+                var fb = document.createElement('p');
+                fb.className = 'chips chips-fallback';
+                fb.textContent = text;
+                chipHost.parentNode.insertBefore(fb, chipHost.nextSibling);
+              }
+            }
+          })();
+        </script>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></div>
+        <p class="footer-blurb">{{FOOTER_TAGLINE}}</p>
+      </div>
+      <div>
+        <div class="footer-col-label">{{FOOTER_PAGES_HEADING|Pages}}</div>
+        <ul class="footer-links" role="list">
+          <li><a href="/">{{NAV_LABEL_HOME|Home}}</a></li>
+          <li><a href="/services">{{NAV_LABEL_SERVICES|Services}}</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/testimonials">{{TESTIMONIALS_PAGE_LABEL|Testimonials}}</a></li>
+          <li><a href="/about">{{NAV_LABEL_ABOUT|About}}</a></li>
+          <li><a href="/articles">{{NAV_LABEL_ARTICLES|Articles}}</a></li>
+          <li><a href="/service-area">{{SERVICE_AREA_PAGE_LABEL|Service area}}</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Contact</div>
+        <ul class="footer-links" role="list">
+          <li><a href="tel:{{PHONE_NUMBER_E164}}">{{PHONE_NUMBER}}</a></li>
+          <li><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+          <li>{{BUSINESS_HOURS}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {{YEAR_CURRENT}} {{BUSINESS_NAME}}</span>
+      <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>

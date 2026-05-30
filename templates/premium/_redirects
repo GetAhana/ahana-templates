@@ -3,6 +3,8 @@
 # Reviews URL removed — page consolidated into testimonials
 /reviews /testimonials 301
 /reviews.html /testimonials.html 301
+/wall-of-love /testimonials 301
+/wall-of-love.html /testimonials.html 301
 
 # Custom 404 — keeps visitors on site
 /*  /404.html  404
