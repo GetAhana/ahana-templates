@@ -370,16 +370,8 @@ export function buildIndexHtml() {
             </div>
             <div class="post-title">{{ARTICLE_1_TITLE}}</div>
             <p class="post-excerpt">{{ARTICLE_1_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL|Read the article →}}</div>
           </a>
-          <div class="post-link" role="article" data-stagger-item>
-            <div class="post-top">
-              <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
-              <div class="post-date">{{ARTICLE_2_DATE}}</div>
-            </div>
-            <div class="post-title">{{ARTICLE_2_TITLE}}</div>
-            <p class="post-excerpt">{{ARTICLE_2_EXCERPT}}</p>
-          </div>
         </div>
         <div style="margin-top:2rem;display:flex;gap:.75rem;flex-wrap:wrap" data-reveal>
           <a class="btn btn-primary" href="/articles">{{HOME_ARTICLES_PRIMARY_CTA_LABEL}}</a>
@@ -407,15 +399,15 @@ export function buildIndexHtml() {
     <section class="section">
       <div class="container">
         <span class="eyebrow">{{HOME_TESTIMONIALS_SECTION_KICKER}}</span>
-        <div class="testimonial-block">
-          <p class="t-main-quote" data-reveal-heading>{{TESTIMONIAL_1_TEXT}}</p>
-          <p class="t-attr" data-reveal><strong>{{TESTIMONIAL_1_NAME}}</strong> <span>·</span> <span>{{TESTIMONIAL_1_CITY}}</span></p>
-          <div class="t-secondary" data-reveal-stagger>
-            <div data-stagger-item>
-              <p class="t2-text">{{TESTIMONIAL_2_TEXT}}</p>
-              <p class="t2-attr">{{TESTIMONIAL_2_NAME}} &nbsp;·&nbsp; {{TESTIMONIAL_2_CITY}}</p>
-            </div>
-          </div>
+        <div class="testimonial-grid" data-reveal-stagger>
+          <figure class="testimonial-item" data-stagger-item>
+            <blockquote class="testimonial-quote">{{TESTIMONIAL_1_TEXT}}</blockquote>
+            <figcaption class="testimonial-attr"><strong>{{TESTIMONIAL_1_NAME}}</strong> <span aria-hidden="true">·</span> {{TESTIMONIAL_1_CITY}}</figcaption>
+          </figure>
+          <figure class="testimonial-item" data-stagger-item>
+            <blockquote class="testimonial-quote">{{TESTIMONIAL_2_TEXT}}</blockquote>
+            <figcaption class="testimonial-attr"><strong>{{TESTIMONIAL_2_NAME}}</strong> <span aria-hidden="true">·</span> {{TESTIMONIAL_2_CITY}}</figcaption>
+          </figure>
         </div>
         <div class="cta-block" data-reveal>
           <div>
@@ -697,7 +689,7 @@ export function buildArticlesHtml() {
             </div>
             <div class="post-title">{{ARTICLE_${n}_TITLE}}</div>
             <p class="post-excerpt">{{ARTICLE_${n}_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL|Read the article →}}</div>
           </a>`;
 
   const main = `
@@ -714,9 +706,6 @@ export function buildArticlesHtml() {
       <div class="container">
         <div class="post-list" data-reveal-stagger>
 ${postLink(1)}
-${postLink(2)}
-${postLink(3)}
-${postLink(4)}
         </div>
       </div>
     </section>

@@ -722,44 +722,34 @@ h1 .accent, h2 .accent { color: var(--copper); }
 .area-link:hover { text-decoration: underline; }
 
 /* ── Testimonials ────────────────────────────────────────── */
-.testimonial-block { margin-top: 3.5rem; }
-.t-main-quote {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-  line-height: 1.22;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-bottom: 1.25rem;
-  max-width: 860px;
+.testimonial-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
 }
-.t-attr {
+.testimonial-item { margin: 0; }
+.testimonial-quote {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  font-style: normal;
+}
+.testimonial-attr {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--faint);
   letter-spacing: 0.04em;
 }
-.t-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
-.t-secondary {
-  margin-top: 3rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-}
-.t2-text { font-style: italic; color: var(--muted); line-height: 1.75; font-size: 0.97rem; }
-.t2-attr {
-  margin-top: 0.65rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--faint);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
+.testimonial-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
 
 /* ── CTA Block (inside sections) ────────────────────────── */
 .cta-block {
@@ -1157,7 +1147,7 @@ body::after {
   .process-connector { display: none; }
   .pl-step { padding: 2rem 0; border-top: 1px solid var(--line); }
   .pl-step:first-child { border-top: none; }
-  .t-secondary { grid-template-columns: 1fr; gap: 2rem; }
+  .testimonial-grid { grid-template-columns: 1fr; gap: 2rem; }
   .cta-block { flex-direction: column; align-items: flex-start; }
   .depth-steps { grid-template-columns: repeat(2, 1fr); }
   .process-6 { grid-template-columns: repeat(2, 1fr); }
