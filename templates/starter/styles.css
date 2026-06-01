@@ -952,10 +952,10 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .depth-tile h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
 .depth-tile p { color: var(--muted); line-height: 1.72; font-size: 0.93rem; }
 
-/* ── Why choose us (4-item) ──────────────────────────────── */
+/* ── Why choose us (3-item) ──────────────────────────────── */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--line);
   margin-top: 3rem;
