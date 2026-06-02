@@ -200,7 +200,7 @@ ${ENHANCED_HOME_HERO_HTML}
         <p class="enh-label" data-reveal>{{HOME_SERVICES_SECTION_KICKER|Services}}</p>
         <h2 class="enh-title" data-reveal-heading>The services that drive the most calls<br/><span>in {{CITY}}</span></h2>
         <p class="enh-body" data-reveal>{{HOME_SERVICES_INTRO|These are the jobs we run most weeks for local homeowners—each summary explains what we check on site, how we price common scopes, and what good looks like when we are done. Open the full services hub for timelines, FAQs, and deeper detail on every line.}}</p>
-        <div class="svc-grid" data-reveal-stagger>
+        <div class="svc-grid svc-grid--6" data-reveal-stagger>
 ${svcTile(1, "/service-1")}
 ${svcTile(2, "/service-2")}
 ${svcTile(3, "/service-3")}
@@ -423,6 +423,12 @@ ${faqItem("{{ABOUT_FAQ_3_QUESTION}}", "{{ABOUT_FAQ_3_ANSWER}}")}
   return pageWrap(head, main, shellFooterEnhanced({ includeHours: true }), shellScripts());
 }
 
+const svcHubCard = (n, href) => `            <a class="svc-detail-card" href="${href}" data-stagger-item>
+              <h3>{{SERVICE_${n}_NAME}}</h3>
+              <p>{{SERVICE_${n}_DESC}}</p>
+              <span class="feature-lm">Learn more</span>
+            </a>`;
+
 export function buildServicesHtml() {
   const head = shellHead({
     title: "{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}",
@@ -457,24 +463,9 @@ export function buildServicesHtml() {
           <h2 id="svc-popular-heading" data-reveal-heading>{{SERVICES_HUB_POPULAR_TITLE|Featured services (full detail pages)}}</h2>
           <p class="section-sub" data-reveal>{{SERVICES_HUB_POPULAR_INTRO|Each card opens a dedicated page with FAQs, process, and before/after photos.}}</p>
           <div class="svc-priority-grid" data-reveal-stagger>
-            <a class="svc-detail-card" href="/service-1" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 10.5L12 4l9 6.5"/><path d="M9 21V12h6v9"/></svg></span>
-              <h3>{{SERVICE_1_NAME}}</h3>
-              <p>{{SERVICE_1_DESC}}</p>
-              <span class="feature-lm">Learn more</span>
-            </a>
-            <a class="svc-detail-card" href="/service-2" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"/><path d="M6 7v11a2 2 0 002 2h8a2 2 0 002-2V7"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></span>
-              <h3>{{SERVICE_2_NAME}}</h3>
-              <p>{{SERVICE_2_DESC}}</p>
-              <span class="feature-lm">Learn more</span>
-            </a>
-            <a class="svc-detail-card" href="/service-3" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-              <h3>{{SERVICE_3_NAME}}</h3>
-              <p>{{SERVICE_3_DESC}}</p>
-              <span class="feature-lm">Learn more</span>
-            </a>
+${svcHubCard(1, "/service-1")}
+${svcHubCard(2, "/service-2")}
+${svcHubCard(3, "/service-3")}
           </div>
         </section>
 
@@ -483,32 +474,17 @@ export function buildServicesHtml() {
           <h2 id="svc-core-heading" data-reveal-heading>{{SERVICES_HUB_CORE_TITLE|Core services on this hub}}</h2>
           <p class="section-sub" data-reveal>{{SERVICES_HUB_CORE_INTRO|Same crews and warranties—only the three cards above get full detail URLs on Enhanced.}}</p>
           <div class="svc-priority-grid" data-reveal-stagger>
-            <article class="card feature-card" data-stagger-item style="padding:2rem 1.75rem;background:var(--bg-card)">
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18"/><path d="M4.5 10.5l7.5-7.5 7.5 7.5"/></svg></span>
-              <h3>{{SERVICE_4_NAME}}</h3>
-              <p>{{SERVICE_4_DESC}}</p>
-              <a class="feature-lm" href="/contact">Learn more</a>
-            </article>
-            <article class="card feature-card" data-stagger-item style="padding:2rem 1.75rem;background:var(--bg-card)">
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg></span>
-              <h3>{{SERVICE_5_NAME}}</h3>
-              <p>{{SERVICE_5_DESC}}</p>
-              <a class="feature-lm" href="/contact">Learn more</a>
-            </article>
-            <article class="card feature-card" data-stagger-item style="padding:2rem 1.75rem;background:var(--bg-card)">
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg></span>
-              <h3>{{SERVICE_6_NAME}}</h3>
-              <p>{{SERVICE_6_DESC}}</p>
-              <a class="feature-lm" href="/contact">Learn more</a>
-            </article>
+${svcHubCard(4, "/contact")}
+${svcHubCard(5, "/contact")}
+${svcHubCard(6, "/contact")}
           </div>
         </section>
 
         <section class="svc-add-more" aria-labelledby="additional-services-heading">
           <p class="enh-label">Additional services</p>
-          <h2 class="svc-more-h2" id="additional-services-heading" data-reveal-heading>Other work we handle</h2>
-          <p class="section-sub" data-reveal>{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
-          <ul class="svc-additional-list" data-reveal>
+          <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+          <p class="section-sub">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
+          <ul class="svc-additional-list">
             {{ADDITIONAL_SERVICES_LIST_ITEMS}}
           </ul>
         </section>
@@ -578,24 +554,24 @@ export function buildTestimonialsHtml() {
     <section class="section">
       <div class="container">
         <section class="wall" data-reveal-stagger>
-          <article class="card" data-stagger-item>
+          <article class="card" data-testimonial-card data-stagger-item>
             <blockquote>“{{TESTIMONIALS_WALL_1_TEXT}}”</blockquote>
             <div class="by">{{TESTIMONIAL_1_NAME}} <span>· {{TESTIMONIAL_1_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
+          <article class="card" data-testimonial-card data-stagger-item>
             <blockquote>“{{TESTIMONIALS_WALL_2_TEXT}}”</blockquote>
             <div class="by">{{TESTIMONIAL_2_NAME}} <span>· {{TESTIMONIAL_2_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
+          <article class="card" data-testimonial-card data-stagger-item>
             <blockquote>“{{TESTIMONIALS_WALL_3_TEXT}}”</blockquote>
             <div class="by">{{TESTIMONIAL_3_NAME}} <span>· {{TESTIMONIAL_3_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
-            <blockquote>“{{TESTIMONIAL_4_TEXT}}”</blockquote>
+          <article class="card" data-testimonial-card data-stagger-item>
+            <blockquote>“{{TESTIMONIALS_WALL_4_TEXT}}”</blockquote>
             <div class="by">{{TESTIMONIAL_4_NAME}} <span>· {{TESTIMONIAL_4_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
-            <blockquote>“{{TESTIMONIAL_5_TEXT}}”</blockquote>
+          <article class="card" data-testimonial-card data-stagger-item>
+            <blockquote>“{{TESTIMONIALS_WALL_5_TEXT}}”</blockquote>
             <div class="by">{{TESTIMONIAL_5_NAME}} <span>· {{TESTIMONIAL_5_CITY}}</span></div>
           </article>
         </section>

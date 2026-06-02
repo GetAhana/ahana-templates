@@ -92,12 +92,12 @@ h1 .accent, h2 .accent { color: var(--copper); }
   transform: translateX(-50%);
   z-index: 200;
   width: calc(100% - 2rem);
-  max-width: 1080px;
+  max-width: 1140px;
 }
 .nav-pill {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: clamp(0.65rem, 2vw, 2rem);
   background: rgba(17,16,9,0.82);
   backdrop-filter: blur(22px) saturate(140%);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
@@ -119,19 +119,26 @@ h1 .accent, h2 .accent { color: var(--copper); }
 .nav-logo .dot { color: var(--copper); }
 .nav-links {
   display: flex;
+  flex-wrap: nowrap;
   gap: 0.15rem;
   list-style: none;
   align-items: center;
   flex: 1;
   justify-content: center;
+  min-width: 0;
+}
+.nav-links li {
+  flex-shrink: 0;
 }
 .nav-link {
+  display: inline-block;
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--muted);
   text-decoration: none;
   padding: 0.38rem 0.75rem;
   border-radius: 100px;
+  white-space: nowrap;
   transition: color 0.18s var(--ease), background 0.18s var(--ease);
   letter-spacing: 0.005em;
 }
@@ -722,34 +729,44 @@ h1 .accent, h2 .accent { color: var(--copper); }
 .area-link:hover { text-decoration: underline; }
 
 /* ── Testimonials ────────────────────────────────────────── */
-.testimonial-grid {
-  margin-top: 3.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-}
-.testimonial-item { margin: 0; }
-.testimonial-quote {
+.testimonial-block { margin-top: 3.5rem; }
+.t-main-quote {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
-  font-size: clamp(1.05rem, 2vw, 1.28rem);
-  line-height: 1.65;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
   color: var(--ink);
-  margin: 0 0 1rem;
-  font-style: normal;
+  margin-bottom: 1.25rem;
+  max-width: 860px;
 }
-.testimonial-attr {
+.t-attr {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--faint);
   letter-spacing: 0.04em;
 }
-.testimonial-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
+.t-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
+.t-secondary {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+.t2-text { font-style: italic; color: var(--muted); line-height: 1.75; font-size: 0.97rem; }
+.t2-attr {
+  margin-top: 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
 /* ── CTA Block (inside sections) ────────────────────────── */
 .cta-block {
@@ -952,10 +969,10 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .depth-tile h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
 .depth-tile p { color: var(--muted); line-height: 1.72; font-size: 0.93rem; }
 
-/* ── Why choose us (3-item) ──────────────────────────────── */
+/* ── Why choose us (4-item) ──────────────────────────────── */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: var(--line);
   margin-top: 3rem;
@@ -1147,7 +1164,7 @@ body::after {
   .process-connector { display: none; }
   .pl-step { padding: 2rem 0; border-top: 1px solid var(--line); }
   .pl-step:first-child { border-top: none; }
-  .testimonial-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .t-secondary { grid-template-columns: 1fr; gap: 2rem; }
   .cta-block { flex-direction: column; align-items: flex-start; }
   .depth-steps { grid-template-columns: repeat(2, 1fr); }
   .process-6 { grid-template-columns: repeat(2, 1fr); }
@@ -1212,13 +1229,15 @@ body::after {
   gap: 0.55rem;
 }
 .nav-logo .logo__img {
-  display: block;
   height: 36px;
   width: auto;
   max-width: min(160px, 34vw);
   object-fit: contain;
+  display: none;
 }
-body.header-brand--text .nav-logo .logo__img { display: none !important; }
+/* Safe defaults: text-only wordmark unless image / image+text mode */
+.nav-logo__media:not(:has(.logo__img)) { display: none; }
+.nav-logo__text--beside { display: none; }
 body.header-brand--text .nav-logo__text--beside { display: none !important; }
 body.header-brand--image .nav-logo .logo__img { display: block; }
 body.header-brand--image .nav-logo__text { display: none !important; }

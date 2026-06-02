@@ -25,7 +25,7 @@ export function shellNavPremium() {
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL|Primary}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME|Home}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES|Services}}</a></li>
@@ -603,10 +603,15 @@ export function buildServicesHtml() {
   });
 
   const svcDetailCard = (n) => `            <a class="svc-detail-card" href="/service-${n}" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 10.5L12 4l9 6.5"/><path d="M9 21V12h6v9"/></svg></span>
               <h3>{{SERVICE_${n}_NAME}}</h3>
               <p>{{SERVICE_${n}_DESC}}</p>
               <span class="feature-lm">Learn more</span>
+            </a>`;
+
+  const svcHubCardContact = (n) => `            <a class="svc-detail-card" href="/contact" data-stagger-item>
+              <h3>{{SERVICE_${n}_NAME}}</h3>
+              <p>{{SERVICE_${n}_DESC}}</p>
+              <span class="feature-lm">Request scope</span>
             </a>`;
 
   const main = `
@@ -634,38 +639,15 @@ ${[1, 2, 3, 4, 5, 6].map(svcDetailCard).join("\n")}
           <h2 id="svc-ext-heading" data-reveal-heading>{{SERVICES_HUB_EXTENDED_TITLE|Services #7–#10 (overview on this hub)}}</h2>
           <p class="section-sub" data-reveal>{{SERVICES_HUB_EXTENDED_INTRO|These lines stay visible across the site with short blurbs here; full dedicated URLs are reserved for your top six priorities above.}}</p>
           <div class="svc-priority-grid svc-priority-grid--extended" data-reveal-stagger>
-            <article class="card feature-card" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18"/><path d="M4.5 10.5l7.5-7.5 7.5 7.5"/></svg></span>
-              <h3>{{SERVICE_7_NAME}}</h3>
-              <p>{{SERVICE_7_DESC}}</p>
-              <a class="feature-lm" href="/contact">Request scope</a>
-            </article>
-            <article class="card feature-card" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg></span>
-              <h3>{{SERVICE_8_NAME}}</h3>
-              <p>{{SERVICE_8_DESC}}</p>
-              <a class="feature-lm" href="/contact">Request scope</a>
-            </article>
-            <article class="card feature-card" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg></span>
-              <h3>{{SERVICE_9_NAME}}</h3>
-              <p>{{SERVICE_9_DESC}}</p>
-              <a class="feature-lm" href="/contact">Request scope</a>
-            </article>
-            <article class="card feature-card" data-stagger-item>
-              <span class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"/><path d="M6 7v11a2 2 0 002 2h8a2 2 0 002-2V7"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></span>
-              <h3>{{SERVICE_10_NAME}}</h3>
-              <p>{{SERVICE_10_DESC}}</p>
-              <a class="feature-lm" href="/contact">Request scope</a>
-            </article>
+${[7, 8, 9, 10].map(svcHubCardContact).join("\n")}
           </div>
         </section>
 
         <section class="svc-add-more" aria-labelledby="additional-services-heading">
           <p class="enh-label">Additional services</p>
-          <h2 class="svc-more-h2" id="additional-services-heading" data-reveal-heading>Other work we handle</h2>
-          <p class="section-sub" data-reveal>{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
-          <ul class="svc-additional-list" data-reveal>
+          <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+          <p class="section-sub">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
+          <ul class="svc-additional-list">
             {{ADDITIONAL_SERVICES_LIST_ITEMS}}
           </ul>
         </section>
@@ -701,24 +683,24 @@ export function buildTestimonialsHtml() {
     <section class="section">
       <div class="container">
         <section class="wall" data-reveal-stagger>
-          <article class="card" data-stagger-item>
+          <article class="card" data-testimonial-card data-stagger-item>
             <blockquote>"{{TESTIMONIALS_WALL_1_TEXT}}"</blockquote>
             <div class="by">{{TESTIMONIAL_1_NAME}} <span>· {{TESTIMONIAL_1_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
+          <article class="card" data-testimonial-card data-stagger-item>
             <blockquote>"{{TESTIMONIALS_WALL_2_TEXT}}"</blockquote>
             <div class="by">{{TESTIMONIAL_2_NAME}} <span>· {{TESTIMONIAL_2_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
+          <article class="card" data-testimonial-card data-stagger-item>
             <blockquote>"{{TESTIMONIALS_WALL_3_TEXT}}"</blockquote>
             <div class="by">{{TESTIMONIAL_3_NAME}} <span>· {{TESTIMONIAL_3_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
-            <blockquote>"{{TESTIMONIAL_4_TEXT}}"</blockquote>
+          <article class="card" data-testimonial-card data-stagger-item>
+            <blockquote>"{{TESTIMONIALS_WALL_4_TEXT}}"</blockquote>
             <div class="by">{{TESTIMONIAL_4_NAME}} <span>· {{TESTIMONIAL_4_CITY}}</span></div>
           </article>
-          <article class="card" data-stagger-item>
-            <blockquote>"{{TESTIMONIAL_5_TEXT}}"</blockquote>
+          <article class="card" data-testimonial-card data-stagger-item>
+            <blockquote>"{{TESTIMONIALS_WALL_5_TEXT}}"</blockquote>
             <div class="by">{{TESTIMONIAL_5_NAME}} <span>· {{TESTIMONIAL_5_CITY}}</span></div>
           </article>
         </section>

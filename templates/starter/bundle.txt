@@ -113,7 +113,7 @@ TYPE: tier
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -315,16 +315,8 @@ TYPE: tier
             </div>
             <div class="post-title">{{ARTICLE_1_TITLE}}</div>
             <p class="post-excerpt">{{ARTICLE_1_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL|Read the article →}}</div>
           </a>
-          <div class="post-link" role="article" data-stagger-item>
-            <div class="post-top">
-              <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
-              <div class="post-date">{{ARTICLE_2_DATE}}</div>
-            </div>
-            <div class="post-title">{{ARTICLE_2_TITLE}}</div>
-            <p class="post-excerpt">{{ARTICLE_2_EXCERPT}}</p>
-          </div>
         </div>
         <div style="margin-top:2rem;display:flex;gap:.75rem;flex-wrap:wrap" data-reveal>
           <a class="btn btn-primary" href="/articles">{{HOME_ARTICLES_PRIMARY_CTA_LABEL}}</a>
@@ -352,15 +344,15 @@ TYPE: tier
     <section class="section">
       <div class="container">
         <span class="eyebrow">{{HOME_TESTIMONIALS_SECTION_KICKER}}</span>
-        <div class="testimonial-block">
-          <p class="t-main-quote" data-reveal-heading>{{TESTIMONIAL_1_TEXT}}</p>
-          <p class="t-attr" data-reveal><strong>{{TESTIMONIAL_1_NAME}}</strong> <span>·</span> <span>{{TESTIMONIAL_1_CITY}}</span></p>
-          <div class="t-secondary" data-reveal-stagger>
-            <div data-stagger-item>
-              <p class="t2-text">{{TESTIMONIAL_2_TEXT}}</p>
-              <p class="t2-attr">{{TESTIMONIAL_2_NAME}} &nbsp;·&nbsp; {{TESTIMONIAL_2_CITY}}</p>
-            </div>
-          </div>
+        <div class="testimonial-grid" data-reveal-stagger>
+          <figure class="testimonial-item" data-stagger-item>
+            <blockquote class="testimonial-quote">{{TESTIMONIAL_1_TEXT}}</blockquote>
+            <figcaption class="testimonial-attr"><strong>{{TESTIMONIAL_1_NAME}}</strong> <span aria-hidden="true">·</span> {{TESTIMONIAL_1_CITY}}</figcaption>
+          </figure>
+          <figure class="testimonial-item" data-stagger-item>
+            <blockquote class="testimonial-quote">{{TESTIMONIAL_2_TEXT}}</blockquote>
+            <figcaption class="testimonial-attr"><strong>{{TESTIMONIAL_2_NAME}}</strong> <span aria-hidden="true">·</span> {{TESTIMONIAL_2_CITY}}</figcaption>
+          </figure>
         </div>
         <div class="cta-block" data-reveal>
           <div>
@@ -510,7 +502,7 @@ TYPE: tier
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -765,7 +757,7 @@ TYPE: tier
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -976,7 +968,7 @@ TYPE: tier
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -1028,34 +1020,7 @@ TYPE: tier
             </div>
             <div class="post-title">{{ARTICLE_1_TITLE}}</div>
             <p class="post-excerpt">{{ARTICLE_1_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-          </a>
-          <a class="post-link" href="{{ARTICLE_2_URL}}" data-stagger-item>
-            <div class="post-top">
-              <div class="post-eyebrow">{{ARTICLE_2_CATEGORY}}</div>
-              <div class="post-date">{{ARTICLE_2_DATE}}</div>
-            </div>
-            <div class="post-title">{{ARTICLE_2_TITLE}}</div>
-            <p class="post-excerpt">{{ARTICLE_2_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-          </a>
-          <a class="post-link" href="{{ARTICLE_3_URL}}" data-stagger-item>
-            <div class="post-top">
-              <div class="post-eyebrow">{{ARTICLE_3_CATEGORY}}</div>
-              <div class="post-date">{{ARTICLE_3_DATE}}</div>
-            </div>
-            <div class="post-title">{{ARTICLE_3_TITLE}}</div>
-            <p class="post-excerpt">{{ARTICLE_3_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
-          </a>
-          <a class="post-link" href="{{ARTICLE_4_URL}}" data-stagger-item>
-            <div class="post-top">
-              <div class="post-eyebrow">{{ARTICLE_4_CATEGORY}}</div>
-              <div class="post-date">{{ARTICLE_4_DATE}}</div>
-            </div>
-            <div class="post-title">{{ARTICLE_4_TITLE}}</div>
-            <p class="post-excerpt">{{ARTICLE_4_EXCERPT}}</p>
-            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL}}</div>
+            <div class="post-cta">{{ARTICLE_CARD_CTA_LABEL|Read the article →}}</div>
           </a>
         </div>
       </div>
@@ -1166,7 +1131,7 @@ TYPE: tier
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -1304,7 +1269,7 @@ TYPE: tier
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -2469,10 +2434,10 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .depth-tile h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
 .depth-tile p { color: var(--muted); line-height: 1.72; font-size: 0.93rem; }
 
-/* ── Why choose us (3-item) ──────────────────────────────── */
+/* ── Why choose us (4-item) ──────────────────────────────── */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: var(--line);
   margin-top: 3rem;
@@ -2729,13 +2694,15 @@ body::after {
   gap: 0.55rem;
 }
 .nav-logo .logo__img {
-  display: block;
   height: 36px;
   width: auto;
   max-width: min(160px, 34vw);
   object-fit: contain;
+  display: none;
 }
-body.header-brand--text .nav-logo .logo__img { display: none !important; }
+/* Safe defaults: text-only wordmark unless image / image+text mode */
+.nav-logo__media:not(:has(.logo__img)) { display: none; }
+.nav-logo__text--beside { display: none; }
 body.header-brand--text .nav-logo__text--beside { display: none !important; }
 body.header-brand--image .nav-logo .logo__img { display: block; }
 body.header-brand--image .nav-logo__text { display: none !important; }

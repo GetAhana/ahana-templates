@@ -67,7 +67,7 @@ export function shellNav() {
 
   <nav class="site-nav" aria-label="{{NAV_PRIMARY_ARIA_LABEL}}">
     <div class="nav-pill">
-      <a class="nav-logo" href="/">{{HEADER_LOGO_IMG}}<span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
+      <a class="nav-logo" href="/"><span class="nav-logo__media">{{HEADER_LOGO_IMG}}</span><span class="nav-logo__text nav-logo__text--fallback">{{BUSINESS_NAME_SHORT}}<span class="dot">.</span></span><span class="nav-logo__text nav-logo__text--beside">{{BUSINESS_NAME_SHORT}}</span></a>
       <ul class="nav-links" role="list">
         <li><a class="nav-link" href="/">{{NAV_LABEL_HOME}}</a></li>
         <li><a class="nav-link" href="/services">{{NAV_LABEL_SERVICES}}</a></li>
@@ -958,13 +958,15 @@ export const SUPPLEMENTAL_CSS = `
   gap: 0.55rem;
 }
 .nav-logo .logo__img {
-  display: block;
   height: 36px;
   width: auto;
   max-width: min(160px, 34vw);
   object-fit: contain;
+  display: none;
 }
-body.header-brand--text .nav-logo .logo__img { display: none !important; }
+/* Safe defaults: text-only wordmark unless image / image+text mode */
+.nav-logo__media:not(:has(.logo__img)) { display: none; }
+.nav-logo__text--beside { display: none; }
 body.header-brand--text .nav-logo__text--beside { display: none !important; }
 body.header-brand--image .nav-logo .logo__img { display: block; }
 body.header-brand--image .nav-logo__text { display: none !important; }

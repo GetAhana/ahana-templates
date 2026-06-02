@@ -3,6 +3,42 @@
 export const ENHANCED_COMPONENT_CSS = `
 /* ── Enhanced tier extensions ───────────────────────────── */
 
+/* Nav logo: default text-only; hide empty / unreplaced logo slot */
+.nav-logo .logo__img {
+  height: 36px;
+  width: auto;
+  max-width: min(160px, 34vw);
+  object-fit: contain;
+  display: none;
+}
+.nav-logo__media:not(:has(.logo__img)) { display: none; }
+.nav-logo__text--beside { display: none; }
+body.header-brand--image .nav-logo .logo__img { display: block; }
+body.header-brand--image-text .nav-logo .logo__img { display: block; }
+body.header-brand--image-text .nav-logo__text--beside { display: inline; white-space: nowrap; }
+
+/* Dense pill nav (Enhanced: 7 links + CTAs) — keep labels on one line */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .nav-pill {
+    gap: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 0.45rem;
+  }
+  .nav-link {
+    font-size: 0.76rem;
+    padding: 0.35rem 0.5rem;
+  }
+  .nav-cta .btn-sm {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.74rem;
+  }
+  .nav-logo {
+    max-width: 9.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 /* Split home hero: .hero grid (text column + image column) from base styles.css */
 .hero.enhanced-hero .hero-h1 {
   max-width: 640px;
@@ -113,12 +149,23 @@ export const ENHANCED_COMPONENT_CSS = `
   margin-bottom: 1.5rem;
 }
 
+/* Home services: Enhanced = 6 primary → 2×3; use .svc-grid--8 for 8 → 2×4 */
 .svc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--line);
   margin-top: 2rem;
+}
+.svc-grid.svc-grid--8 {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1024px) {
+  .svc-grid.svc-grid--8 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .svc-grid,
+  .svc-grid.svc-grid--8 { grid-template-columns: 1fr; }
 }
 .svc-grid .svc-tile {
   display: block;
@@ -265,14 +312,28 @@ export const ENHANCED_COMPONENT_CSS = `
 }
 
 /* Service hub */
-.svc-hub-section { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+.svc-hub-section {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
 .svc-hub-section:first-of-type { margin-top: 2rem; padding-top: 0; border-top: 0; }
+.svc-hub-section > h2 {
+  margin: 0.35rem 0 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  line-height: 1.15;
+}
+.svc-hub-section > .section-sub { margin-top: 0.75rem; max-width: 720px; }
 .svc-priority-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--line);
   margin-top: 1.5rem;
+  align-items: stretch;
 }
 .svc-detail-card {
   display: flex;
@@ -281,10 +342,11 @@ export const ENHANCED_COMPONENT_CSS = `
   color: inherit;
   background: var(--bg-card);
   padding: 2rem 1.75rem;
+  min-height: 0;
   transition: background 0.2s var(--ease);
 }
 .svc-detail-card:hover { background: var(--bg-card-2); }
-.svc-detail-card h3 { margin: 0.75rem 0 0.5rem; }
+.svc-detail-card h3 { margin: 0 0 0.5rem; font-size: 1.12rem; }
 .svc-detail-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; flex: 1; margin: 0; }
 .feature-lm {
   margin-top: 1rem;
@@ -292,21 +354,37 @@ export const ENHANCED_COMPONENT_CSS = `
   font-weight: 600;
   color: var(--copper);
 }
-.feature-ico {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--copper);
-  opacity: 0.85;
+.feature-ico { display: none !important; }
+.svc-add-more {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  position: relative;
+  z-index: 1;
+  clear: both;
 }
-.feature-ico svg { width: 100%; height: 100%; }
-.svc-add-more { margin-top: 3rem; }
+.svc-more-h2 {
+  margin: 0.35rem 0 0.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  line-height: 1.15;
+}
+.svc-add-more > .section-sub { margin-top: 0; max-width: 720px; }
 .svc-additional-list {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   padding-left: 1.25rem;
   color: var(--muted);
   line-height: 1.75;
+  max-width: 720px;
 }
 .svc-additional-list li { margin-bottom: 0.35rem; }
+@media (max-width: 900px) {
+  .svc-priority-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .svc-priority-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 .sticky-svc-cta {
   position: fixed;
@@ -428,14 +506,17 @@ export const ENHANCED_COMPONENT_CSS = `
 
 .wall {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   background: var(--line);
   margin-top: 1.25rem;
+  align-items: stretch;
 }
 .wall .card {
   background: var(--bg-card);
   padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 .wall blockquote {
   font-size: 0.95rem;
@@ -443,6 +524,7 @@ export const ENHANCED_COMPONENT_CSS = `
   line-height: 1.7;
   font-style: italic;
   margin: 0;
+  flex: 1;
 }
 .wall .by {
   margin-top: 0.85rem;
@@ -450,6 +532,25 @@ export const ENHANCED_COMPONENT_CSS = `
   color: var(--faint);
 }
 .wall .by span { opacity: 0.7; }
+/* Odd counts: last review spans full width (e.g. 5 → 2×2 + 1 centered) */
+.wall--count-1 { grid-template-columns: 1fr; max-width: 42rem; }
+.wall--count-3 .wall-card--span,
+.wall--count-5 .wall-card--span,
+.wall--count-7 .wall-card--span {
+  grid-column: 1 / -1;
+  max-width: min(42rem, 100%);
+  justify-self: center;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .wall { grid-template-columns: 1fr; max-width: none; }
+  .wall--count-3 .wall-card--span,
+  .wall--count-5 .wall-card--span,
+  .wall--count-7 .wall-card--span {
+    max-width: none;
+    grid-column: auto;
+  }
+}
 
 .related {
   display: flex;

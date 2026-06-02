@@ -237,6 +237,62 @@
     return last || 'index';
   }
 
+  /* ── Testimonials wall: drop empty slots, layout by count ─ */
+  (function initTestimonialsWall() {
+    document.querySelectorAll('.wall').forEach(function (wall) {
+      var cards = Array.prototype.slice.call(
+        wall.querySelectorAll('[data-testimonial-card], .card')
+      );
+      var kept = [];
+      cards.forEach(function (card) {
+        var quote = card.querySelector('blockquote');
+        var by = card.querySelector('.by');
+        var text = quote
+          ? quote.textContent.replace(/[\u201c\u201d\u2018\u2019"]/g, '').trim()
+          : '';
+        var name = by
+          ? by.textContent.replace(/\s*·[\s\S]*$/, '').trim()
+          : '';
+        if (
+          !text ||
+          text.indexOf('{{') !== -1 ||
+          !name ||
+          name.indexOf('{{') !== -1
+        ) {
+          card.remove();
+          return;
+        }
+        kept.push(card);
+      });
+      var n = kept.length;
+      if (!n) return;
+      wall.classList.add('wall--count-' + n);
+      if (n % 2 === 1 && n > 1) {
+        kept[kept.length - 1].classList.add('wall-card--span');
+      }
+    });
+  })();
+
+  /* ── Header logo slot (no logo / unreplaced tokens) ─── */
+  (function initHeaderBrand() {
+    var body = document.body;
+    if (!/\bheader-brand--/.test(body.className)) {
+      body.classList.add('header-brand--text');
+    }
+    document.querySelectorAll('.nav-logo').forEach(function (logo) {
+      logo.querySelectorAll('.nav-logo__media').forEach(function (slot) {
+        if (!slot.querySelector('.logo__img')) {
+          var raw = (slot.textContent || '').trim();
+          if (!raw || raw.indexOf('{{') !== -1) slot.remove();
+        }
+      });
+      if (!logo.querySelector('.logo__img')) {
+        body.classList.remove('header-brand--image', 'header-brand--image-text');
+        body.classList.add('header-brand--text');
+      }
+    });
+  })();
+
   var path = pathKeyFromPathname(window.location.pathname);
   document.querySelectorAll('.nav-link, .nav-menu-link').forEach(function (a) {
     var h = a.getAttribute('href');

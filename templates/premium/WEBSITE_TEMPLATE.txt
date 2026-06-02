@@ -749,7 +749,7 @@ SERVICES.HTML (6 sections):
   2. 6-service list (.svc-list)
   3. 4 weekly problems (depth-quad 2x2)
   4. 6-step visit flow (.process-6 grid)
-  5. Why choose us (why-grid 3-column)
+  5. Why choose us (why-grid 2x2)
   6. Service FAQ (3 questions) + CTA band
 
 ARTICLES.HTML (3 sections):
