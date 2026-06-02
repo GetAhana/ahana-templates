@@ -150,15 +150,16 @@ TYPE: tier
 
   <main id="main">
 
-    <section class="enhanced-hero" id="hero">
-      <div class="container hero-inner">
+
+    <section class="hero enhanced-hero" id="hero">
+      <div class="hero-content">
         <div class="hero-kicker" data-reveal>
           <div class="hk">Local pros in <strong>{{CITY}}, {{STATE}}</strong></div>
           <div class="hk">{{LICENSE_TYPE}}</div>
           <div class="hk">Rated {{REVIEW_RATING}}★ ({{REVIEW_COUNT}})</div>
         </div>
-        <h1 data-reveal-heading>{{PRIMARY_SERVICE}} you can<br/><span class="accent">count on</span>.</h1>
-        <p class="sub" data-reveal>{{HERO_SUBHEADLINE|Residential and light commercial service with confident scheduling: priority dispatch for urgent calls, written estimates, and documented repairs across your primary service markets.}}</p>
+        <h1 class="hero-h1" data-reveal-heading>{{PRIMARY_SERVICE}} you can<br/><span class="accent">count on</span>.</h1>
+        <p class="hero-sub" data-reveal>{{HERO_SUBHEADLINE|Residential and light commercial service with confident scheduling: priority dispatch for urgent calls, written estimates, and documented repairs across your primary service markets.}}</p>
         <div class="hero-cta-group" data-reveal>
           <a class="btn btn-primary btn-lg" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
           <a class="btn btn-outline btn-lg" href="/contact">Get a free estimate</a>
@@ -179,6 +180,11 @@ TYPE: tier
             <div class="p-val">{{HERO_PROOF_3_VALUE|1 year labor}}</div>
             <div class="p-sub">{{HERO_PROOF_3_SUB|Qualified installations and covered labor come with a written workmanship warranty and a straightforward process if something we addressed needs follow-up under the guarantee terms you receive at completion.}}</div>
           </div>
+        </div>
+      </div>
+      <div class="hero-image-side" aria-hidden="true">
+        <div class="hero-img-clip">
+          <img src="{{HERO_IMAGE_URL}}" alt="" loading="eager" fetchpriority="high" width="900" height="1200" />
         </div>
       </div>
     </section>
@@ -4973,44 +4979,34 @@ h1 .accent, h2 .accent { color: var(--copper); }
 .area-link:hover { text-decoration: underline; }
 
 /* ── Testimonials ────────────────────────────────────────── */
-.testimonial-block { margin-top: 3.5rem; }
-.t-main-quote {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-  line-height: 1.22;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-bottom: 1.25rem;
-  max-width: 860px;
+.testimonial-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
 }
-.t-attr {
+.testimonial-item { margin: 0; }
+.testimonial-quote {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  font-style: normal;
+}
+.testimonial-attr {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--faint);
   letter-spacing: 0.04em;
 }
-.t-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
-.t-secondary {
-  margin-top: 3rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-}
-.t2-text { font-style: italic; color: var(--muted); line-height: 1.75; font-size: 0.97rem; }
-.t2-attr {
-  margin-top: 0.65rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--faint);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
+.testimonial-attr strong { color: rgba(242,237,230,0.75); font-weight: 600; }
 
 /* ── CTA Block (inside sections) ────────────────────────── */
 .cta-block {
@@ -5213,10 +5209,10 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .depth-tile h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
 .depth-tile p { color: var(--muted); line-height: 1.72; font-size: 0.93rem; }
 
-/* ── Why choose us (4-item) ──────────────────────────────── */
+/* ── Why choose us (3-item) ──────────────────────────────── */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--line);
   margin-top: 3rem;
@@ -5408,7 +5404,7 @@ body::after {
   .process-connector { display: none; }
   .pl-step { padding: 2rem 0; border-top: 1px solid var(--line); }
   .pl-step:first-child { border-top: none; }
-  .t-secondary { grid-template-columns: 1fr; gap: 2rem; }
+  .testimonial-grid { grid-template-columns: 1fr; gap: 2rem; }
   .cta-block { flex-direction: column; align-items: flex-start; }
   .depth-steps { grid-template-columns: repeat(2, 1fr); }
   .process-6 { grid-template-columns: repeat(2, 1fr); }
@@ -5535,18 +5531,17 @@ body.header-brand--image-text .nav-logo__text--beside { display: inline; white-s
 
 /* ── Enhanced tier extensions ───────────────────────────── */
 
-.enhanced-hero {
-  min-height: min(92vh, 100dvh);
-  background:
-    radial-gradient(60% 60% at 15% 30%, rgba(0,0,0,.65) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(18,18,19,.92) 0%, rgba(18,18,19,.6) 55%, rgba(18,18,19,.15) 100%),
-    url('{{HERO_IMAGE_URL}}') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  padding: 8.5rem 0 4rem;
-  margin-top: 0;
+/* Split home hero: .hero grid (text column + image column) from base styles.css */
+.hero.enhanced-hero .hero-h1 {
+  max-width: 640px;
+  margin-bottom: 1rem;
 }
-.enhanced-hero .hero-inner { max-width: 760px; }
+.hero.enhanced-hero .hero-h1 .accent,
+.hero.enhanced-hero .hero-h1 span { color: var(--copper); }
+.hero.enhanced-hero .hero-sub {
+  max-width: 620px;
+  margin-bottom: 1.5rem;
+}
 .enhanced-hero .hero-kicker {
   display: flex;
   flex-wrap: wrap;
@@ -5568,14 +5563,6 @@ body.header-brand--image-text .nav-logo__text--beside { display: inline; white-s
   text-transform: uppercase;
 }
 .enhanced-hero .hk strong { color: var(--copper); }
-.enhanced-hero h1 { margin-bottom: 1rem; }
-.enhanced-hero h1 span { color: var(--copper); }
-.enhanced-hero .sub {
-  color: var(--muted);
-  max-width: 620px;
-  line-height: 1.75;
-  margin-bottom: 1.5rem;
-}
 .enhanced-hero .hero-cta-group {
   display: flex;
   flex-wrap: wrap;

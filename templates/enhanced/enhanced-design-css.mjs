@@ -3,18 +3,17 @@
 export const ENHANCED_COMPONENT_CSS = `
 /* ── Enhanced tier extensions ───────────────────────────── */
 
-.enhanced-hero {
-  min-height: min(92vh, 100dvh);
-  background:
-    radial-gradient(60% 60% at 15% 30%, rgba(0,0,0,.65) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(18,18,19,.92) 0%, rgba(18,18,19,.6) 55%, rgba(18,18,19,.15) 100%),
-    url('{{HERO_IMAGE_URL}}') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  padding: 8.5rem 0 4rem;
-  margin-top: 0;
+/* Split home hero: .hero grid (text column + image column) from base styles.css */
+.hero.enhanced-hero .hero-h1 {
+  max-width: 640px;
+  margin-bottom: 1rem;
 }
-.enhanced-hero .hero-inner { max-width: 760px; }
+.hero.enhanced-hero .hero-h1 .accent,
+.hero.enhanced-hero .hero-h1 span { color: var(--copper); }
+.hero.enhanced-hero .hero-sub {
+  max-width: 620px;
+  margin-bottom: 1.5rem;
+}
 .enhanced-hero .hero-kicker {
   display: flex;
   flex-wrap: wrap;
@@ -36,14 +35,6 @@ export const ENHANCED_COMPONENT_CSS = `
   text-transform: uppercase;
 }
 .enhanced-hero .hk strong { color: var(--copper); }
-.enhanced-hero h1 { margin-bottom: 1rem; }
-.enhanced-hero h1 span { color: var(--copper); }
-.enhanced-hero .sub {
-  color: var(--muted);
-  max-width: 620px;
-  line-height: 1.75;
-  margin-bottom: 1.5rem;
-}
 .enhanced-hero .hero-cta-group {
   display: flex;
   flex-wrap: wrap;
