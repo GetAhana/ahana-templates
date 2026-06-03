@@ -6069,22 +6069,21 @@ body.header-brand--image-text .nav-logo__text--beside { display: inline; white-s
   color: var(--faint);
 }
 .wall .by span { opacity: 0.7; }
-/* Odd counts: last review spans full width (e.g. 5 → 2×2 + 1 centered) */
+/* Odd counts: last review spans both columns (e.g. 5 → 2×2 + 1 full width) */
 .wall--count-1 { grid-template-columns: 1fr; max-width: 42rem; }
 .wall--count-3 .wall-card--span,
 .wall--count-5 .wall-card--span,
 .wall--count-7 .wall-card--span {
   grid-column: 1 / -1;
-  max-width: min(42rem, 100%);
-  justify-self: center;
   width: 100%;
+  max-width: none;
+  justify-self: stretch;
 }
 @media (max-width: 700px) {
   .wall { grid-template-columns: 1fr; max-width: none; }
   .wall--count-3 .wall-card--span,
   .wall--count-5 .wall-card--span,
   .wall--count-7 .wall-card--span {
-    max-width: none;
     grid-column: auto;
   }
 }

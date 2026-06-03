@@ -429,9 +429,102 @@ const svcHubCard = (n, href) => `            <a class="svc-detail-card" href="${
               <span class="feature-lm">Learn more</span>
             </a>`;
 
+const svcRow = (n, name, body, tag) => `          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">${n}</span>
+            <div><h3>${name}</h3><p>${body}</p></div>
+            <span class="svc-tag">${tag}</span>
+          </div>`;
+
+/** Starter-parity depth sections (grid, problems, visit flow, why choose, FAQ, CTA). */
+const servicesStarterDepthSections = () => `
+    <section class="section">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_GRID_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_GRID_H2_LINE_1}} <span class="accent">{{SERVICES_GRID_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{SERVICES_GRID_INTRO}}</p>
+        <div class="svc-list" data-reveal-stagger>
+${svcRow("01", "{{SERVICE_1_NAME}}", "{{SERVICE_1_LONG}}", "{{SERVICE_1_TAG}}")}
+${svcRow("02", "{{SERVICE_2_NAME}}", "{{SERVICE_2_LONG}}", "{{SERVICE_2_TAG}}")}
+${svcRow("03", "{{SERVICE_3_NAME}}", "{{SERVICE_3_LONG}}", "{{SERVICE_3_TAG}}")}
+${svcRow("04", "{{SERVICE_4_NAME}}", "{{SERVICE_4_LONG}}", "{{SERVICE_4_TAG}}")}
+${svcRow("05", "{{SERVICE_5_NAME}}", "{{SERVICE_5_LONG}}", "{{SERVICE_5_TAG}}")}
+${svcRow("06", "{{SERVICE_6_NAME}}", "{{SERVICE_6_LONG}}", "{{SERVICE_6_TAG}}")}
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_PROBLEM_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_PROBLEM_H2_LINE_1}} <span class="accent">{{SERVICES_PROBLEM_H2_ACCENT}}</span></h2>
+        <div class="depth-quad" data-reveal-stagger>
+          <div class="depth-tile" data-stagger-item><div class="depth-n" aria-hidden="true">01</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_1_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_1_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_1_BODY}}</p></div>
+          <div class="depth-tile alt" data-stagger-item><div class="depth-n" aria-hidden="true">02</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_2_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_2_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_2_BODY}}</p></div>
+          <div class="depth-tile alt" data-stagger-item><div class="depth-n" aria-hidden="true">03</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_3_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_3_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_3_BODY}}</p></div>
+          <div class="depth-tile" data-stagger-item><div class="depth-n" aria-hidden="true">04</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_4_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_4_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_4_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_VISIT_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_VISIT_H2_LINE_1}} <span class="accent">{{SERVICES_VISIT_H2_ACCENT}}</span></h2>
+        <div class="process-6" data-reveal-stagger>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_1_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_1_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_1_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_2_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_2_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_2_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_3_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_3_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_3_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_4_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_4_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_4_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>Step 5</em><h3>{{PROCESS_STEP_1_TITLE}}</h3><p>{{PROCESS_STEP_1_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>Step 6</em><h3>{{PROCESS_STEP_2_TITLE}}</h3><p>{{PROCESS_STEP_2_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_WHY_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_WHY_H2_LINE_1}} <span class="accent">{{SERVICES_WHY_H2_ACCENT}}</span></h2>
+        <div class="why-grid" data-reveal-stagger>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_1_TITLE}}</h3><p>{{WHY_CHOOSE_1_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_1_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_2_TITLE}}</h3><p>{{WHY_CHOOSE_2_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_2_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_3_TITLE}}</h3><p>{{WHY_CHOOSE_3_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_3_TAG}}</div></div>
+        </div>
+        <p style="margin-top:2.25rem" data-reveal>
+          <a href="/about" class="area-link">{{SERVICES_WHY_STORY_LINK_LABEL}}</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_FAQ_SECTION_KICKER}}</p>
+        <div class="faq-block" data-reveal>
+${faqItem("{{SERVICES_FAQ_1_QUESTION}}", "{{SERVICES_FAQ_1_ANSWER}}")}
+${faqItem("{{SERVICES_FAQ_2_QUESTION}}", "{{SERVICES_FAQ_2_ANSWER}}")}
+${faqItem("{{SERVICES_FAQ_3_QUESTION}}", "{{SERVICES_FAQ_3_ANSWER}}")}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-bottom:7rem">
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <div>
+            <h2>{{SERVICES_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{SERVICES_CTA_SUB}}</p>
+          </div>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{SERVICES_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{SERVICES_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
+      </div>
+    </section>`;
+
 export function buildServicesHtml() {
   const head = shellHead({
-    title: "{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}",
+    title: "{{SERVICES_PAGE_TITLE}}",
     description: "{{SERVICES_META_DESCRIPTION}}",
     canonical: "{{SITE_URL}}/services",
     ogUrl: "{{SITE_URL}}/services",
@@ -442,7 +535,15 @@ export function buildServicesHtml() {
     "@type":"Service",
     "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
     "areaServed": {{AREA_SERVED_JSON}},
-    "serviceType":"{{PRIMARY_SERVICE}} Services"
+    "hasOfferCatalog":{
+      "@type":"OfferCatalog",
+      "name":"{{SERVICES_OFFER_CATALOG_NAME}}",
+      "itemListElement":[
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_1_NAME}}"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_2_NAME}}"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_3_NAME}}"}}
+      ]
+    }
   }
   </script>`,
   });
@@ -450,13 +551,13 @@ export function buildServicesHtml() {
   const main = `
     <div class="page-hero">
       <div class="container">
-        <p class="enh-label">Services</p>
-        <h1>Services for <span class="accent">{{CITY}}</span> Homeowners</h1>
-        <p class="section-sub">{{SERVICES_INTRO|Houston-area heat, hail, and wind cycles stress every layer of the roof—we answer with licensed crews and clear scopes. Text photos of damage; we route you to the right fix fast.}}</p>
+        <p class="enh-label">{{SERVICES_SECTION_KICKER}}</p>
+        <h1>{{SERVICES_H1_LINE_1}} <span class="accent">{{SERVICES_H1_ACCENT}}</span></h1>
+        <p class="section-sub">{{SERVICES_INTRO}}</p>
       </div>
     </div>
 
-    <section class="section" style="padding-bottom:6rem">
+    <section class="section">
       <div class="container">
         <section class="svc-hub-section" aria-labelledby="svc-popular-heading">
           <p class="enh-label">{{SERVICES_HUB_POPULAR_KICKER|Most popular services}}</p>
@@ -482,7 +583,7 @@ ${svcHubCard(6, "/contact")}
 
         <section class="svc-add-more" aria-labelledby="additional-services-heading">
           <p class="enh-label">Additional services</p>
-          <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+          <h2 class="svc-more-h2" id="additional-services-heading">{{ADDITIONAL_SERVICES_TITLE|Other work we handle}}</h2>
           <p class="section-sub">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
           <ul class="svc-additional-list">
             {{ADDITIONAL_SERVICES_LIST_ITEMS}}
@@ -490,6 +591,7 @@ ${svcHubCard(6, "/contact")}
         </section>
       </div>
     </section>
+${servicesStarterDepthSections()}
 
   <div class="sticky-svc-cta" role="region" aria-label="Quick estimate">
     <a class="sticky-svc-primary" href="/contact">Get free estimate</a>

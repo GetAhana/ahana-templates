@@ -645,7 +645,7 @@ ${[7, 8, 9, 10].map(svcHubCardContact).join("\n")}
 
         <section class="svc-add-more" aria-labelledby="additional-services-heading">
           <p class="enh-label">Additional services</p>
-          <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+          <h2 class="svc-more-h2" id="additional-services-heading">{{ADDITIONAL_SERVICES_TITLE|Other work we handle}}</h2>
           <p class="section-sub">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
           <ul class="svc-additional-list">
             {{ADDITIONAL_SERVICES_LIST_ITEMS}}

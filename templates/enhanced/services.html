@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}</title>
+  <title>{{SERVICES_PAGE_TITLE}}</title>
   <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
   <link rel="canonical" href="{{SITE_URL}}/services" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}" />
+  <meta property="og:title" content="{{SERVICES_PAGE_TITLE}}" />
   <meta property="og:description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta property="og:url" content="{{SITE_URL}}/services" />
   <meta property="og:image" content="{{OG_IMAGE_URL}}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}" />
+  <meta name="twitter:title" content="{{SERVICES_PAGE_TITLE}}" />
   <meta name="twitter:description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,7 +29,15 @@
     "@type":"Service",
     "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
     "areaServed": {{AREA_SERVED_JSON}},
-    "serviceType":"{{PRIMARY_SERVICE}} Services"
+    "hasOfferCatalog":{
+      "@type":"OfferCatalog",
+      "name":"{{SERVICES_OFFER_CATALOG_NAME}}",
+      "itemListElement":[
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_1_NAME}}"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_2_NAME}}"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_3_NAME}}"}}
+      ]
+    }
   }
   </script>
 </head>
@@ -77,13 +85,13 @@
 
     <div class="page-hero">
       <div class="container">
-        <p class="enh-label">Services</p>
-        <h1>Services for <span class="accent">{{CITY}}</span> Homeowners</h1>
-        <p class="section-sub">{{SERVICES_INTRO|Houston-area heat, hail, and wind cycles stress every layer of the roof—we answer with licensed crews and clear scopes. Text photos of damage; we route you to the right fix fast.}}</p>
+        <p class="enh-label">{{SERVICES_SECTION_KICKER}}</p>
+        <h1>{{SERVICES_H1_LINE_1}} <span class="accent">{{SERVICES_H1_ACCENT}}</span></h1>
+        <p class="section-sub">{{SERVICES_INTRO}}</p>
       </div>
     </div>
 
-    <section class="section" style="padding-bottom:6rem">
+    <section class="section">
       <div class="container">
         <section class="svc-hub-section" aria-labelledby="svc-popular-heading">
           <p class="enh-label">{{SERVICES_HUB_POPULAR_KICKER|Most popular services}}</p>
@@ -133,12 +141,145 @@
 
         <section class="svc-add-more" aria-labelledby="additional-services-heading">
           <p class="enh-label">Additional services</p>
-          <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+          <h2 class="svc-more-h2" id="additional-services-heading">{{ADDITIONAL_SERVICES_TITLE|Other work we handle}}</h2>
           <p class="section-sub">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
           <ul class="svc-additional-list">
             {{ADDITIONAL_SERVICES_LIST_ITEMS}}
           </ul>
         </section>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_GRID_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_GRID_H2_LINE_1}} <span class="accent">{{SERVICES_GRID_H2_ACCENT}}</span></h2>
+        <p class="section-sub" data-reveal>{{SERVICES_GRID_INTRO}}</p>
+        <div class="svc-list" data-reveal-stagger>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">01</span>
+            <div><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_1_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">02</span>
+            <div><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_2_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">03</span>
+            <div><h3>{{SERVICE_3_NAME}}</h3><p>{{SERVICE_3_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_3_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">04</span>
+            <div><h3>{{SERVICE_4_NAME}}</h3><p>{{SERVICE_4_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_4_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">05</span>
+            <div><h3>{{SERVICE_5_NAME}}</h3><p>{{SERVICE_5_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_5_TAG}}</span>
+          </div>
+          <div class="svc-row" data-stagger-item>
+            <span class="svc-n">06</span>
+            <div><h3>{{SERVICE_6_NAME}}</h3><p>{{SERVICE_6_LONG}}</p></div>
+            <span class="svc-tag">{{SERVICE_6_TAG}}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_PROBLEM_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_PROBLEM_H2_LINE_1}} <span class="accent">{{SERVICES_PROBLEM_H2_ACCENT}}</span></h2>
+        <div class="depth-quad" data-reveal-stagger>
+          <div class="depth-tile" data-stagger-item><div class="depth-n" aria-hidden="true">01</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_1_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_1_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_1_BODY}}</p></div>
+          <div class="depth-tile alt" data-stagger-item><div class="depth-n" aria-hidden="true">02</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_2_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_2_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_2_BODY}}</p></div>
+          <div class="depth-tile alt" data-stagger-item><div class="depth-n" aria-hidden="true">03</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_3_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_3_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_3_BODY}}</p></div>
+          <div class="depth-tile" data-stagger-item><div class="depth-n" aria-hidden="true">04</div><span class="depth-chip">{{SERVICES_PROBLEM_TILE_4_CHIP}}</span><h3>{{SERVICES_PROBLEM_TILE_4_TITLE}}</h3><p>{{SERVICES_PROBLEM_TILE_4_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_VISIT_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_VISIT_H2_LINE_1}} <span class="accent">{{SERVICES_VISIT_H2_ACCENT}}</span></h2>
+        <div class="process-6" data-reveal-stagger>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_1_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_1_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_1_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_2_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_2_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_2_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_3_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_3_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_3_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>{{SERVICES_VISIT_STEP_4_LABEL}}</em><h3>{{SERVICES_VISIT_STEP_4_TITLE}}</h3><p>{{SERVICES_VISIT_STEP_4_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>Step 5</em><h3>{{PROCESS_STEP_1_TITLE}}</h3><p>{{PROCESS_STEP_1_BODY}}</p></div>
+          <div class="pl6-step" data-stagger-item><em>Step 6</em><h3>{{PROCESS_STEP_2_TITLE}}</h3><p>{{PROCESS_STEP_2_BODY}}</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-warm">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_WHY_SECTION_KICKER}}</p>
+        <h2 data-reveal-heading>{{SERVICES_WHY_H2_LINE_1}} <span class="accent">{{SERVICES_WHY_H2_ACCENT}}</span></h2>
+        <div class="why-grid" data-reveal-stagger>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_1_TITLE}}</h3><p>{{WHY_CHOOSE_1_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_1_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_2_TITLE}}</h3><p>{{WHY_CHOOSE_2_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_2_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_3_TITLE}}</h3><p>{{WHY_CHOOSE_3_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_3_TAG}}</div></div>
+        </div>
+        <p style="margin-top:2.25rem" data-reveal>
+          <a href="/about" class="area-link">{{SERVICES_WHY_STORY_LINK_LABEL}}</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="enh-label">{{SERVICES_FAQ_SECTION_KICKER}}</p>
+        <div class="faq-block" data-reveal>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{SERVICES_FAQ_1_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{SERVICES_FAQ_1_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{SERVICES_FAQ_2_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{SERVICES_FAQ_2_ANSWER}}</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary" aria-expanded="false">
+              {{SERVICES_FAQ_3_QUESTION}}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">{{SERVICES_FAQ_3_ANSWER}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-bottom:7rem">
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <div>
+            <h2>{{SERVICES_CTA_HEADLINE}}</h2>
+            <p class="section-sub">{{SERVICES_CTA_SUB}}</p>
+          </div>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-lg" href="/contact">{{SERVICES_CTA_PRIMARY_LABEL}}</a>
+            <a class="btn btn-ghost btn-lg" href="tel:{{PHONE_NUMBER_E164}}">{{SERVICES_CTA_SECONDARY_LABEL}}</a>
+          </div>
+        </div>
       </div>
     </section>
 
