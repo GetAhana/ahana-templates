@@ -616,9 +616,9 @@ TYPE: tier
         <span class="eyebrow">{{SERVICES_WHY_SECTION_KICKER}}</span>
         <h2 data-reveal-heading>{{SERVICES_WHY_H2_LINE_1}} <span class="accent">{{SERVICES_WHY_H2_ACCENT}}</span></h2>
         <div class="why-grid" data-reveal-stagger>
-          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_1_TITLE}}</h3><p>{{WHY_CHOOSE_1_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_1_TAG}}</div></div>
-          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_2_TITLE}}</h3><p>{{WHY_CHOOSE_2_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_2_TAG}}</div></div>
-          <div class="why-cell" data-stagger-item><h3>{{WHY_CHOOSE_3_TITLE}}</h3><p>{{WHY_CHOOSE_3_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_3_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{HOME_VALUE_TILE_1_TITLE}}</h3><p>{{HOME_VALUE_TILE_1_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_1_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{HOME_VALUE_TILE_2_TITLE}}</h3><p>{{HOME_VALUE_TILE_2_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_2_TAG}}</div></div>
+          <div class="why-cell" data-stagger-item><h3>{{HOME_VALUE_TILE_3_TITLE}}</h3><p>{{HOME_VALUE_TILE_3_BODY}}</p><div class="card-tag">{{WHY_CHOOSE_3_TAG}}</div></div>
         </div>
         <p style="margin-top:2.25rem" data-reveal>
           <a href="/about" class="area-link">{{SERVICES_WHY_STORY_LINK_LABEL}}</a>
