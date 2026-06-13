@@ -19,6 +19,7 @@
       const isOpen = overlay.classList.toggle('is-open');
       toggle.classList.toggle('is-active', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('nav-open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
 
       if (isOpen && motionOK && typeof gsap !== 'undefined') {
@@ -36,6 +37,7 @@
         overlay.classList.remove('is-open');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
         document.body.style.overflow = '';
       });
     });
@@ -46,6 +48,7 @@
         overlay.classList.remove('is-open');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
         document.body.style.overflow = '';
         toggle.focus();
       }
@@ -291,6 +294,49 @@
         body.classList.add('header-brand--text');
       }
     });
+  })();
+
+  /* ── Mobile sticky call bar ───────────────────────────── */
+  (function initMobileStickyCta() {
+    if (!window.matchMedia('(max-width: 760px)').matches) return;
+    if (document.querySelector('.mobile-sticky-cta')) return;
+
+    var telLink =
+      document.querySelector('.nav-overlay-footer a[href^="tel:"]') ||
+      document.querySelector('.nav-cta a[href^="tel:"]') ||
+      document.querySelector('.hero-cta-group a[href^="tel:"]') ||
+      document.querySelector('a[href^="tel:"]');
+    if (!telLink) return;
+
+    var contactHref = '/contact';
+    var contactEl =
+      document.querySelector('.nav-menu-link[href="/contact"]') ||
+      document.querySelector('.nav-cta .btn-ghost') ||
+      document.querySelector('.hero-cta-group a[href="/contact"]');
+    if (contactEl) contactHref = contactEl.getAttribute('href') || contactHref;
+
+    var contactLabel = contactEl && contactEl.textContent
+      ? contactEl.textContent.trim()
+      : 'Get a Quote';
+
+    var bar = document.createElement('div');
+    bar.className = 'mobile-sticky-cta';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Quick contact');
+
+    var call = document.createElement('a');
+    call.className = 'btn btn-primary';
+    call.href = telLink.getAttribute('href');
+    call.textContent = telLink.textContent.trim();
+
+    var quote = document.createElement('a');
+    quote.className = 'btn btn-ghost';
+    quote.href = contactHref;
+    quote.textContent = contactLabel;
+
+    bar.appendChild(call);
+    bar.appendChild(quote);
+    document.body.appendChild(bar);
   })();
 
   var path = pathKeyFromPathname(window.location.pathname);
