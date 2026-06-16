@@ -63,6 +63,7 @@ TYPE: tier
   <title>{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}</title>
   <meta name="description" content="{{META_DESCRIPTION_FROM_IMAGES}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}" />
@@ -89,8 +90,76 @@ TYPE: tier
     "telephone":"{{PHONE_NUMBER_E164}}",
     "url":"{{SITE_URL}}",
     "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"},
-    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}},
-    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
+    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}},"aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "serviceType":"{{PRIMARY_SERVICE}}",
+    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "areaServed": {{AREA_SERVED_JSON}}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_1_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_1_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_2_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_2_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_3_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_3_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[{"@type":"Question","name":"Do you offer emergency service?","acceptedAnswer":{"@type":"Answer","text":"{{EMERGENCY_FAQ_ANSWER}}"}},{"@type":"Question","name":"How fast can you come out?","acceptedAnswer":{"@type":"Answer","text":"{{SCHEDULING_FAQ_ANSWER}}"}},{"@type":"Question","name":"Do you provide free estimates?","acceptedAnswer":{"@type":"Answer","text":"{{ESTIMATE_FAQ_ANSWER}}"}}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}",
+    "url":"{{SITE_URL}}/",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>
@@ -443,6 +512,7 @@ TYPE: tier
   <title>{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/services" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} Services | {{CITY}}, {{STATE}}" />
@@ -604,7 +674,7 @@ TYPE: tier
 
         <section class="svc-add-more" aria-labelledby="additional-services-heading">
           <p class="enh-label">Additional services</p>
-          <h2 class="svc-more-h2" id="additional-services-heading">Other work we handle</h2>
+          <h2 class="svc-more-h2" id="additional-services-heading">{{ADDITIONAL_SERVICES_TITLE|Other work we handle}}</h2>
           <p class="section-sub">{{ADDITIONAL_SERVICES_INTRO|Not sure which line fits? Call or text photos—we match scope to the right crew.}}</p>
           <ul class="svc-additional-list">
             {{ADDITIONAL_SERVICES_LIST_ITEMS}}
@@ -671,6 +741,7 @@ TYPE: tier
   <title>{{ABOUT_PAGE_TITLE}}</title>
   <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/about" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ABOUT_PAGE_TITLE}}" />
@@ -903,6 +974,7 @@ TYPE: tier
   <title>{{BUSINESS_NAME}} Articles | {{PRIMARY_SERVICE}} Tips in {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{BLOG_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/articles" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} Articles | {{PRIMARY_SERVICE}} Tips in {{CITY}}, {{STATE}}" />
@@ -1070,6 +1142,7 @@ TYPE: tier
   <title>{{CONTACT_PAGE_TITLE|Contact}} | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{CONTACT_PAGE_TITLE|Contact}} | {{BUSINESS_NAME}}" />
@@ -1276,6 +1349,7 @@ TYPE: tier
   <title>{{SERVICE_1_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_1_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-1" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICE_1_SEO_TITLE}}" />
@@ -1497,6 +1571,7 @@ TYPE: tier
   <title>{{SERVICE_2_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_2_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-2" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICE_2_SEO_TITLE}}" />
@@ -1718,6 +1793,7 @@ TYPE: tier
   <title>{{SERVICE_3_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_3_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-3" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICE_3_SEO_TITLE}}" />
@@ -1939,6 +2015,7 @@ TYPE: tier
   <title>{{SERVICE_4_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_4_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-4" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICE_4_SEO_TITLE}}" />
@@ -2160,6 +2237,7 @@ TYPE: tier
   <title>{{SERVICE_5_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_5_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-5" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICE_5_SEO_TITLE}}" />
@@ -2381,6 +2459,7 @@ TYPE: tier
   <title>{{SERVICE_6_SEO_TITLE}}</title>
   <meta name="description" content="{{SERVICE_6_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-6" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICE_6_SEO_TITLE}}" />
@@ -2602,6 +2681,7 @@ TYPE: tier
   <title>{{LOCATION_1_SEO_TITLE}}</title>
   <meta name="description" content="{{LOCATION_1_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/location-1" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{LOCATION_1_SEO_TITLE}}" />
@@ -2830,6 +2910,7 @@ TYPE: tier
   <title>{{LOCATION_2_SEO_TITLE}}</title>
   <meta name="description" content="{{LOCATION_2_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/location-2" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{LOCATION_2_SEO_TITLE}}" />
@@ -3058,6 +3139,7 @@ TYPE: tier
   <title>{{LOCATION_3_SEO_TITLE}}</title>
   <meta name="description" content="{{LOCATION_3_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/location-3" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{LOCATION_3_SEO_TITLE}}" />
@@ -3286,6 +3368,7 @@ TYPE: tier
   <title>Privacy Policy | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{PRIVACY_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/privacy-policy" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Privacy Policy | {{BUSINESS_NAME}}" />
@@ -3404,6 +3487,7 @@ TYPE: tier
   <title>Terms of Use | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{TERMS_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/terms" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Terms of Use | {{BUSINESS_NAME}}" />
@@ -3520,6 +3604,7 @@ TYPE: tier
   <meta name="description" content="{{ERROR_404_MESSAGE}}" />
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/404" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Page not found | {{BUSINESS_NAME}}" />
@@ -3566,6 +3651,7 @@ TYPE: tier
   <meta name="description" content="{{OFFLINE_MESSAGE}}" />
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/offline" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Offline | {{BUSINESS_NAME}}" />
@@ -3610,6 +3696,7 @@ TYPE: tier
   <title>{{BUSINESS_NAME}} Gallery | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{GALLERY_META_DESCRIPTION_FROM_IMAGES}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/gallery" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} Gallery | {{CITY}}, {{STATE}}" />
@@ -3777,6 +3864,7 @@ TYPE: tier
   <title>{{TESTIMONIALS_PAGE_LABEL|Testimonials}} | {{BUSINESS_NAME}}</title>
   <meta name="description" content="{{TESTIMONIALS_META_DESCRIPTION|Read real homeowner feedback for {{BUSINESS_NAME}} in {{CITY}}, {{STATE}}.}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/testimonials" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{TESTIMONIALS_PAGE_LABEL|Testimonials}} | {{BUSINESS_NAME}}" />
@@ -3956,6 +4044,7 @@ TYPE: tier
   <title>{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}</title>
   <meta name="description" content="{{SERVICE_AREA_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/service-area" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} Service Area | {{CITY}}, {{STATE}}" />
@@ -4208,6 +4297,7 @@ TYPE: tier
   <meta name="description" content="{{TESTIMONIALS_META_DESCRIPTION|Read real homeowner feedback for {{BUSINESS_NAME}} in {{CITY}}, {{STATE}}.}}" />
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/reviews" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} Reviews" />
@@ -5042,10 +5132,27 @@ h1 .accent, h2 .accent { color: var(--copper); }
   align-items: center;
   gap: 2rem;
   margin-top: 0;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
-.cta-band h2 { font-size: clamp(1.5rem, 2.8vw, 2.4rem); }
+.cta-band > div:first-child {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.cta-band h2 {
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  overflow-wrap: anywhere;
+}
 .cta-band .section-sub { color: var(--muted); margin-top: 0.4rem; max-width: 480px; }
-.cta-band-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+.cta-band-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
 
 /* ── FAQ ─────────────────────────────────────────────────── */
 .faq-block { margin-top: 2.5rem; max-width: 760px; }
@@ -5385,6 +5492,12 @@ body::after {
   }
 }
 
+/* ── Mobile-only CTA surfaces ────────────────────────────── */
+.mobile-sticky-cta,
+.mobile-cta-strip {
+  display: none;
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .editorial-split { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -5394,54 +5507,219 @@ body::after {
 
 @media (max-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     min-height: auto;
-    padding-bottom: 5rem;
+    padding-top: 5.25rem;
+    padding-bottom: 0;
   }
-  .hero-image-side { display: none; }
   .hero-content {
-    padding: 3rem 1.5rem 4rem;
+    display: contents;
   }
-  .stats-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .stat-cell { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--line); padding-bottom: 2rem; }
-  .stat-cell:last-child { border-bottom: none; padding-bottom: 0; }
-  .area-split { grid-template-columns: 1fr; gap: 2.5rem; }
-  .area-photo { min-height: 260px; }
+  .hero-badge { order: 1; padding: 0 1.25rem; margin-top: 1.5rem; }
+  .hero-h1 {
+    order: 2;
+    padding: 0 1.25rem;
+    font-size: clamp(2.1rem, 8vw, 3rem);
+    max-width: none;
+  }
+  .hero-sub {
+    order: 3;
+    padding: 0 1.25rem;
+    margin-bottom: 1.25rem;
+    max-width: none;
+  }
+  .hero-image-side {
+    order: 4;
+    display: block;
+    position: relative;
+    top: auto;
+    height: auto;
+    padding: 0 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .hero-img-clip {
+    aspect-ratio: 16 / 10;
+    max-height: 240px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .hero-img-clip::after {
+    background: linear-gradient(to top, rgba(11,10,8,0.28) 0%, transparent 55%);
+  }
+  .hero-img-clip img {
+    height: 100%;
+    object-position: center;
+  }
+  .hero-cta-group {
+    order: 5;
+    padding: 0 1.25rem 1.5rem;
+    width: 100%;
+  }
+  .hero-cta-group .btn {
+    flex: 1 1 calc(50% - 0.375rem);
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+  }
+  .stats-strip { padding: 2rem 0; }
+  .stats-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0 1.25rem;
+  }
+  .stat-cell {
+    border-right: none;
+    margin-right: 0;
+    padding: 0.85rem 0.5rem;
+    border-bottom: none;
+    text-align: center;
+  }
+  .stat-val { font-size: clamp(1.15rem, 4vw, 1.45rem); }
+  .stat-label { font-size: 0.68rem; }
+  .stat-note { font-size: 0.78rem; line-height: 1.45; }
+  .area-split { grid-template-columns: 1fr; gap: 1.75rem; }
+  .area-photo { min-height: 220px; }
   .process-list { grid-template-columns: 1fr; }
   .process-connector { display: none; }
-  .pl-step { padding: 2rem 0; border-top: 1px solid var(--line); }
+  .pl-step { padding: 1.5rem 0; border-top: 1px solid var(--line); }
   .pl-step:first-child { border-top: none; }
-  .t-secondary { grid-template-columns: 1fr; gap: 2rem; }
-  .cta-block { flex-direction: column; align-items: flex-start; }
+  .t-secondary { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cta-block { flex-direction: column; align-items: stretch; gap: 1.25rem; }
+  .cta-block-actions { width: 100%; }
+  .cta-block-actions .btn { flex: 1 1 auto; white-space: normal; }
   .depth-steps { grid-template-columns: repeat(2, 1fr); }
   .process-6 { grid-template-columns: repeat(2, 1fr); }
   .steps-4 { grid-template-columns: repeat(2, 1fr); }
   .contact-2col { grid-template-columns: 1fr; }
-  .services-bento { grid-template-columns: 1fr; }
-  .svc-tile.featured { grid-row: auto; }
-  .depth-quad { grid-template-columns: 1fr; }
-  .why-grid { grid-template-columns: 1fr; }
-  .topic-grid { grid-template-columns: 1fr; }
+  .services-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-tile.featured { grid-row: auto; grid-column: 1 / -1; }
+  .depth-quad { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .problem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section { padding: 4.5rem 0; }
+  .section-warm { padding: 4.5rem 0; }
+  .container { padding: 0 1.25rem; }
 }
 
 @media (max-width: 760px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .nav-toggle { display: flex; }
-  .section { padding: 5rem 0; }
-  .section-warm { padding: 5rem 0; }
-  .problem-grid { grid-template-columns: 1fr; }
-  .values-grid { grid-template-columns: 1fr; }
+  .site-nav { top: 0.75rem; width: calc(100% - 1.25rem); }
+  .nav-pill { padding: 0.4rem 0.45rem 0.4rem 1rem; }
+  .section { padding: 3.25rem 0; }
+  .section-warm { padding: 3.25rem 0; }
+  .problem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
   .why-grid { grid-template-columns: 1fr; }
   .topic-grid { grid-template-columns: 1fr; }
+  .services-bento { grid-template-columns: 1fr; }
+  .depth-quad { grid-template-columns: 1fr; }
   .svc-row { grid-template-columns: 2.5rem 1fr; gap: 1.25rem; }
   .svc-row .svc-tag { display: none; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-blurb { max-width: none; }
-  .cta-band { padding: 2rem 1.75rem; }
+  .cta-band {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem 1.25rem;
+    gap: 1.15rem;
+  }
+  .cta-band-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .cta-band-actions .btn,
+  .cta-block-actions .btn {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    min-height: 44px;
+  }
+  .btn { white-space: normal; }
   .process-6 { grid-template-columns: 1fr; }
-  .steps-4 { grid-template-columns: 1fr; }
-  .page-hero { padding: 8rem 0 4rem; }
+  .steps-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .page-hero { padding: 6rem 0 2.5rem; }
+  .stats-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .stat-note { display: none; }
+  .mobile-sticky-cta {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 180;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem calc(0.65rem + env(safe-area-inset-bottom, 0px));
+    background: rgba(11,10,8,0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.28);
+  }
+  .mobile-sticky-cta .btn {
+    flex: 1 1 0;
+    min-height: 44px;
+    padding: 0.55rem 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.25;
+  }
+  .mobile-cta-strip {
+    display: block;
+    margin: 0 1.25rem 1.25rem;
+    padding: 1.15rem 1.1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .mobile-cta-strip__label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.45;
+  }
+  .mobile-cta-strip__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+  .mobile-cta-strip__actions .btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.55rem 0.45rem;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+  body {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+  body.nav-open {
+    padding-bottom: 0;
+  }
+  .card,
+  .contact-card,
+  .problem-cell,
+  .value-cell,
+  .cta-band,
+  .cta-block,
+  .quote-card {
+    overflow: hidden;
+    min-width: 0;
+  }
+  .form-input,
+  input.form-input,
+  select.form-input,
+  textarea.form-input {
+    font-size: 16px;
+  }
 }
 
 /* ── Ahana starter template extensions ───────────────────── */
@@ -6903,6 +7181,7 @@ TYPE: tier
       const isOpen = overlay.classList.toggle('is-open');
       toggle.classList.toggle('is-active', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('nav-open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
 
       if (isOpen && motionOK && typeof gsap !== 'undefined') {
@@ -6920,6 +7199,7 @@ TYPE: tier
         overlay.classList.remove('is-open');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
         document.body.style.overflow = '';
       });
     });
@@ -6930,6 +7210,7 @@ TYPE: tier
         overlay.classList.remove('is-open');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
         document.body.style.overflow = '';
         toggle.focus();
       }
@@ -7175,6 +7456,49 @@ TYPE: tier
         body.classList.add('header-brand--text');
       }
     });
+  })();
+
+  /* ── Mobile sticky call bar ───────────────────────────── */
+  (function initMobileStickyCta() {
+    if (!window.matchMedia('(max-width: 760px)').matches) return;
+    if (document.querySelector('.mobile-sticky-cta')) return;
+
+    var telLink =
+      document.querySelector('.nav-overlay-footer a[href^="tel:"]') ||
+      document.querySelector('.nav-cta a[href^="tel:"]') ||
+      document.querySelector('.hero-cta-group a[href^="tel:"]') ||
+      document.querySelector('a[href^="tel:"]');
+    if (!telLink) return;
+
+    var contactHref = '/contact';
+    var contactEl =
+      document.querySelector('.nav-menu-link[href="/contact"]') ||
+      document.querySelector('.nav-cta .btn-ghost') ||
+      document.querySelector('.hero-cta-group a[href="/contact"]');
+    if (contactEl) contactHref = contactEl.getAttribute('href') || contactHref;
+
+    var contactLabel = contactEl && contactEl.textContent
+      ? contactEl.textContent.trim()
+      : 'Get a Quote';
+
+    var bar = document.createElement('div');
+    bar.className = 'mobile-sticky-cta';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Quick contact');
+
+    var call = document.createElement('a');
+    call.className = 'btn btn-primary';
+    call.href = telLink.getAttribute('href');
+    call.textContent = telLink.textContent.trim();
+
+    var quote = document.createElement('a');
+    quote.className = 'btn btn-ghost';
+    quote.href = contactHref;
+    quote.textContent = contactLabel;
+
+    bar.appendChild(call);
+    bar.appendChild(quote);
+    document.body.appendChild(bar);
   })();
 
   var path = pathKeyFromPathname(window.location.pathname);

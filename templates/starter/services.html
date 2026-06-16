@@ -6,6 +6,7 @@
   <title>{{SERVICES_PAGE_TITLE}}</title>
   <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/services" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICES_PAGE_TITLE}}" />
@@ -36,6 +37,32 @@
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_3_NAME}}"}}
       ]
     }
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[{"@type":"Question","name":"{{SERVICES_FAQ_1_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_1_ANSWER}}"}},{"@type":"Question","name":"{{SERVICES_FAQ_2_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_2_ANSWER}}"}},{"@type":"Question","name":"{{SERVICES_FAQ_3_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_3_ANSWER}}"}},{"@type":"Question","name":"{{SERVICES_FAQ_4_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_4_ANSWER}}"}}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_SERVICES}}","item":"{{SITE_URL}}/services"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{SERVICES_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/services",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>

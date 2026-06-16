@@ -12,6 +12,18 @@ import {
   minimalPageWrap,
 } from "../shared/coal-design-shell.mjs";
 import { ENHANCED_HOME_HERO_HTML } from "./enhanced-home-hero.mjs";
+import {
+  aggregateRatingField,
+  reviewLdScript,
+  ENHANCED_HOME_FAQ_LD,
+  ENHANCED_SERVICES_FAQ_LD,
+  ABOUT_FAQ_LD,
+  BREADCRUMB_HOME,
+  BREADCRUMB_SERVICES,
+  BREADCRUMB_ABOUT,
+  serviceLdBlock,
+  webPageDateModifiedLd,
+} from "../shared/schema-blocks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SERVICE_AREA_MAP_SCRIPT = fs.readFileSync(
@@ -171,10 +183,16 @@ export function buildIndexHtml() {
     "telephone":"{{PHONE_NUMBER_E164}}",
     "url":"{{SITE_URL}}",
     "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"},
-    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}},
-    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
+    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}}${aggregateRatingField()}
   }
-  </script>`,
+  </script>
+  ${serviceLdBlock()}
+  ${reviewLdScript(1)}
+  ${reviewLdScript(2)}
+  ${reviewLdScript(3)}
+  ${ENHANCED_HOME_FAQ_LD}
+  ${BREADCRUMB_HOME}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/"', '"{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}"')}`,
   });
 
   const svcTile = (n, href) => `        <a class="svc-tile" href="${href}" data-stagger-item>

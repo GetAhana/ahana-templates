@@ -6,6 +6,7 @@
   <title>{{CONTACT_PAGE_TITLE}}</title>
   <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{CONTACT_PAGE_TITLE}}" />
@@ -28,6 +29,24 @@
     "name":"{{CONTACT_PAGE_TITLE}}",
     "url":"{{SITE_URL}}/contact",
     "about":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_CONTACT}}","item":"{{SITE_URL}}/contact"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{CONTACT_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/contact",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>

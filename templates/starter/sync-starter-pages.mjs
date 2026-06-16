@@ -1,5 +1,21 @@
 /** HTML shell + page builders for sync-starter-from-sample.mjs */
 
+import {
+  aggregateRatingField,
+  reviewLdScript,
+  HOME_FAQ_LD,
+  SERVICES_FAQ_LD,
+  ABOUT_FAQ_LD,
+  BREADCRUMB_HOME,
+  BREADCRUMB_SERVICES,
+  BREADCRUMB_ABOUT,
+  BREADCRUMB_ARTICLES,
+  BREADCRUMB_CONTACT,
+  BREADCRUMB_ARTICLE_POST,
+  serviceLdBlock,
+  webPageDateModifiedLd,
+} from "../shared/schema-blocks.mjs";
+
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap";
 
@@ -35,6 +51,7 @@ export function shellHead({
   <title>${title}</title>
   <meta name="description" content="${description}" />
   <meta name="theme-color" content="${themeColor}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="${canonical}" />
   <meta property="og:type" content="${ogType}" />
   <meta property="og:title" content="${title}" />
@@ -186,18 +203,15 @@ export function buildIndexHtml() {
       "addressRegion": "{{STATE}}",
       "postalCode": "{{ZIP}}"
     },
-    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}}
+    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}}${aggregateRatingField()}
   }
   </script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Service",
-    "serviceType":"{{PRIMARY_SERVICE}}",
-    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
-    "areaServed": {{AREA_SERVED_JSON}}
-  }
-  </script>`,
+  ${serviceLdBlock()}
+  ${reviewLdScript(1)}
+  ${reviewLdScript(2)}
+  ${HOME_FAQ_LD}
+  ${BREADCRUMB_HOME}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/"', '"{{HOME_PAGE_TITLE}}"')}`,
   });
 
   const main = `
@@ -213,7 +227,7 @@ export function buildIndexHtml() {
       </div>
       <div class="hero-image-side" aria-hidden="true">
         <div class="hero-img-clip">
-          <img src="{{HERO_IMAGE_URL}}" alt="" loading="eager" fetchpriority="high" width="900" height="1200" />
+          <img src="{{HERO_IMAGE_URL}}" alt="{{HERO_IMAGE_ALT}}" loading="eager" fetchpriority="high" width="900" height="1200" />
         </div>
       </div>
     </section>
@@ -455,7 +469,10 @@ export function buildAboutHtml() {
     "url":"{{SITE_URL}}/about",
     "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}{{JSON_LD_LOGO_ENTRY}}
   }
-  </script>`,
+  </script>
+  ${ABOUT_FAQ_LD}
+  ${BREADCRUMB_ABOUT}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/about"', '"{{ABOUT_PAGE_TITLE}}"')}`,
   });
 
   const main = `
@@ -568,7 +585,10 @@ export function buildServicesHtml() {
       ]
     }
   }
-  </script>`,
+  </script>
+  ${SERVICES_FAQ_LD}
+  ${BREADCRUMB_SERVICES}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/services"', '"{{SERVICES_PAGE_TITLE}}"')}`,
   });
 
   const svcRow = (n, name, body, tag) => `          <div class="svc-row" data-stagger-item>
@@ -680,6 +700,9 @@ export function buildArticlesHtml() {
     description: "{{ARTICLES_META_DESCRIPTION}}",
     canonical: "{{SITE_URL}}/articles",
     ogUrl: "{{SITE_URL}}/articles",
+    extraHead: `
+  ${BREADCRUMB_ARTICLES}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/articles"', '"{{ARTICLES_PAGE_TITLE}}"')}`,
   });
 
   const postLink = (n) => `          <a class="post-link" href="{{ARTICLE_${n}_URL}}" data-stagger-item>
@@ -755,7 +778,9 @@ export function buildContactHtml() {
     "url":"{{SITE_URL}}/contact",
     "about":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}"}
   }
-  </script>`,
+  </script>
+  ${BREADCRUMB_CONTACT}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/contact"', '"{{CONTACT_PAGE_TITLE}}"')}`,
   });
 
   const main = `
@@ -876,7 +901,9 @@ export function buildArticlePostHtml() {
     extraHead: `
   <script type="application/ld+json">
 {{ARTICLE_POST_SCHEMA_JSON}}
-  </script>`,
+  </script>
+  ${BREADCRUMB_ARTICLE_POST}
+  ${webPageDateModifiedLd('"{{SITE_URL}}/articles/{{ARTICLE_1_URL}}"', '"{{ARTICLE_1_TITLE}}"')}`,
   });
 
   const main = `

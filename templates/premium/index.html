@@ -6,6 +6,7 @@
   <title>{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}</title>
   <meta name="description" content="{{META_DESCRIPTION_FROM_IMAGES}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}" />
@@ -32,8 +33,76 @@
     "telephone":"{{PHONE_NUMBER_E164}}",
     "url":"{{SITE_URL}}",
     "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"},
-    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}},
-    "aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
+    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}},"aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "serviceType":"{{PRIMARY_SERVICE}}",
+    "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "areaServed": {{AREA_SERVED_JSON}}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_1_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_1_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_2_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_2_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_3_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_3_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[{"@type":"Question","name":"Do you offer emergency service?","acceptedAnswer":{"@type":"Answer","text":"{{EMERGENCY_FAQ_ANSWER}}"}},{"@type":"Question","name":"How fast can you come out?","acceptedAnswer":{"@type":"Answer","text":"{{SCHEDULING_FAQ_ANSWER}}"}},{"@type":"Question","name":"Do you provide free estimates?","acceptedAnswer":{"@type":"Answer","text":"{{ESTIMATE_FAQ_ANSWER}}"}}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{BUSINESS_NAME}} | {{PRIMARY_KEYWORD_1}} in {{CITY}}",
+    "url":"{{SITE_URL}}/",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>
@@ -125,7 +194,7 @@
           </div>
         </div>
       </div>
-      <div class="hero-image-side">
+      <div class="hero-image-side" aria-hidden="true">
         <div class="hero-img-clip">
           <img src="{{HERO_IMAGE_URL}}" alt="" loading="eager" fetchpriority="high" width="900" height="1200" />
         </div>
@@ -139,14 +208,6 @@
         <div class="trust-item"><b>Emergency</b> service</div>
         <div class="trust-item"><b>Upfront</b> pricing</div>
         <div class="trust-item"><b>Local</b> crew</div>
-      </div>
-    </div>
-
-    <div class="mobile-cta-strip">
-      <p class="mobile-cta-strip__label">Ready when you are — call or request service today.</p>
-      <div class="mobile-cta-strip__actions">
-        <a class="btn btn-primary" href="tel:{{PHONE_NUMBER_E164}}">Call {{PHONE_NUMBER}}</a>
-        <a class="btn btn-outline" href="/contact">Get a free estimate</a>
       </div>
     </div>
 

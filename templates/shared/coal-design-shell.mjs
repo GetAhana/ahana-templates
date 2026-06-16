@@ -37,6 +37,7 @@ export function shellHead({
   <title>${title}</title>
   <meta name="description" content="${description}" />${robotsTag}
   <meta name="theme-color" content="${themeColor}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="${canonical}" />
   <meta property="og:type" content="${ogType}" />
   <meta property="og:title" content="${title}" />
