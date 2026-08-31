@@ -157,8 +157,14 @@ export function shellFooter({ includeHours = false, includeEmail = true } = {}) 
 
 export function shellScripts(cssPrefix = ".") {
   const p = cssPrefix === ".." ? ".." : ".";
+  return `  <script src="${p}/main.js" defer></script>`;
+}
+
+export function contactShellScripts(cssPrefix = ".") {
+  const p = cssPrefix === ".." ? ".." : ".";
   return `  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="${p}/site-lead-intake.js" defer></script>
   <script src="${p}/main.js" defer></script>`;
 }
 
@@ -174,6 +180,17 @@ ${main}
   </main>
 
 ${footer}
+
+  <div class="mobile-cta-bar" role="group" aria-label="Quick contact">
+    <a class="mcb-btn mcb-call" href="tel:{{PHONE_NUMBER_E164}}" aria-label="Call {{BUSINESS_NAME}} now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call now</span>
+    </a>
+    <a class="mcb-btn mcb-quote" href="/contact" aria-label="Request a free quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Free quote</span>
+    </a>
+  </div>
 ${scripts}
 </body>
 </html>`;
@@ -300,7 +317,7 @@ export function buildIndexHtml() {
           </aside>
         </div>
         <div style="margin-top:4.5rem" data-reveal-heading>
-          <h2>Six things that shape<br>every visit</h2>
+          <h2>{{HOME_VALUE_H2_LINE_1}} <span class="accent">{{HOME_VALUE_H2_ACCENT}}</span></h2>
         </div>
         <div class="values-grid" data-reveal-stagger style="margin-top:2rem">
           <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">01</span><h3>{{HOME_VALUE_TILE_1_TITLE}}</h3><p>{{HOME_VALUE_TILE_1_BODY}}</p></div>
@@ -412,7 +429,7 @@ export function buildIndexHtml() {
 
     <section class="section">
       <div class="container">
-        <span class="eyebrow">{{HOME_TESTIMONIALS_SECTION_KICKER}}</span>
+        <h2 class="testimonials-title" data-reveal-heading>{{HOME_TESTIMONIALS_SECTION_KICKER}}</h2>
         <div class="testimonial-grid" data-reveal-stagger>
           <figure class="testimonial-item" data-stagger-item>
             <blockquote class="testimonial-quote">{{TESTIMONIAL_1_TEXT}}</blockquote>
@@ -735,7 +752,7 @@ ${postLink(1)}
 
     <section class="section-warm">
       <div class="container">
-        <h2 data-reveal-heading>Topics we hear <span class="accent">every single week</span></h2>
+        <h2 data-reveal-heading>{{ARTICLES_TOPICS_H2_LINE_1}} <span class="accent">{{ARTICLES_TOPICS_H2_ACCENT}}</span></h2>
         <div class="topic-grid" data-reveal-stagger>
           <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_1_TAG}}</div><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_DESC}}</p></div>
           <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_2_TAG}}</div><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_DESC}}</p></div>
@@ -808,7 +825,16 @@ export function buildContactHtml() {
           <div class="contact-card">
             <h3>{{CONTACT_FORM_CARD_TITLE}}</h3>
             <p>{{CONTACT_FORM_INTRO}}</p>
-            <form id="contact-form" class="form-grid" action="{{CONTACT_FORM_ACTION}}" method="{{CONTACT_FORM_METHOD}}" novalidate>
+            <form
+              id="contact-form"
+              class="form-grid"
+              action="{{CONTACT_FORM_ACTION}}"
+              method="{{CONTACT_FORM_METHOD}}"
+              data-intake-url="{{SITE_LEAD_INTAKE_URL}}"
+              data-client-token="{{SITE_LEAD_TOKEN}}"
+              novalidate
+            >
+              <input type="hidden" name="client_token" value="{{SITE_LEAD_TOKEN}}" />
               <div class="form-field">
                 <label class="form-label" for="name">{{CONTACT_FIELD_NAME_LABEL}}</label>
                 <input class="form-input" id="name" name="name" type="text" autocomplete="name" required />
@@ -818,8 +844,16 @@ export function buildContactHtml() {
                 <input class="form-input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
               </div>
               <div class="form-field">
+                <label class="form-label" for="email">{{CONTACT_FIELD_EMAIL_LABEL}}</label>
+                <input class="form-input" id="email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="form-field">
                 <label class="form-label" for="address">{{CONTACT_FIELD_ADDRESS_LABEL}}</label>
                 <input class="form-input" id="address" name="address" type="text" autocomplete="street-address" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="zip">{{CONTACT_FIELD_ZIP_LABEL}}</label>
+                <input class="form-input" id="zip" name="zip" type="text" autocomplete="postal-code" inputmode="numeric" required />
               </div>
               <div class="form-field">
                 <label class="form-label" for="service">{{CONTACT_FIELD_SERVICE_LABEL}}</label>
@@ -863,9 +897,9 @@ export function buildContactHtml() {
           <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_3_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_3_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_3_BODY}}</p></div>
           <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_4_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_4_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_4_BODY}}</p></div>
         </div>
-        <div class="card" style="margin-top:2rem;border-color:var(--copper-line);background:var(--copper-dim)" data-reveal>
+        <div class="response-time-card" data-reveal>
           <h3>{{CONTACT_RESPONSE_CARD_TITLE}}</h3>
-          <p style="margin:.45rem 0 0">{{CONTACT_RESPONSE_TIME}}</p>
+          <p>{{CONTACT_RESPONSE_TIME}}</p>
         </div>
       </div>
     </section>
@@ -885,7 +919,7 @@ ${faqItem("{{CONTACT_FAQ_3_QUESTION}}", "{{CONTACT_FAQ_3_ANSWER}}")}
       </div>
     </section>`;
 
-  return pageWrap(head, main, shellFooter({ includeHours: true }), shellScripts());
+  return pageWrap(head, main, shellFooter({ includeHours: true }), contactShellScripts());
 }
 
 export function buildArticlePostHtml() {
@@ -1046,6 +1080,78 @@ body.header-brand--image-text .nav-logo__text--beside { display: inline; white-s
 .article-prose ol { margin: 0 0 1rem 1.25rem; }
 .article-prose li { margin-bottom: 0.35rem; }
 .article-prose a { color: var(--copper); }
+
+/* ── Mobile conversion + ergonomics (Ahana) ──────────────── */
+
+/* Comfortable, thumb-friendly tap targets (Google mobile-usability + UX). */
+.btn { min-height: 44px; }
+.btn-lg { min-height: 52px; }
+.faq-summary { min-height: 56px; }
+.nav-menu-link { display: inline-flex; align-items: center; min-height: 48px; }
+
+/* Sticky mobile call / quote bar — the primary conversion driver on phones.
+   On mobile the floating header collapses to a menu button and hides the phone,
+   so this keeps a one-tap call + quote action visible at all times. Desktop hides it. */
+.mobile-cta-bar { display: none; }
+
+@media (max-width: 760px) {
+  .mobile-cta-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 180;
+    background: rgba(17,16,9,0.88);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border-top: 1px solid rgba(242,237,230,0.12);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.30);
+  }
+  .mcb-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 60px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .mcb-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
+  .mcb-call { background: var(--copper); color: #fff; }
+  .mcb-call:active { filter: brightness(0.92); }
+  .mcb-quote { background: transparent; color: var(--ink); border-left: 1px solid rgba(242,237,230,0.14); }
+  .mcb-quote:active { background: rgba(242,237,230,0.06); }
+
+  /* Larger menu-button tap target (only shown on mobile). */
+  .nav-toggle { width: 2.75rem; height: 2.75rem; }
+
+  /* Keep page content and footer clear of the fixed bar. */
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+}
+
+/* Small-phone refinements (≤480px): full-width CTAs, tighter rhythm, no overflow. */
+@media (max-width: 480px) {
+  .container { padding: 0 1.25rem; }
+  .section, .section-warm { padding: 3.75rem 0; }
+  .page-hero { padding: 7rem 0 3rem; }
+  .hero-h1 { font-size: clamp(2.25rem, 8.5vw, 3rem); }
+  .hero-content { padding: 2.5rem 1.25rem 3.5rem; }
+  .hero-cta-group { flex-direction: column; align-items: stretch; }
+  .hero-cta-group .btn { width: 100%; }
+  .cta-block-actions,
+  .cta-band-actions { flex-direction: column; align-items: stretch; }
+  .cta-block-actions .btn,
+  .cta-band-actions .btn { width: 100%; }
+  .cta-band { padding: 1.75rem 1.25rem; }
+}
 `;
 
 export const MAIN_JS_EXTRA = `

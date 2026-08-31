@@ -204,30 +204,7 @@
     });
   });
 
-  /* ── Contact form (demo / non-Netlify) ─────────────────── */
-  var form = document.getElementById('contact-form');
-  var success = document.getElementById('form-success');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      if (form.getAttribute('data-netlify') === 'true') return;
-      var action = (form.getAttribute('action') || '').trim();
-      if (action && action !== '#' && !/^javascript:/i.test(action)) {
-        try {
-          var u = new URL(action, window.location.href);
-          if (u.origin !== window.location.origin) return;
-        } catch (err) {
-          return;
-        }
-      }
-      e.preventDefault();
-      form.style.display = 'none';
-      if (success) success.style.display = 'block';
-    });
-  }
+  /* ── Contact form: site-lead-intake.js on contact.html ── */
 
   /* ── Nav active state (extensionless paths) ───────────── */
   function pathKeyFromPathname(p) {

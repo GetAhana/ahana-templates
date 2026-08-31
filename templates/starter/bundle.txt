@@ -63,6 +63,7 @@ TYPE: tier
   <title>{{HOME_PAGE_TITLE}}</title>
   <meta name="description" content="{{HOME_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{HOME_PAGE_TITLE}}" />
@@ -95,9 +96,10 @@ TYPE: tier
       "addressRegion": "{{STATE}}",
       "postalCode": "{{ZIP}}"
     },
-    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}}
+    "areaServed": {{AREA_SERVED_JSON}}{{JSON_LD_LOGO_ENTRY}},"aggregateRating":{"@type":"AggregateRating","ratingValue":"{{REVIEW_RATING}}","reviewCount":"{{REVIEW_COUNT}}"}
   }
   </script>
+  
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -105,6 +107,54 @@ TYPE: tier
     "serviceType":"{{PRIMARY_SERVICE}}",
     "provider":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
     "areaServed": {{AREA_SERVED_JSON}}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_1_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_1_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Review",
+    "itemReviewed":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}"},
+    "author":{"@type":"Person","name":"{{TESTIMONIAL_2_NAME}}"},
+    "reviewBody":"{{TESTIMONIAL_2_TEXT}}",
+    "reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[{"@type":"Question","name":"{{HOME_FAQ_1_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{HOME_FAQ_1_ANSWER}}"}},{"@type":"Question","name":"{{HOME_FAQ_2_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{HOME_FAQ_2_ANSWER}}"}},{"@type":"Question","name":"{{HOME_FAQ_3_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{HOME_FAQ_3_ANSWER}}"}},{"@type":"Question","name":"{{HOME_FAQ_4_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{HOME_FAQ_4_ANSWER}}"}}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{HOME_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>
@@ -158,7 +208,7 @@ TYPE: tier
       </div>
       <div class="hero-image-side" aria-hidden="true">
         <div class="hero-img-clip">
-          <img src="{{HERO_IMAGE_URL}}" alt="" loading="eager" fetchpriority="high" width="900" height="1200" />
+          <img src="{{HERO_IMAGE_URL}}" alt="{{HERO_IMAGE_ALT}}" loading="eager" fetchpriority="high" width="900" height="1200" />
         </div>
       </div>
     </section>
@@ -231,7 +281,7 @@ TYPE: tier
           </aside>
         </div>
         <div style="margin-top:4.5rem" data-reveal-heading>
-          <h2>Six things that shape<br>every visit</h2>
+          <h2>{{HOME_VALUE_H2_LINE_1}} <span class="accent">{{HOME_VALUE_H2_ACCENT}}</span></h2>
         </div>
         <div class="values-grid" data-reveal-stagger style="margin-top:2rem">
           <div class="value-cell" data-stagger-item><span class="value-num" aria-hidden="true">01</span><h3>{{HOME_VALUE_TILE_1_TITLE}}</h3><p>{{HOME_VALUE_TILE_1_BODY}}</p></div>
@@ -343,7 +393,7 @@ TYPE: tier
 
     <section class="section">
       <div class="container">
-        <span class="eyebrow">{{HOME_TESTIMONIALS_SECTION_KICKER}}</span>
+        <h2 class="testimonials-title" data-reveal-heading>{{HOME_TESTIMONIALS_SECTION_KICKER}}</h2>
         <div class="testimonial-grid" data-reveal-stagger>
           <figure class="testimonial-item" data-stagger-item>
             <blockquote class="testimonial-quote">{{TESTIMONIAL_1_TEXT}}</blockquote>
@@ -444,6 +494,17 @@ TYPE: tier
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+
+  <div class="mobile-cta-bar" role="group" aria-label="Quick contact">
+    <a class="mcb-btn mcb-call" href="tel:{{PHONE_NUMBER_E164}}" aria-label="Call {{BUSINESS_NAME}} now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call now</span>
+    </a>
+    <a class="mcb-btn mcb-quote" href="/contact" aria-label="Request a free quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Free quote</span>
+    </a>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
@@ -464,6 +525,7 @@ TYPE: tier
   <title>{{SERVICES_PAGE_TITLE}}</title>
   <meta name="description" content="{{SERVICES_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/services" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{SERVICES_PAGE_TITLE}}" />
@@ -494,6 +556,32 @@ TYPE: tier
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"{{SERVICE_3_NAME}}"}}
       ]
     }
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[{"@type":"Question","name":"{{SERVICES_FAQ_1_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_1_ANSWER}}"}},{"@type":"Question","name":"{{SERVICES_FAQ_2_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_2_ANSWER}}"}},{"@type":"Question","name":"{{SERVICES_FAQ_3_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_3_ANSWER}}"}},{"@type":"Question","name":"{{SERVICES_FAQ_4_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{SERVICES_FAQ_4_ANSWER}}"}}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_SERVICES}}","item":"{{SITE_URL}}/services"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{SERVICES_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/services",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>
@@ -706,6 +794,17 @@ TYPE: tier
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+
+  <div class="mobile-cta-bar" role="group" aria-label="Quick contact">
+    <a class="mcb-btn mcb-call" href="tel:{{PHONE_NUMBER_E164}}" aria-label="Call {{BUSINESS_NAME}} now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call now</span>
+    </a>
+    <a class="mcb-btn mcb-quote" href="/contact" aria-label="Request a free quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Free quote</span>
+    </a>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
@@ -726,6 +825,7 @@ TYPE: tier
   <title>{{ABOUT_PAGE_TITLE}}</title>
   <meta name="description" content="{{ABOUT_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/about" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ABOUT_PAGE_TITLE}}" />
@@ -749,6 +849,32 @@ TYPE: tier
     "telephone":"{{PHONE_NUMBER_E164}}",
     "url":"{{SITE_URL}}/about",
     "address":{"@type":"PostalAddress","streetAddress":"{{ADDRESS_LINE_1}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}"}{{JSON_LD_LOGO_ENTRY}}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[{"@type":"Question","name":"{{ABOUT_FAQ_1_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{ABOUT_FAQ_1_ANSWER}}"}},{"@type":"Question","name":"{{ABOUT_FAQ_2_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{ABOUT_FAQ_2_ANSWER}}"}},{"@type":"Question","name":"{{ABOUT_FAQ_3_QUESTION}}","acceptedAnswer":{"@type":"Answer","text":"{{ABOUT_FAQ_3_ANSWER}}"}}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_ABOUT}}","item":"{{SITE_URL}}/about"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{ABOUT_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/about",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>
@@ -927,6 +1053,17 @@ TYPE: tier
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+
+  <div class="mobile-cta-bar" role="group" aria-label="Quick contact">
+    <a class="mcb-btn mcb-call" href="tel:{{PHONE_NUMBER_E164}}" aria-label="Call {{BUSINESS_NAME}} now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call now</span>
+    </a>
+    <a class="mcb-btn mcb-quote" href="/contact" aria-label="Request a free quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Free quote</span>
+    </a>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
@@ -947,6 +1084,7 @@ TYPE: tier
   <title>{{ARTICLES_PAGE_TITLE}}</title>
   <meta name="description" content="{{ARTICLES_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/articles" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ARTICLES_PAGE_TITLE}}" />
@@ -962,6 +1100,24 @@ TYPE: tier
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_ARTICLES}}","item":"{{SITE_URL}}/articles"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{ARTICLES_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/articles",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
+  }
+  </script>
 </head>
 <body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
   <a class="skip-link" href="#main">{{SKIP_TO_CONTENT_LABEL}}</a>
@@ -1028,7 +1184,7 @@ TYPE: tier
 
     <section class="section-warm">
       <div class="container">
-        <h2 data-reveal-heading>Topics we hear <span class="accent">every single week</span></h2>
+        <h2 data-reveal-heading>{{ARTICLES_TOPICS_H2_LINE_1}} <span class="accent">{{ARTICLES_TOPICS_H2_ACCENT}}</span></h2>
         <div class="topic-grid" data-reveal-stagger>
           <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_1_TAG}}</div><h3>{{SERVICE_1_NAME}}</h3><p>{{SERVICE_1_DESC}}</p></div>
           <div class="topic-cell" data-stagger-item><div class="topic-label">{{SERVICE_2_TAG}}</div><h3>{{SERVICE_2_NAME}}</h3><p>{{SERVICE_2_DESC}}</p></div>
@@ -1083,6 +1239,17 @@ TYPE: tier
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+
+  <div class="mobile-cta-bar" role="group" aria-label="Quick contact">
+    <a class="mcb-btn mcb-call" href="tel:{{PHONE_NUMBER_E164}}" aria-label="Call {{BUSINESS_NAME}} now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call now</span>
+    </a>
+    <a class="mcb-btn mcb-quote" href="/contact" aria-label="Request a free quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Free quote</span>
+    </a>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
@@ -1107,6 +1274,7 @@ TYPE: tier
   <title>{{ARTICLE_POST_PAGE_TITLE}}</title>
   <meta name="description" content="{{ARTICLE_POST_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}{{ARTICLE_1_URL}}" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{{ARTICLE_POST_PAGE_TITLE}}" />
@@ -1124,6 +1292,24 @@ TYPE: tier
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
 {{ARTICLE_POST_SCHEMA_JSON}}
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_ARTICLES}}","item":"{{SITE_URL}}/articles"},{"@type":"ListItem","position":3,"name":"{{ARTICLE_1_TITLE}}","item":"{{SITE_URL}}/articles/{{ARTICLE_1_URL}}"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{ARTICLE_1_TITLE}}",
+    "url":"{{SITE_URL}}/articles/{{ARTICLE_1_URL}}",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
+  }
   </script>
 </head>
 <body class="no-js {{HEADER_BRAND_CLASS|header-brand--text}}">
@@ -1239,6 +1425,7 @@ TYPE: tier
   <title>{{CONTACT_PAGE_TITLE}}</title>
   <meta name="description" content="{{CONTACT_META_DESCRIPTION}}" />
   <meta name="theme-color" content="{{BRAND_DARK}}" />
+  <meta name="dateModified" content="{{SITE_LAST_MODIFIED}}" />
   <link rel="canonical" href="{{SITE_URL}}/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{CONTACT_PAGE_TITLE}}" />
@@ -1261,6 +1448,24 @@ TYPE: tier
     "name":"{{CONTACT_PAGE_TITLE}}",
     "url":"{{SITE_URL}}/contact",
     "about":{"@type":"LocalBusiness","name":"{{BUSINESS_NAME}}","telephone":"{{PHONE_NUMBER_E164}}"}
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{"@type":"ListItem","position":1,"name":"{{BREADCRUMB_HOME_LABEL|Home}}","item":"{{SITE_URL}}/"},{"@type":"ListItem","position":2,"name":"{{NAV_LABEL_CONTACT}}","item":"{{SITE_URL}}/contact"}]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"{{CONTACT_PAGE_TITLE}}",
+    "url":"{{SITE_URL}}/contact",
+    "dateModified":"{{SITE_LAST_MODIFIED}}"
   }
   </script>
 </head>
@@ -1381,9 +1586,9 @@ TYPE: tier
           <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_3_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_3_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_3_BODY}}</p></div>
           <div class="step4-cell" data-stagger-item><em>{{CONTACT_NEXT_STEP_4_LABEL}}</em><h3>{{CONTACT_NEXT_STEP_4_TITLE}}</h3><p>{{CONTACT_NEXT_STEP_4_BODY}}</p></div>
         </div>
-        <div class="card" style="margin-top:2rem;border-color:var(--copper-line);background:var(--copper-dim)" data-reveal>
+        <div class="response-time-card" data-reveal>
           <h3>{{CONTACT_RESPONSE_CARD_TITLE}}</h3>
-          <p style="margin:.45rem 0 0">{{CONTACT_RESPONSE_TIME}}</p>
+          <p>{{CONTACT_RESPONSE_TIME}}</p>
         </div>
       </div>
     </section>
@@ -1458,6 +1663,17 @@ TYPE: tier
       <span>{{CITY}}, {{STATE}} · {{LICENSE_TYPE}}</span>
     </div>
   </footer>
+
+  <div class="mobile-cta-bar" role="group" aria-label="Quick contact">
+    <a class="mcb-btn mcb-call" href="tel:{{PHONE_NUMBER_E164}}" aria-label="Call {{BUSINESS_NAME}} now">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call now</span>
+    </a>
+    <a class="mcb-btn mcb-quote" href="/contact" aria-label="Request a free quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Free quote</span>
+    </a>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="./main.js" defer></script>
@@ -2434,10 +2650,10 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .depth-tile h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
 .depth-tile p { color: var(--muted); line-height: 1.72; font-size: 0.93rem; }
 
-/* ── Why choose us (4-item) ──────────────────────────────── */
+/* ── Why choose us (stacked) ─────────────────────────────── */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 1px;
   background: var(--line);
   margin-top: 3rem;
@@ -2755,6 +2971,78 @@ body.header-brand--image-text .nav-logo__text--beside { display: inline; white-s
 .article-prose ol { margin: 0 0 1rem 1.25rem; }
 .article-prose li { margin-bottom: 0.35rem; }
 .article-prose a { color: var(--copper); }
+
+/* ── Mobile conversion + ergonomics (Ahana) ──────────────── */
+
+/* Comfortable, thumb-friendly tap targets (Google mobile-usability + UX). */
+.btn { min-height: 44px; }
+.btn-lg { min-height: 52px; }
+.faq-summary { min-height: 56px; }
+.nav-menu-link { display: inline-flex; align-items: center; min-height: 48px; }
+
+/* Sticky mobile call / quote bar — the primary conversion driver on phones.
+   On mobile the floating header collapses to a menu button and hides the phone,
+   so this keeps a one-tap call + quote action visible at all times. Desktop hides it. */
+.mobile-cta-bar { display: none; }
+
+@media (max-width: 760px) {
+  .mobile-cta-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 180;
+    background: rgba(17,16,9,0.88);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border-top: 1px solid rgba(242,237,230,0.12);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.30);
+  }
+  .mcb-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 60px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .mcb-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
+  .mcb-call { background: var(--copper); color: #fff; }
+  .mcb-call:active { filter: brightness(0.92); }
+  .mcb-quote { background: transparent; color: var(--ink); border-left: 1px solid rgba(242,237,230,0.14); }
+  .mcb-quote:active { background: rgba(242,237,230,0.06); }
+
+  /* Larger menu-button tap target (only shown on mobile). */
+  .nav-toggle { width: 2.75rem; height: 2.75rem; }
+
+  /* Keep page content and footer clear of the fixed bar. */
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+}
+
+/* Small-phone refinements (≤480px): full-width CTAs, tighter rhythm, no overflow. */
+@media (max-width: 480px) {
+  .container { padding: 0 1.25rem; }
+  .section, .section-warm { padding: 3.75rem 0; }
+  .page-hero { padding: 7rem 0 3rem; }
+  .hero-h1 { font-size: clamp(2.25rem, 8.5vw, 3rem); }
+  .hero-content { padding: 2.5rem 1.25rem 3.5rem; }
+  .hero-cta-group { flex-direction: column; align-items: stretch; }
+  .hero-cta-group .btn { width: 100%; }
+  .cta-block-actions,
+  .cta-band-actions { flex-direction: column; align-items: stretch; }
+  .cta-block-actions .btn,
+  .cta-band-actions .btn { width: 100%; }
+  .cta-band { padding: 1.75rem 1.25rem; }
+}
 
 ================================================================================
 FILE: main.js

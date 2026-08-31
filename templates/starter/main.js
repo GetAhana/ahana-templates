@@ -19,7 +19,6 @@
       const isOpen = overlay.classList.toggle('is-open');
       toggle.classList.toggle('is-active', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
-      document.body.classList.toggle('nav-open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
 
       if (isOpen && motionOK && typeof gsap !== 'undefined') {
@@ -37,7 +36,6 @@
         overlay.classList.remove('is-open');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('nav-open');
         document.body.style.overflow = '';
       });
     });
@@ -48,7 +46,6 @@
         overlay.classList.remove('is-open');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('nav-open');
         document.body.style.overflow = '';
         toggle.focus();
       }
@@ -204,30 +201,7 @@
     });
   });
 
-  /* ── Contact form (demo / non-Netlify) ─────────────────── */
-  var form = document.getElementById('contact-form');
-  var success = document.getElementById('form-success');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      if (form.getAttribute('data-netlify') === 'true') return;
-      var action = (form.getAttribute('action') || '').trim();
-      if (action && action !== '#' && !/^javascript:/i.test(action)) {
-        try {
-          var u = new URL(action, window.location.href);
-          if (u.origin !== window.location.origin) return;
-        } catch (err) {
-          return;
-        }
-      }
-      e.preventDefault();
-      form.style.display = 'none';
-      if (success) success.style.display = 'block';
-    });
-  }
+  /* ── Contact form: site-lead-intake.js on contact.html ── */
 
   /* ── Nav active state (extensionless paths) ───────────── */
   function pathKeyFromPathname(p) {
@@ -239,105 +213,6 @@
     if (last.endsWith('.html')) last = last.slice(0, -5);
     return last || 'index';
   }
-
-  /* ── Testimonials wall: drop empty slots, layout by count ─ */
-  (function initTestimonialsWall() {
-    document.querySelectorAll('.wall').forEach(function (wall) {
-      var cards = Array.prototype.slice.call(
-        wall.querySelectorAll('[data-testimonial-card], .card')
-      );
-      var kept = [];
-      cards.forEach(function (card) {
-        var quote = card.querySelector('blockquote');
-        var by = card.querySelector('.by');
-        var text = quote
-          ? quote.textContent.replace(/[\u201c\u201d\u2018\u2019"]/g, '').trim()
-          : '';
-        var name = by
-          ? by.textContent.replace(/\s*·[\s\S]*$/, '').trim()
-          : '';
-        if (
-          !text ||
-          text.indexOf('{{') !== -1 ||
-          !name ||
-          name.indexOf('{{') !== -1
-        ) {
-          card.remove();
-          return;
-        }
-        kept.push(card);
-      });
-      var n = kept.length;
-      if (!n) return;
-      wall.classList.add('wall--count-' + n);
-      if (n % 2 === 1 && n > 1) {
-        kept[kept.length - 1].classList.add('wall-card--span');
-      }
-    });
-  })();
-
-  /* ── Header logo slot (no logo / unreplaced tokens) ─── */
-  (function initHeaderBrand() {
-    var body = document.body;
-    if (!/\bheader-brand--/.test(body.className)) {
-      body.classList.add('header-brand--text');
-    }
-    document.querySelectorAll('.nav-logo').forEach(function (logo) {
-      logo.querySelectorAll('.nav-logo__media').forEach(function (slot) {
-        if (!slot.querySelector('.logo__img')) {
-          var raw = (slot.textContent || '').trim();
-          if (!raw || raw.indexOf('{{') !== -1) slot.remove();
-        }
-      });
-      if (!logo.querySelector('.logo__img')) {
-        body.classList.remove('header-brand--image', 'header-brand--image-text');
-        body.classList.add('header-brand--text');
-      }
-    });
-  })();
-
-  /* ── Mobile sticky call bar ───────────────────────────── */
-  (function initMobileStickyCta() {
-    if (!window.matchMedia('(max-width: 760px)').matches) return;
-    if (document.querySelector('.mobile-sticky-cta')) return;
-
-    var telLink =
-      document.querySelector('.nav-overlay-footer a[href^="tel:"]') ||
-      document.querySelector('.nav-cta a[href^="tel:"]') ||
-      document.querySelector('.hero-cta-group a[href^="tel:"]') ||
-      document.querySelector('a[href^="tel:"]');
-    if (!telLink) return;
-
-    var contactHref = '/contact';
-    var contactEl =
-      document.querySelector('.nav-menu-link[href="/contact"]') ||
-      document.querySelector('.nav-cta .btn-ghost') ||
-      document.querySelector('.hero-cta-group a[href="/contact"]');
-    if (contactEl) contactHref = contactEl.getAttribute('href') || contactHref;
-
-    var contactLabel = contactEl && contactEl.textContent
-      ? contactEl.textContent.trim()
-      : 'Get a Quote';
-
-    var bar = document.createElement('div');
-    bar.className = 'mobile-sticky-cta';
-    bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Quick contact');
-
-    var call = document.createElement('a');
-    call.className = 'btn btn-primary';
-    call.href = telLink.getAttribute('href');
-    call.textContent = telLink.textContent.trim();
-
-    var quote = document.createElement('a');
-    quote.className = 'btn btn-ghost';
-    quote.href = contactHref;
-    quote.textContent = contactLabel;
-
-    bar.appendChild(call);
-    bar.appendChild(quote);
-    document.body.appendChild(bar);
-  })();
 
   var path = pathKeyFromPathname(window.location.pathname);
   document.querySelectorAll('.nav-link, .nav-menu-link').forEach(function (a) {

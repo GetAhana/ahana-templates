@@ -101,6 +101,9 @@
           <section class="contact-enh-card">
             <h2>Request a Quote</h2>
             <p class="contact-form-intro">{{CONTACT_FORM_INTRO}}</p>
+            <script id="site-lead-config" type="application/json">
+              {"intakeUrl":"{{SITE_LEAD_INTAKE_URL}}","clientToken":"{{SITE_LEAD_TOKEN}}"}
+            </script>
             <div id="form">
               <div class="row">
                 <div>
@@ -112,6 +115,10 @@
                   <input id="ph" type="tel" required>
                 </div>
               </div>
+              <label for="em">Email *</label>
+              <input id="em" type="email" required>
+              <label for="addr">Address</label>
+              <input id="addr" type="text" autocomplete="street-address">
               <label for="sv">Service Needed *</label>
               <select id="sv" required>
                 <option value="" disabled selected>Choose…</option>
@@ -139,7 +146,7 @@
               </div>
               <label for="d">Details</label>
               <textarea id="d" rows="3"></textarea>
-              <button type="button" onclick="send(event)">Send Request →</button>
+              <button type="button" onclick="ahanaSubmitContactLead(event)">Send Request →</button>
             </div>
             <div id="ok">Request received — we’ll contact you soon.</div>
           </section>
@@ -147,18 +154,6 @@
       </div>
     </section>
 
-  <script>
-    function send(e){
-      e.preventDefault();
-      const n=document.getElementById('n').value.trim();
-      const ph=document.getElementById('ph').value.trim();
-      const sv=document.getElementById('sv').value;
-      const z=document.getElementById('z').value.trim();
-      if(!n||!ph||!sv||!z){alert('Please fill in required fields.');return;}
-      document.getElementById('form').style.display='none';
-      document.getElementById('ok').style.display='block';
-    }
-  </script>
   </main>
 
   <footer>
@@ -195,6 +190,9 @@
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="./site-lead-intake.js" defer></script>
   <script src="./main.js" defer></script>
 </body>
 </html>
